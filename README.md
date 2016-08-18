@@ -1,1 +1,1 @@
-# uploadcare-effects-widget
+# uploadcare-widget-tab-effects
