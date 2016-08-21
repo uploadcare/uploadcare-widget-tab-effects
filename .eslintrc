@@ -1,0 +1,32 @@
+{
+  "parser": "babel-eslint",
+  "extends": "eslint-config-defaults",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "jasmine": true
+  },
+  "globals": {
+    "angular": false
+  },
+  "ecmaFeatures": {
+    "modules": true,
+    "spread" : true,
+    "restParams" : true
+  },
+  "rules" : {
+    "no-unused-vars" : 2,
+    "no-undef" : 2
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+      "ecmaFeatures": {
+      "modules": true,
+      "spread" : true,
+      "restParams" : true
+    }
+  }
+}
