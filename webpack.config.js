@@ -10,6 +10,7 @@ module.exports = {
     loaders: [
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'babel' },
        { test: /\.html$/, loader: 'raw' },
+       { test: /\.ejs$/, loader: 'raw' },
        { test: /\.scss$/, loader: 'style!css!postcss-loader!sass' },
        { test: /\.css$/, loader: 'style!css!postcss-loader' },
        { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },

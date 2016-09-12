@@ -1,0 +1,35 @@
+@import 'constants';
+@import 'common';
+
+.viewContainer { 
+  &.preview{
+    .headerBlock {
+      padding-top: 30px;
+      padding-bottom: 10px;
+
+      h1 {
+        font-family: SFUIText-Medium;
+        font-size: 28px;
+        text-align: center;
+        letter-spacing: 0px;
+        line-height: 40px;
+      }
+    }
+    .imageBlock {
+      padding-top: 16px;
+      flex: 1 auto;
+    }
+
+    .toolBoxContainer {
+      padding-top: 45px; 
+      width: 100%;
+      height: 104px;
+      
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      
+    }
+  }
+}
+

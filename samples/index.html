@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Uploadcare effects widget example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="description" content="Uploadcare effects widget example">
+    <!-- The best place for this one is your <HEAD> tag -->
+    <script>UPLOADCARE_PUBLIC_KEY = "b2a5dd7667f04ddaac62";</script>
+    <script src="https://ucarecdn.com/widget/2.10.0/uploadcare/uploadcare.full.js" charset="utf-8"></script>
+
+  </head>
+  <body>
+    <div id="uc-widget"></div>
+    <img id="img" src="http://ucarecdn.com/7ab139a4-8ac4-4686-ab6c-744aa7b7c64e/-/blur/70/" alt="" width="100%">
+    <button id="editBtn">Edit</button>
+    <script>
+      window.onload = function() {
+        uploadcare.plugin(function(uc) {
+  
+          uploadcareTabEffects();
+          var config = {};
+          if ( ! ('effects' in config)) {
+            config.effects = true;
+          }
+          var fileUrl = "http://ucarecdn.com/7ab139a4-8ac4-4686-ab6c-744aa7b7c64e/-/blur/70/";
+
+          var settings = uc.settings.build(
+            uc.jQuery.extend({}, config, {multiple: false})
+          );
+          var file = uploadcare.fileFrom('uploaded', fileUrl, settings);
+
+          uploadcare.openDialog(file, settings).always(function(result) {
+            console.log(result);
+          });
+        });
+      };
+    </script>
+  </body>
+</html>

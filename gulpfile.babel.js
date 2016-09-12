@@ -46,7 +46,7 @@ let paths = {
 };
 
 gulp.task('build-prod', [], (cb) => {
-  const prodConfig = require('./webpack.dist.config');
+  const prodConfig = require('./webpack.dist.min.config');
   prodConfig.entry.app = paths.entry;
   webpack(prodConfig, (err, stats) => {
     if(err)  {
@@ -64,7 +64,7 @@ gulp.task('build-prod', [], (cb) => {
 });
 
 gulp.task('build-dev', [], (cb) => {
-  const prodConfig = require('./webpack.dev.config');
+  const prodConfig = require('./webpack.dist.config');
   prodConfig.entry.app = paths.entry;
   webpack(prodConfig, (err, stats) => {
     if(err)  {

@@ -1,0 +1,87 @@
+@import 'constants';
+
+.viewContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: $containerBackground;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.ucButton {
+  border-radius: 24px;
+  height: 48px;
+  font-size: 17px;
+  letter-spacing: 0.3px;
+  padding-left: 42px;
+  padding-right: 42px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border: 0px;
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+  
+  &.ucButtonGrey {
+    color: #FFFFFF;
+    background: #5D5D5D;
+  }
+  
+  &.ucButtonPrimary {
+    color: #FFFFFF;
+    background: #3787EC;
+  }
+}
+
+.ucIconBtn {
+  border: 0px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: $textColor;
+  background: none;
+  align-items: center;
+  align-content: center;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+.btnImage {
+  background-position: center !important;
+  width: 32px;
+  height: 32px;
+}
+.cropAndRotateImg {
+  @extend .btnImage;
+  background: url($cropAndRotateImgUrl) 100% 100% no-repeat;
+}
+
+.enhanceImg {
+  @extend .btnImage;
+  background: url($enhanceImgUrl) 100% 100% no-repeat;
+}
+
+.sharpenImg {
+  @extend .btnImage;
+  background: url($sharpenImgUrl) 100% 100% no-repeat;
+}
+
+.grayScaleImg {
+  @extend .btnImage;
+  background: url($grayScaleImgUrl) 100% 100% no-repeat;
+}
+
+

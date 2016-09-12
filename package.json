@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "description": "Uploadcare tab effects",
   "main": "index.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel-core": "^6.7.7",
@@ -24,6 +23,7 @@
     "connect-history-api-fallback": "^1.1.0",
     "css-loader": "^0.19.0",
     "del": "^2.2.0",
+    "ejs": "^2.5.1",
     "eslint": "^2.13.1",
     "eslint-config-defaults": "^9.0.0",
     "eslint-plugin-filenames": "^1.0.0",
@@ -68,8 +68,7 @@
     "webpack-hot-middleware": "^2.6.0",
     "yargs": "^3.9.0"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [],
   "repository": {
     "type": "git",
