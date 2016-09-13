@@ -1,7 +1,19 @@
-$containerBackground: #ffffff;
-$textColor: #454545;
+$whiteColor: #ffffff;
+$darkGrayColor: #454545;
+$blueColor: #3787EC;
+$grayColor: #5D5D5D; 
+
+
 
 $cropAndRotateImgUrl: '../img/cropAndRotate.svg';
 $enhanceImgUrl: '../img/enhance.svg';
 $sharpenImgUrl: '../img/sharpen.svg';
 $grayScaleImgUrl: '../img/grayscale.svg';
+
+$freeRatioImgUrl: '../img/freeRatio.svg';
+$originalRatioImgUrl: '../img/originalRatio.svg';
+$oneToOneRatioImgUrl: '../img/1to1Ratio.svg';
+$threeToFourRatioImgUrl: '../img/3to4Ratio.svg';
+$fourToThreeRatioImgUrl: '../img/4to3Ratio.svg';
+$sixteenToNineRatioImgUrl: '../img/16to9Ratio.svg';
+$nineToSixteenRatioImgUrl: '../img/9to16Ratio.svg';

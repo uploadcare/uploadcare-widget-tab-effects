@@ -2,12 +2,22 @@
 import ejs from '../../node_modules/ejs/ejs';
 import previewTemplate from '../templates/preview.html';
 
-import '../styles/preview.scss';
+import '../styles/buttons.scss';
+import '../styles/images.scss';
+import '../styles/viewContainer.scss';
+
+import CropAndRotateView from './cropAndRotateView.js';
+
+let that;
 
 export default class PreviewView {
   constructor(container, effectsModel) {
     this.container = container;
     this.model = effectsModel;
+
+    this.cropAndRotateView = new CropAndRotateView(container, effectsModel);
+
+    that = this;
   }
 
   
@@ -17,5 +27,14 @@ export default class PreviewView {
     };
     let markupStr = ejs.render(previewTemplate, renderData);
     parentEl.html(markupStr);
+    this.setupHandlers();
+  }
+
+  setupHandlers() {
+    uploadcare.jQuery('#cropAndRotateBtn').click(this.CropAndRotateClick);   
+  }
+
+  CropAndRotateClick(ev) {
+    that.cropAndRotateView.render();
   }
 }

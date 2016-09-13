@@ -1,0 +1,58 @@
+@import 'constants';
+
+.ucButton {
+  border-radius: 24px;
+  height: 48px;
+  font-size: 17px;
+  letter-spacing: 0.3px;
+  padding-left: 42px;
+  padding-right: 42px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border: 0px;
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+  
+  &.ucButtonGrey {
+    color: $whiteColor;
+    background: $grayColor;
+  }
+  
+  &.ucButtonPrimary {
+    color: $whiteColor;
+    background: $blueColor;
+  }
+
+  &.ucButtonWhite {
+    color: $blueColor;
+    background: $whiteColor;
+  }
+}
+
+.ucIconBtn {
+  border: 0px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: $darkGrayColor;
+  background: none;
+  align-items: center;
+  align-content: center;
+
+  &.white {
+    color: $whiteColor;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,63 @@
+@import 'constants';
+
+.btnImage {
+  background-position: center !important;
+  width: 32px;
+  height: 32px;
+}
+.cropAndRotateImg {
+  @extend .btnImage;
+  background: url($cropAndRotateImgUrl) 100% 100% no-repeat;
+}
+
+.enhanceImg {
+  @extend .btnImage;
+  background: url($enhanceImgUrl) 100% 100% no-repeat;
+}
+
+.sharpenImg {
+  @extend .btnImage;
+  background: url($sharpenImgUrl) 100% 100% no-repeat;
+}
+
+.grayScaleImg {
+  @extend .btnImage;
+  background: url($grayScaleImgUrl) 100% 100% no-repeat;
+}
+
+.freeRatioImg {
+  @extend .btnImage;
+  background: url($freeRatioImgUrl) 100% 100% no-repeat;
+}
+
+.originalRatioImg {
+  @extend .btnImage;
+  background: url($originalRatioImgUrl) 100% 100% no-repeat;
+}
+
+.oneToOneRatioImg {
+  @extend .btnImage;
+  background: url($oneToOneRatioImgUrl) 100% 100% no-repeat;
+}
+
+.threeToFourRatioImg {
+  @extend .btnImage;
+  background: url($threeToFourRatioImgUrl) 100% 100% no-repeat;
+}
+
+.fourToThreeRatioImg {
+  @extend .btnImage;
+  background: url($fourToThreeRatioImgUrl) 100% 100% no-repeat;
+}
+
+.sixteenToNineRatioImg {
+  @extend .btnImage;
+  background: url($sixteenToNineRatioImgUrl) 100% 100% no-repeat;
+}
+
+.nineToSixteenRatioImg {
+  @extend .btnImage;
+  background: url($nineToSixteenRatioImgUrl) 100% 100% no-repeat;
+}
+
+

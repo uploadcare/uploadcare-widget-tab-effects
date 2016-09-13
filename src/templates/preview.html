@@ -1,4 +1,4 @@
-<div class="viewContainer preview">
+<div class="viewContainer">
   <div class="headerBlock">
     <h1>Preview</h1>
   </div>
@@ -6,23 +6,23 @@
     <img src="<%= previewUrl %>" alt="">
   </div>
   <div class="toolBoxContainer">
-    <button class="ucButton ucButtonGrey">Remove</button>
-    <button class="ucIconBtn">
+    <button class="ucButton ucButtonGrey" id="removeBtn">Remove</button>
+    <button class="ucIconBtn" id="cropAndRotateBtn">
       <div class="cropAndRotateImg"></div>
       <span>CROP &amp; ROTATE</span>
     </button>
-    <button class="ucIconBtn">
+    <button class="ucIconBtn" id="enhanceBtn">
       <div class="enhanceImg"></div>
       <span>ENHANCE</span>
     </button>
-    <button class="ucIconBtn">
+    <button class="ucIconBtn" id="sharpenBtn">
       <div class="sharpenImg"></div>
       <span>SHARPEN</span>
     </button>
-    <button class="ucIconBtn">
+    <button class="ucIconBtn" id="grayscaleBtn">
       <div class="grayScaleImg"></div>
       <span>GRAYSCALE</span>
     </button>
-    <button class="ucButton ucButtonPrimary">Done</button>
+    <button class="ucButton ucButtonPrimary" id="doneBtn">Done</button>
   </div>
 </div>
