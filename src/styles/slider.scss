@@ -1,0 +1,42 @@
+@import 'constants';
+
+.slider {
+  flex: 1 auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  height: 48px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  .backLineBlock {
+    padding-left: 15px;
+    padding-right: 15px;
+    display: block;
+    width: 100%;
+    height: 3px;
+  }
+  
+  .backLine {
+    background: $whiteColor;
+    width: calc(100% - 30px);
+    height: 3px;
+    position: absolute;
+  }
+
+  .pointer {
+    border-radius: 50%;
+    position: absolute;
+    background: $whiteColor;
+    width: 16px;
+    height: 16px;
+    left: 20%;
+    z-index: 100;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

@@ -1,11 +1,12 @@
 'use strict';
 
 import ejs from '../../node_modules/ejs/ejs';
-import cropAndRotateTemplate from '../templates/cropAndRotate.html';
+import enhanceTemplate from '../templates/enhance.html';
+
 let $ = uploadcare.jQuery;
 let that;
 
-export default class CropAndRotateView {
+export default class EnhanceView {
   constructor(container, effectsModel) {
     this.container = container;
     this.model = effectsModel;
@@ -17,24 +18,24 @@ export default class CropAndRotateView {
     let renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382)
     };
-    let markupStr = ejs.render(cropAndRotateTemplate, renderData);
+    let markupStr = ejs.render(enhanceTemplate, renderData);
     parentEl.html(markupStr);
     this.setupHandlers();
     return this.viewDeferred.promise();
   }
 
   setupHandlers() {
-    $('#carCancelBtn').click(this.carCancelClick);
-    $('#carApplyBtn').click(this.carApplyClick);
+    $('#enhanceCancelBtn').click(this.enhanceCancelClick);
+    $('#enhanceApplyBtn').click(this.enhanceApplyClick);
   } 
 
-  carCancelClick(ev) {
+  enhanceCancelClick(ev) {
     that.viewDeferred.resolve({
       closeType: "Cancel"
     });
   }
 
-  carApplyClick(ev) {
+  enhanceApplyClick(ev) {
     that.viewDeferred.resolve({
       closeType: "Apply"
     });
