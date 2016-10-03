@@ -60,4 +60,14 @@
   background: url($nineToSixteenRatioImgUrl) 100% 100% no-repeat;
 }
 
+.rotateLeftImg {
+  @extend .btnImage;
+  background: url($rotateLeftImgUrl) 100% 100% no-repeat;
+}
+
+.rotateRightImg {
+  @extend .btnImage;
+  background: url($rotateRightImgUrl) 100% 100% no-repeat;
+}
+
 
