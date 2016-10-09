@@ -9,18 +9,25 @@ const POINTER_ID = "pointer_" + IdGenerator.Generate();
 let that;
 
 export default class Slider {
-  constructor(container) {
+  constructor(container, maxValue = 100) {
     this.container = container;
+    this.onChangeHandler = null;
+    this.maxValue = maxValue;
     that = this;
+
   }
 
-  render(parentEl = this.container) {
+  render(parentEl = this.container, value = 0) {
     this.container = parentEl;
     let markupStr = ejs.render(sliderTemplate, {
       pointerId: POINTER_ID 
     });
     parentEl.html(markupStr);
     this.setupHandlers(parentEl);
+
+    this.currentPos = Math.round(100 / this.maxValue * value);
+
+    this.$pointer.css("left", "calc(" + this.currentPos + "% - 8px)");
   }
 
   setupHandlers(parentEl) {
@@ -55,18 +62,19 @@ export default class Slider {
     pointerPos = Math.min(100, pointerPos);
     pointerPos = Math.round(pointerPos);
 
-    console.log({
-      pageX: ev.pageX,
-      pageY: ev.pageY,
-      leftPos: pointerPos,
-      mult: this.multiplyer
-    });
-
     this.$pointer.css("left", "calc(" + pointerPos + "% - 8px)");
+    
+    if(this.onChangeHandler && this.currentPos != pointerPos) {
+      this.onChangeHandler(Math.round(this.maxValue / 100 * pointerPos));
+    }
+    this.currentPos = pointerPos;
   }
 
   bodyMouseUp(ev) {
-    console.log(ev);
     $("body").off();
+  }
+
+  onChange( handler ) {
+    this.onChangeHandler = handler;
   }
 }
