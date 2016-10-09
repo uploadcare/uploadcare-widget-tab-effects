@@ -37,12 +37,12 @@
   }
 
   .toolBoxContainer {
-    padding-top: 45px; 
     width: 100%;
     height: 104px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
 
     &.blue {
       background-color: $blueColor;
