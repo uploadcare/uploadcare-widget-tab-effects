@@ -30,13 +30,13 @@ export default class CropAndRotateView {
 
   carCancelClick(ev) {
     that.viewDeferred.resolve({
-      closeType: "Cancel"
+      reason: "Cancel"
     });
   }
 
   carApplyClick(ev) {
     that.viewDeferred.resolve({
-      closeType: "Apply"
+      reason: "Apply"
     });
   }
 }

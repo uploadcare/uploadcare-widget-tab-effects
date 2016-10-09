@@ -21,9 +21,12 @@ function effectsTab(container, button, dialogApi, settings) {
         model.parseUrl(fileInfo.cdnUrl);
         let previewView = new PreviewView(container, model);
         previewView.render(container);
-        fileInfo.cdnUrl = 'http://ucarecdn.com/7ab139a4-8ac4-4686-ab6c-744aa7b7c64e/';
-        fileInfo.cdnUrlModifiers = "";
+
     });
+  });
+
+  dialogApi.then(res => {
+    console.log("promise resolved");
   });
 
   dialogApi.always(function(result) {
@@ -38,8 +41,7 @@ function effectsTab(container, button, dialogApi, settings) {
 export default function uploadcareTabEffects() {
   if(!uploadcare)
     throw Error('uploadcare widget not loaded');
-  uploadcare.registerTab('preview', effectsTab);
-  
+  uploadcare.registerTab('preview', effectsTab);  
 }
 
 global.uploadcareTabEffects = uploadcareTabEffects;

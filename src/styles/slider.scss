@@ -13,8 +13,8 @@
   margin-right: 20px;
 
   .backLineBlock {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 8px;
+    padding-right: 8px;
     display: block;
     width: 100%;
     height: 3px;
@@ -22,7 +22,7 @@
   
   .backLine {
     background: $whiteColor;
-    width: calc(100% - 30px);
+    width: calc(100% - 16px);
     height: 3px;
     position: absolute;
   }
@@ -33,7 +33,8 @@
     background: $whiteColor;
     width: 16px;
     height: 16px;
-    left: 20%;
+    top: -7px;
+    left: calc(0% - 8px);
     z-index: 100;
     &:hover {
       cursor: pointer;

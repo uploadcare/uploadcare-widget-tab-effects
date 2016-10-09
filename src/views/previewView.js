@@ -10,8 +10,14 @@ import '../styles/slider.scss';
 import CropAndRotateView from './cropAndRotateView.js';
 import EnhanceView from './enhanceView.js';
 import SharpenView from './sharpenView.js';
+import IdGenerator from '../tools/IdGenerator.js';
 
-let $ = uploadcare.jQuery;
+const CROP_AND_ROTATE_BTN_ID = "cropAndRotateBtn_" + IdGenerator.Generate();
+const ENHANCE_BTN_ID = "enhanceBtn_" + IdGenerator.Generate();
+const SHARPEN_BTN_ID = "sharpenBtn_" + IdGenerator.Generate();
+
+const $ = uploadcare.jQuery;
+
 
 let that;
 
@@ -29,35 +35,40 @@ export default class PreviewView {
 
   
   render(parentEl = this.container) {
+    this.container = parentEl;
+
     let renderData = {
-      previewUrl: this.model.getPreviewUrl(800, 382)
+      previewUrl: this.model.getPreviewUrl(800, 382),
+      cropAndRotateBtnId: CROP_AND_ROTATE_BTN_ID,
+      enhanceBtnId: ENHANCE_BTN_ID,
+      sharpenBtnId: SHARPEN_BTN_ID
     };
     let markupStr = ejs.render(previewTemplate, renderData);
     parentEl.html(markupStr);
-    this.setupHandlers();
+    this.setupHandlers(parentEl);
   }
 
-  setupHandlers() {
-    $('#cropAndRotateBtn').click(this.CropAndRotateClick);   
-    $('#enhanceBtn').click(this.EnhanceClick);   
-    $('#sharpenBtn').click(this.SharpenClick);   
+  setupHandlers(parentEl) {
+    $(parentEl).find("#" + CROP_AND_ROTATE_BTN_ID).click(this.cropAndRotateClick);   
+    $(parentEl).find("#" + ENHANCE_BTN_ID).click(this.enhanceClick);   
+    $(parentEl).find("#" + SHARPEN_BTN_ID).click(this.sharpenClick);   
   }
 
-  CropAndRotateClick(ev) {
+  cropAndRotateClick(ev) {
     that.cropAndRotateView.render()
       .then(type => {
         that.render();
       });
   }
 
-  EnhanceClick(ev) {
+  enhanceClick(ev) {
     that.enhanceView.render()
       .then(type => {
         that.render();
       });
   }
 
-  SharpenClick(ev) {
+  sharpenClick(ev) {
     that.sharpenView.render()
       .then(type => {
         that.render();
