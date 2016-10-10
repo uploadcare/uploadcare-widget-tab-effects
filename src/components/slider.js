@@ -5,22 +5,19 @@ import slider from '../styles/slider.scss';
 import IdGenerator from '../tools/IdGenerator.js';
 
 const $ = uploadcare.jQuery;
-const POINTER_ID = "pointer_" + IdGenerator.Generate();
-let that;
 
 export default class Slider {
   constructor(container, maxValue = 100) {
     this.container = container;
     this.onChangeHandler = null;
     this.maxValue = maxValue;
-    that = this;
-
+    this.POINTER_ID = "pointer_" + IdGenerator.Generate();
   }
 
   render(parentEl = this.container, value = 0) {
     this.container = parentEl;
     let markupStr = ejs.render(sliderTemplate, {
-      pointerId: POINTER_ID 
+      pointerId: this.POINTER_ID 
     });
     parentEl.html(markupStr);
     this.setupHandlers(parentEl);
@@ -32,7 +29,7 @@ export default class Slider {
 
   setupHandlers(parentEl) {
     this.$pointer = 
-    $(parentEl).find("#" + POINTER_ID);
+    $(parentEl).find("#" + this.POINTER_ID);
 
     this.$pointer.on("mousedown", ev => { 
       return this.pointerMouseDown(ev);
@@ -48,11 +45,11 @@ export default class Slider {
     ev.bubbles = false;
 
     $("body").mousemove(ev => {
-      return that.bodyMouseMove(ev); 
+      return this.bodyMouseMove(ev); 
     });
 
     $("body").mouseup(ev => { 
-      return that.bodyMouseUp(ev)
+      return this.bodyMouseUp(ev)
     });
   }
 

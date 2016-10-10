@@ -3,13 +3,11 @@
 import ejs from '../../node_modules/ejs/ejs';
 import cropAndRotateTemplate from '../templates/cropAndRotate.html';
 let $ = uploadcare.jQuery;
-let that;
 
 export default class CropAndRotateView {
   constructor(container, effectsModel) {
     this.container = container;
     this.model = effectsModel;
-    that = this;
   }
 
   render(parentEl = this.container) {
@@ -24,18 +22,18 @@ export default class CropAndRotateView {
   }
 
   setupHandlers() {
-    $('#carCancelBtn').click(this.carCancelClick);
-    $('#carApplyBtn').click(this.carApplyClick);
+    $('#carCancelBtn').click(ev => { return this.carCancelClick(ev); });
+    $('#carApplyBtn').click(ev => { return this.carApplyClick(ev); });
   } 
 
   carCancelClick(ev) {
-    that.viewDeferred.resolve({
+    this.viewDeferred.resolve({
       reason: "Cancel"
     });
   }
 
   carApplyClick(ev) {
-    that.viewDeferred.resolve({
+    this.viewDeferred.resolve({
       reason: "Apply"
     });
   }

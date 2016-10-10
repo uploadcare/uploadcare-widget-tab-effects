@@ -3,16 +3,11 @@
     <h1>Enhance</h1>
   </div>
   <div class="imageBlock">
-    <img src="<%= previewUrl %>" alt="">
+    <img src="<%= previewUrl %>" alt="" id="<%= previewImageId%>"/>
   </div>
   <div class="toolBoxContainer blue">
     <button class="ucButton ucButtonGrey" id="enhanceCancelBtn">Cancel</button>
-    <div class="slider">
-      <div class="pointer"></div>
-      <div class="backLineBlock">
-        <div class="backLine"></div>
-      </div>
-    </div>
+    <div class="slider" id="<%= sliderId%>"></div>
     <button class="ucButton ucButtonWhite" id="enhanceApplyBtn">Apply</button>
   </div>
 </div>

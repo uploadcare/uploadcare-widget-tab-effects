@@ -18,9 +18,6 @@ const SHARPEN_BTN_ID = "sharpenBtn_" + IdGenerator.Generate();
 
 const $ = uploadcare.jQuery;
 
-
-let that;
-
 export default class PreviewView {
   constructor(container, effectsModel) {
     this.container = container;
@@ -29,8 +26,6 @@ export default class PreviewView {
     this.cropAndRotateView = new CropAndRotateView(container, effectsModel);
     this.enhanceView = new EnhanceView(container, effectsModel);
     this.sharpenView = new SharpenView(container, effectsModel);
-
-    that = this;
   }
 
   
@@ -49,29 +44,29 @@ export default class PreviewView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find("#" + CROP_AND_ROTATE_BTN_ID).click(this.cropAndRotateClick);   
-    $(parentEl).find("#" + ENHANCE_BTN_ID).click(this.enhanceClick);   
-    $(parentEl).find("#" + SHARPEN_BTN_ID).click(this.sharpenClick);   
+    $(parentEl).find("#" + CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });   
+    $(parentEl).find("#" + ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });   
+    $(parentEl).find("#" + SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });   
   }
 
   cropAndRotateClick(ev) {
-    that.cropAndRotateView.render()
+    this.cropAndRotateView.render()
       .then(type => {
-        that.render();
+        this.render();
       });
   }
 
   enhanceClick(ev) {
-    that.enhanceView.render()
+    this.enhanceView.render()
       .then(type => {
-        that.render();
+        this.render();
       });
   }
 
   sharpenClick(ev) {
-    that.sharpenView.render()
+    this.sharpenView.render()
       .then(type => {
-        that.render();
+        this.render();
       });
   }
 }
