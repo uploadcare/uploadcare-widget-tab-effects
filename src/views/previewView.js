@@ -15,6 +15,7 @@ import IdGenerator from '../tools/IdGenerator.js';
 const CROP_AND_ROTATE_BTN_ID = "cropAndRotateBtn_" + IdGenerator.Generate();
 const ENHANCE_BTN_ID = "enhanceBtn_" + IdGenerator.Generate();
 const SHARPEN_BTN_ID = "sharpenBtn_" + IdGenerator.Generate();
+const GRAYSCALE_BTN_ID = "grayScaleBtn_" + IdGenerator.Generate();
 
 const $ = uploadcare.jQuery;
 
@@ -36,7 +37,9 @@ export default class PreviewView {
       previewUrl: this.model.getPreviewUrl(800, 382),
       cropAndRotateBtnId: CROP_AND_ROTATE_BTN_ID,
       enhanceBtnId: ENHANCE_BTN_ID,
-      sharpenBtnId: SHARPEN_BTN_ID
+      sharpenBtnId: SHARPEN_BTN_ID,
+      grayscaleBtnId: GRAYSCALE_BTN_ID,
+      appliedGrayscale: this.model.grayscale === null
     };
     let markupStr = ejs.render(previewTemplate, renderData);
     parentEl.html(markupStr);
@@ -47,6 +50,7 @@ export default class PreviewView {
     $(parentEl).find("#" + CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });   
     $(parentEl).find("#" + ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });   
     $(parentEl).find("#" + SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });   
+    $(parentEl).find("#" + GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });   
   }
 
   cropAndRotateClick(ev) {
@@ -68,5 +72,14 @@ export default class PreviewView {
       .then(type => {
         this.render();
       });
+  }
+
+  grayScaleClick(ev) {
+    if (this.model.grayscale === null) {
+      this.model.grayscale = undefined;
+    } else {
+      this.model.grayscale = null;
+    }
+    this.render();
   }
 }

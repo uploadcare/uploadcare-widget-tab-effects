@@ -5,7 +5,7 @@
   <div class="imageBlock">
     <img src="<%= previewUrl %>" alt="">
   </div>
-  <div class="toolBoxContainer">
+  <div class="toolBoxContainer align-top">
     <button class="ucButton ucButtonGrey" id="removeBtn">Remove</button>
     <div class="ucIconBtn" id="<%= cropAndRotateBtnId %>">
       <div class="cropAndRotateImg"></div>
@@ -19,9 +19,12 @@
       <div class="sharpenImg"></div>
       <span>SHARPEN</span>
     </div>
-    <div class="ucIconBtn" id="grayscaleBtn">
+    <div class="ucIconBtn" id="<%= grayscaleBtnId %>">
       <div class="grayScaleImg"></div>
       <span>GRAYSCALE</span>
+      <% if(appliedGrayscale) { %>
+        <div class="applied"></div>
+      <% } %>
     </div>
     <button class="ucButton ucButtonPrimary" id="doneBtn">Done</button>
   </div>

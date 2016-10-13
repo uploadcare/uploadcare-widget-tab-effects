@@ -45,6 +45,7 @@
   color: $darkGrayColor;
   background: none;
   align-items: center;
+  position: relative;
 
   &.white {
     color: $whiteColor;
@@ -56,5 +57,15 @@
 
   &:hover {
     cursor: pointer;
+  }
+
+  .applied {
+    margin-top: 10px;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    background: $blueColor;
+    position: absolute;
+    bottom: -15px;
   }
 }

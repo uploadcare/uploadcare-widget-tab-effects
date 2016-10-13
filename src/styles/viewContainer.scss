@@ -46,6 +46,10 @@
     justify-content: space-around;
     align-items: center;
 
+    &.align-top {
+//      align-items: flex-start;
+    }
+
     &.blue {
       background-color: $blueColor;
     } 
