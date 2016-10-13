@@ -2658,7 +2658,7 @@
 	
 	      this.$pointer = $(parentEl).find("#" + this.POINTER_ID);
 	
-	      this.$pointer.on("mousedown", function (ev) {
+	      this.$pointer.on("mousedown click touchstart", function (ev) {
 	        return _this.pointerMouseDown(ev);
 	      });
 	    }
@@ -2677,14 +2677,29 @@
 	        return _this2.bodyMouseMove(ev);
 	      });
 	
-	      $("body").mouseup(function (ev) {
+	      $("body").on("touchmove", function (ev) {
+	        return _this2.bodyTouchMove(ev);
+	      });
+	
+	      $("body").on("mouseup", function (ev) {
 	        return _this2.bodyMouseUp(ev);
 	      });
 	    }
 	  }, {
 	    key: 'bodyMouseMove',
 	    value: function bodyMouseMove(ev) {
-	      var pointerPos = (ev.pageX - this.leftOffset) * this.multiplyer;
+	      return this.updatePoinerPos(ev.pageX);
+	    }
+	  }, {
+	    key: 'bodyTouchMove',
+	    value: function bodyTouchMove(ev) {
+	      console.log(ev.originalEvent.touches[0]);
+	      return this.updatePoinerPos(ev.originalEvent.touches[0].clientX);
+	    }
+	  }, {
+	    key: 'updatePoinerPos',
+	    value: function updatePoinerPos(pageX) {
+	      var pointerPos = (pageX - this.leftOffset) * this.multiplyer;
 	      pointerPos = Math.max(0, pointerPos);
 	      pointerPos = Math.min(100, pointerPos);
 	      pointerPos = Math.round(pointerPos);

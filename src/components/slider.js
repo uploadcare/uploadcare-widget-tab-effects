@@ -31,7 +31,7 @@ export default class Slider {
     this.$pointer = 
     $(parentEl).find("#" + this.POINTER_ID);
 
-    this.$pointer.on("mousedown", ev => { 
+    this.$pointer.on("mousedown touchstart", ev => { 
       return this.pointerMouseDown(ev);
     });   
   }
@@ -48,13 +48,26 @@ export default class Slider {
       return this.bodyMouseMove(ev); 
     });
 
-    $("body").mouseup(ev => { 
+    $("body").on("touchmove", ev => {
+      return this.bodyTouchMove(ev); 
+    });
+
+    $("body").on("mouseup", ev => { 
       return this.bodyMouseUp(ev)
     });
   }
 
   bodyMouseMove(ev) {
-    let pointerPos = ((ev.pageX - this.leftOffset) * this.multiplyer);
+    return this.updatePoinerPos(ev.pageX);
+  }
+
+  bodyTouchMove(ev) {
+    console.log(ev.originalEvent.touches[0]);
+    return this.updatePoinerPos(ev.originalEvent.touches[0].clientX);
+  }
+
+  updatePoinerPos(pageX) {
+    let pointerPos = ((pageX - this.leftOffset) * this.multiplyer);
     pointerPos = Math.max(0, pointerPos);
     pointerPos = Math.min(100, pointerPos);
     pointerPos = Math.round(pointerPos);
