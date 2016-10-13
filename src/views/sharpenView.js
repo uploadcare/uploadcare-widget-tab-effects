@@ -44,6 +44,8 @@ export default class SharpenView {
   setupHandlers(parentEl) {
     $(parentEl).find('#sharpenCancelBtn').click(ev => { return this.sharpenCancelClick(ev); });
     $(parentEl).find('#sharpenApplyBtn').click(ev => { return this.sharpenApplyClick(ev); });
+    $(parentEl).find('#sharpenCancelMobBtn').click(ev => { return this.sharpenCancelClick(ev); });
+    $(parentEl).find('#sharpenApplyMobBtn').click(ev => { return this.sharpenApplyClick(ev); });
   } 
 
   sharpenCancelClick(ev) {

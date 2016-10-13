@@ -24,6 +24,8 @@ export default class CropAndRotateView {
   setupHandlers() {
     $('#carCancelBtn').click(ev => { return this.carCancelClick(ev); });
     $('#carApplyBtn').click(ev => { return this.carApplyClick(ev); });
+    $('#carCancelMobBtn').click(ev => { return this.carCancelClick(ev); });
+    $('#carApplyMobBtn').click(ev => { return this.carApplyClick(ev); });
   } 
 
   carCancelClick(ev) {

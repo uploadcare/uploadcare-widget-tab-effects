@@ -42,6 +42,9 @@ export default class EnhanceView {
   setupHandlers(parentEl) {
     $(parentEl).find('#enhanceCancelBtn').click( ev => { return this.enhanceCancelClick(ev); });
     $(parentEl).find('#enhanceApplyBtn').click(ev => { return this.enhanceApplyClick(ev); });
+    $(parentEl).find('#enhanceCancelMobBtn').click( ev => { return this.enhanceCancelClick(ev); });
+    $(parentEl).find('#enhanceApplyMobBtn').click(ev => { return this.enhanceApplyClick(ev); });
+
   } 
 
   enhanceCancelClick(ev) {

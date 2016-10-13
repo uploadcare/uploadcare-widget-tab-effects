@@ -13,6 +13,13 @@
   margin-left: 20px;
   margin-right: 20px;
 
+  @media screen and (max-width: 759px) {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   &:focus {
     outline: none;
   }
@@ -22,13 +29,37 @@
   }
   
   &.ucButtonGrey {
-    color: $whiteColor;
-    background: $grayColor;
+
+    @media screen and (max-width: 759px) {
+      font-family: SFUIText-Regular;
+      font-size: 16px;
+      letter-spacing: 0.3px;
+      line-height: 18px;
+      color: $blueColor;
+      background: none;  
+    }
+
+    @media screen and (min-width: 760px) {
+      color: $whiteColor;
+      background: $grayColor;
+    }
   }
   
   &.ucButtonPrimary {
-    color: $whiteColor;
-    background: $blueColor;
+
+    @media screen and (max-width: 759px) {
+      font-family: SFUIText-Regular;
+      font-size: 16px;
+      letter-spacing: 0.3px;
+      line-height: 18px;
+      color: $blueColor;
+      background: none;  
+    }
+
+    @media screen and (min-width: 760px) {
+      color: $whiteColor;
+      background: $blueColor;
+    }
   }
 
   &.ucButtonWhite {
@@ -46,6 +77,12 @@
   background: none;
   align-items: center;
   position: relative;
+
+  @media screen and (max-width: 759px) {
+    font-family: SFUIText-Regular;
+    font-size: 10px;
+    letter-spacing: 0.41px;
+  }
 
   &.white {
     color: $whiteColor;
@@ -67,5 +104,17 @@
     background: $blueColor;
     position: absolute;
     bottom: -15px;
+  }
+}
+
+.hideMobile {
+  @media screen and (max-width: 759px) {
+    display: none;
+  }
+}
+
+.hideScreen {
+  @media screen and (min-width: 760px) {
+    display: none;
   }
 }

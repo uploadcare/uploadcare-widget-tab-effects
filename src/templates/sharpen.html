@@ -1,13 +1,15 @@
 <div class="viewContainer">
   <div class="headerBlock">
+    <button class="ucButton ucButtonGrey hideScreen" id="sharpenCancelMobBtn">Cancel</button>
     <h1>Sharpen</h1>
+    <button class="ucButton ucButtonWhite hideScreen" id="sharpenApplyMobBtn">Apply</button>
   </div>
   <div class="imageBlock">
     <img src="<%= previewUrl %>" alt="" id="<%= previewImageId%>"/>
   </div>
   <div class="toolBoxContainer blue">
-    <button class="ucButton ucButtonGrey" id="sharpenCancelBtn">Cancel</button>
-    <div class="slider" id="<%= sliderId%>"></div>
-    <button class="ucButton ucButtonWhite" id="sharpenApplyBtn">Apply</button>
+    <button class="ucButton ucButtonGrey hideMobile" id="sharpenCancelBtn">Cancel</button>
+    <div class="slider" id="<%= sliderId %>"></div>
+    <button class="ucButton ucButtonWhite hideMobile" id="sharpenApplyBtn">Apply</button>
   </div>
 </div>

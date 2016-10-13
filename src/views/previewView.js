@@ -39,7 +39,10 @@ export default class PreviewView {
       enhanceBtnId: ENHANCE_BTN_ID,
       sharpenBtnId: SHARPEN_BTN_ID,
       grayscaleBtnId: GRAYSCALE_BTN_ID,
-      appliedGrayscale: this.model.grayscale === null
+
+      appliedGrayscale: this.model.grayscale === null,
+      appliedSharpen: this.model.sharp ? true : false,
+      appliedEnhance: this.model.enhance ? true : false      
     };
     let markupStr = ejs.render(previewTemplate, renderData);
     parentEl.html(markupStr);
@@ -50,7 +53,7 @@ export default class PreviewView {
     $(parentEl).find("#" + CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });   
     $(parentEl).find("#" + ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });   
     $(parentEl).find("#" + SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });   
-    $(parentEl).find("#" + GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });   
+    $(parentEl).find("#" + GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });
   }
 
   cropAndRotateClick(ev) {
