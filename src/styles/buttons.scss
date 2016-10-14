@@ -78,7 +78,7 @@
   align-items: center;
   position: relative;
 
-  @media screen and (max-width: 759px) {
+  @media screen and (max-width: 760px) {
     font-family: SFUIText-Regular;
     font-size: 10px;
     letter-spacing: 0.41px;
@@ -104,11 +104,12 @@
     background: $blueColor;
     position: absolute;
     bottom: -15px;
+    left: calc(50% - 4px);
   }
 }
 
 .hideMobile {
-  @media screen and (max-width: 759px) {
+  @media screen and (max-width: 760px) {
     display: none;
   }
 }
