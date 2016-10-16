@@ -20,14 +20,30 @@ export default class EnhanceView {
 
     this.SLIDER_ID = "slider_" + IdGenerator.Generate();
     this.PREVIEW_IMG_ID = "preview_mage_" + IdGenerator.Generate();
+
+    this.ENHANCE_APPLY_BTN_ID = "enhanceApplyBtn_" + IdGenerator.Generate();
+    this.ENHANCE_CANCEL_BTN_ID = "enhanceCancelBtn_" + IdGenerator.Generate();
+
+    this.ENHANCE_APPLY_MOB_BTN_ID = "enhanceApplyMobBtn_" + IdGenerator.Generate();
+    this.ENHANCE_CANCEL_MOB_BTN_ID = "enhanceCancelMobBtn_" + IdGenerator.Generate();
+    
   }
 
   render(parentEl = this.container) {
-    this.viewDeferred = $.Deferred();
+    
+    if(!this.viewDeferred || this.viewDeferred.state() === "resolved") {
+      this.viewDeferred = $.Deferred();
+    }
+    this.container = parentEl;
+
     let renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
       sliderId: this.SLIDER_ID,
-      previewImageId: this.PREVIEW_IMG_ID
+      previewImageId: this.PREVIEW_IMG_ID,
+      enhanceApplyBtn: this.ENHANCE_APPLY_BTN_ID,
+      enhanceCancelBtn: this.ENHANCE_CANCEL_BTN_ID,
+      enhanceApplyMobBtn: this.ENHANCE_APPLY_MOB_BTN_ID,
+      enhanceCancelMobBtn: this.ENHANCE_CANCEL_MOB_BTN_ID
     };
     let markupStr = ejs.render(enhanceTemplate, renderData);
     parentEl.html(markupStr);
@@ -40,10 +56,10 @@ export default class EnhanceView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find('#enhanceCancelBtn').click( ev => { return this.enhanceCancelClick(ev); });
-    $(parentEl).find('#enhanceApplyBtn').click(ev => { return this.enhanceApplyClick(ev); });
-    $(parentEl).find('#enhanceCancelMobBtn').click( ev => { return this.enhanceCancelClick(ev); });
-    $(parentEl).find('#enhanceApplyMobBtn').click(ev => { return this.enhanceApplyClick(ev); });
+    $(parentEl).find('#' + this.ENHANCE_CANCEL_BTN_ID ).click( ev => { return this.enhanceCancelClick(ev); });
+    $(parentEl).find('#' + this.ENHANCE_APPLY_BTN_ID).click(ev => { return this.enhanceApplyClick(ev); });
+    $(parentEl).find('#' + this.ENHANCE_CANCEL_MOB_BTN_ID).click( ev => { return this.enhanceCancelClick(ev); });
+    $(parentEl).find('#' + this.ENHANCE_APPLY_MOB_BTN_ID).click(ev => { return this.enhanceApplyClick(ev); });
 
   } 
 

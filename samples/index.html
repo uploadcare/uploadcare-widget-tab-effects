@@ -15,28 +15,36 @@
   </head>
   <body>
     <div id="uc-widget"></div>
-    <img id="img" src="http://ucarecdn.com/7ab139a4-8ac4-4686-ab6c-744aa7b7c64e/" alt="" width="100%">
     <button id="editBtn">Edit</button>
+    <img id="img" src="http://ucarecdn.com/7ab139a4-8ac4-4686-ab6c-744aa7b7c64e/" alt="" width="100%">
     <script>
       window.onload = function() {
         uploadcare.plugin(function(uc) {
-  
           uploadcareTabEffects();
+
           var config = {};
-          if ( ! ('effects' in config)) {
-            config.effects = true;
-          }
-          var fileUrl = "http://ucarecdn.com/7ab139a4-8ac4-4686-ab6c-744aa7b7c64e/";
+            if ( ! ('effects' in config)) {
+              config.effects = true;
+            }
+            var settings = uc.settings.build(
+              uc.jQuery.extend({}, config, {multiple: false})
+            );
 
-          var settings = uc.settings.build(
-            uc.jQuery.extend({}, config, {multiple: false})
-          );
-          var file = uploadcare.fileFrom('uploaded', fileUrl, settings);
+          
+            uc.jQuery("#editBtn").click(function(ev) {
+              var fileUrl = uc.jQuery("#img").attr("src");
 
-          uploadcare.openDialog(file, settings).always(function(result) {
-            console.log(result);
+              var file = uploadcare.fileFrom('uploaded', fileUrl, settings);
+              
+              uploadcare.openDialog(file, settings).always(function(result) {
+                result.then(function(imgData) {
+                  uc.jQuery("#img").attr("src", imgData.cdnUrl);
+                });
+              });
           });
         });
+
+        
       };
     </script>
   </body>

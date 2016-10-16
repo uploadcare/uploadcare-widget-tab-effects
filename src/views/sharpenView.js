@@ -18,17 +18,27 @@ export default class SharpenView {
 
     this.SLIDER_ID = "slider_" + IdGenerator.Generate();
     this.PREVIEW_IMG_ID = "preview_mage_" + IdGenerator.Generate();
-
+    this.SHARPEN_APPLY_BTN_ID = "sharpenApplyBtn" + + IdGenerator.Generate();
+    this.SHARPEN_CANCEL_BTN_ID = "sharpenCancelBtn" + + IdGenerator.Generate();
+    this.SHARPEN_APPLY_MOB_BTN_ID = "sharpenApplyMobBtn" + + IdGenerator.Generate();
+    this.SHARPEN_CANCEL_MOB_BTN_ID = "sharpenCancelMobBtn" + + IdGenerator.Generate();
   }
 
   render(parentEl = this.container) {
-    this.viewDeferred = $.Deferred();
+    
+    if(!this.viewDeferred || this.viewDeferred.state() === "resolved") {
+      this.viewDeferred = $.Deferred();
+    }
     this.container = parentEl;
 
     let renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
       sliderId: this.SLIDER_ID,
-      previewImageId: this.PREVIEW_IMG_ID
+      previewImageId: this.PREVIEW_IMG_ID,
+      sharpenApplyBtn: this.SHARPEN_APPLY_BTN_ID,
+      sharpenCancelBtn: this.SHARPEN_CANCEL_BTN_ID,
+      sharpenCancelMobBtn: this.SHARPEN_CANCEL_MOB_BTN_ID,
+      sharpenApplyMobBtn: this.SHARPEN_APPLY_MOB_BTN_ID
     };
 
     let markupStr = ejs.render(sharpenTemplate, renderData);
@@ -42,10 +52,10 @@ export default class SharpenView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find('#sharpenCancelBtn').click(ev => { return this.sharpenCancelClick(ev); });
-    $(parentEl).find('#sharpenApplyBtn').click(ev => { return this.sharpenApplyClick(ev); });
-    $(parentEl).find('#sharpenCancelMobBtn').click(ev => { return this.sharpenCancelClick(ev); });
-    $(parentEl).find('#sharpenApplyMobBtn').click(ev => { return this.sharpenApplyClick(ev); });
+    $(parentEl).find('#' + this.SHARPEN_CANCEL_BTN_ID).click(ev => { return this.sharpenCancelClick(ev); });
+    $(parentEl).find('#' + this.SHARPEN_APPLY_BTN_ID).click(ev => { return this.sharpenApplyClick(ev); });
+    $(parentEl).find('#' + this.SHARPEN_CANCEL_MOB_BTN_ID).click(ev => { return this.sharpenCancelClick(ev); });
+    $(parentEl).find('#' + this.SHARPEN_APPLY_MOB_BTN_ID).click(ev => { return this.sharpenApplyClick(ev); });
   } 
 
   sharpenCancelClick(ev) {

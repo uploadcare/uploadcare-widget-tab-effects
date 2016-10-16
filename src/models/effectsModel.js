@@ -80,6 +80,16 @@ export default function EffectsModel (cdn_url) {
   }
 
   this.getPreviewUrl = function(width, height) {
-    return this.getFinalUrl() + '-/preview/' + width + 'x' + height + '/';
+    var res = this.getFinalUrl() + '-/preview/';
+    if(width) {
+      res += width; 
+    }
+    if(height) {
+      res += "x" + height;
+    }
+    if(width || height) {
+      res += "/";
+    } 
+    return res;
   }
 }

@@ -20,21 +20,13 @@ function effectsTab(container, button, dialogApi, settings) {
         let model = new EffectsModel('ucarecdn.com/');
         model.parseUrl(fileInfo.cdnUrl);
         let previewView = new PreviewView(container, model);
-        previewView.render(container);
-
+        previewView
+          .render()
+          .then(type => {
+            fileInfo.cdnUrl = model.getPreviewUrl();
+            dialogApi.resolve();
+          });
     });
-  });
-
-  dialogApi.then(res => {
-    console.log("promise resolved");
-  });
-
-  dialogApi.always(function(result) {
-    console.log(result);
-    result[0].then(s => {
-      console.log(s);
-      
-    });    
   });
 }
 

@@ -12,11 +12,6 @@ import EnhanceView from './enhanceView.js';
 import SharpenView from './sharpenView.js';
 import IdGenerator from '../tools/IdGenerator.js';
 
-const CROP_AND_ROTATE_BTN_ID = "cropAndRotateBtn_" + IdGenerator.Generate();
-const ENHANCE_BTN_ID = "enhanceBtn_" + IdGenerator.Generate();
-const SHARPEN_BTN_ID = "sharpenBtn_" + IdGenerator.Generate();
-const GRAYSCALE_BTN_ID = "grayScaleBtn_" + IdGenerator.Generate();
-
 const $ = uploadcare.jQuery;
 
 export default class PreviewView {
@@ -27,18 +22,35 @@ export default class PreviewView {
     this.cropAndRotateView = new CropAndRotateView(container, effectsModel);
     this.enhanceView = new EnhanceView(container, effectsModel);
     this.sharpenView = new SharpenView(container, effectsModel);
-  }
 
-  
+    this.CROP_AND_ROTATE_BTN_ID = "cropAndRotateBtn_" + IdGenerator.Generate();
+    this.ENHANCE_BTN_ID = "enhanceBtn_" + IdGenerator.Generate();
+    this.SHARPEN_BTN_ID = "sharpenBtn_" + IdGenerator.Generate();
+    this.GRAYSCALE_BTN_ID = "grayScaleBtn_" + IdGenerator.Generate();
+
+    this.DONE_BTN_ID = "doneBtn_" + IdGenerator.Generate();
+    this.REMOVE_BTN_ID = "removeBtn_" + IdGenerator.Generate();
+     
+    this.DONE_MOB_BTN_ID = "doneMobBtn_" + IdGenerator.Generate();
+    this.REMOVE_MOB_BTN_ID = "removeMobBtn_" + IdGenerator.Generate();
+ }
+
   render(parentEl = this.container) {
     this.container = parentEl;
+    if(!this.viewDeferred || this.viewDeferred.state() === "resolved") {
+      this.viewDeferred = $.Deferred();
+    }
 
     let renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
-      cropAndRotateBtnId: CROP_AND_ROTATE_BTN_ID,
-      enhanceBtnId: ENHANCE_BTN_ID,
-      sharpenBtnId: SHARPEN_BTN_ID,
-      grayscaleBtnId: GRAYSCALE_BTN_ID,
+      cropAndRotateBtnId: this.CROP_AND_ROTATE_BTN_ID,
+      enhanceBtnId: this.ENHANCE_BTN_ID,
+      sharpenBtnId: this.SHARPEN_BTN_ID,
+      grayscaleBtnId: this.GRAYSCALE_BTN_ID,
+      doneBtn: this.DONE_BTN_ID,
+      removeBtn: this.REMOVE_BTN_ID,
+      doneMobBtn: this.DONE_MOB_BTN_ID,
+      removeMobBtn: this.REMOVE_MOB_BTN_ID,
 
       appliedGrayscale: this.model.grayscale === null,
       appliedSharpen: this.model.sharp ? true : false,
@@ -47,13 +59,19 @@ export default class PreviewView {
     let markupStr = ejs.render(previewTemplate, renderData);
     parentEl.html(markupStr);
     this.setupHandlers(parentEl);
+    return this.viewDeferred.promise();
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find("#" + CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });   
-    $(parentEl).find("#" + ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });   
-    $(parentEl).find("#" + SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });   
-    $(parentEl).find("#" + GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });
+    $(parentEl).find("#" + this.CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });   
+    $(parentEl).find("#" + this.ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });   
+    $(parentEl).find("#" + this.SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });   
+    $(parentEl).find("#" + this.GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });
+    
+    $(parentEl).find("#" + this.REMOVE_BTN_ID).click(ev => { return this.removeClick(ev); });
+    $(parentEl).find("#" + this.REMOVE_MOB_BTN_ID).click(ev => { return this.removeClick(ev); });
+    $(parentEl).find("#" + this.DONE_BTN_ID).click(ev => { return this.doneClick(ev); });
+    $(parentEl).find("#" + this.DONE_MOB_BTN_ID).click(ev => { return this.doneClick(ev); });
   }
 
   cropAndRotateClick(ev) {
@@ -83,6 +101,19 @@ export default class PreviewView {
     } else {
       this.model.grayscale = null;
     }
+    this.render();
+  }
+
+  doneClick(ev) {
+    this.viewDeferred.resolve({
+      reason: "Done"
+    });
+  }
+
+  removeClick(ev) {
+    this.model.enhance = undefined;
+    this.model.sharp = undefined;
+    this.model.grayscale = undefined;
     this.render();
   }
 }

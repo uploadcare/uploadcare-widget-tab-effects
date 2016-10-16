@@ -166,6 +166,7 @@
 	var CROP_AND_ROTATE_BTN_ID = "cropAndRotateBtn_" + _IdGenerator2.default.Generate();
 	var ENHANCE_BTN_ID = "enhanceBtn_" + _IdGenerator2.default.Generate();
 	var SHARPEN_BTN_ID = "sharpenBtn_" + _IdGenerator2.default.Generate();
+	var GRAYSCALE_BTN_ID = "grayScaleBtn_" + _IdGenerator2.default.Generate();
 	
 	var $ = uploadcare.jQuery;
 	
@@ -192,7 +193,12 @@
 	        previewUrl: this.model.getPreviewUrl(800, 382),
 	        cropAndRotateBtnId: CROP_AND_ROTATE_BTN_ID,
 	        enhanceBtnId: ENHANCE_BTN_ID,
-	        sharpenBtnId: SHARPEN_BTN_ID
+	        sharpenBtnId: SHARPEN_BTN_ID,
+	        grayscaleBtnId: GRAYSCALE_BTN_ID,
+	
+	        appliedGrayscale: this.model.grayscale === null,
+	        appliedSharpen: this.model.sharp ? true : false,
+	        appliedEnhance: this.model.enhance ? true : false
 	      };
 	      var markupStr = _ejs2.default.render(_preview2.default, renderData);
 	      parentEl.html(markupStr);
@@ -211,6 +217,9 @@
 	      });
 	      $(parentEl).find("#" + SHARPEN_BTN_ID).click(function (ev) {
 	        return _this.sharpenClick(ev);
+	      });
+	      $(parentEl).find("#" + GRAYSCALE_BTN_ID).click(function (ev) {
+	        return _this.grayScaleClick(ev);
 	      });
 	    }
 	  }, {
@@ -239,6 +248,16 @@
 	      this.sharpenView.render().then(function (type) {
 	        _this4.render();
 	      });
+	    }
+	  }, {
+	    key: 'grayScaleClick',
+	    value: function grayScaleClick(ev) {
+	      if (this.model.grayscale === null) {
+	        this.model.grayscale = undefined;
+	      } else {
+	        this.model.grayscale = null;
+	      }
+	      this.render();
 	    }
 	  }]);
 	  return PreviewView;
@@ -1845,7 +1864,7 @@
 /* 24 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <h1>Preview</h1>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n  </div>\r\n  <div class=\"toolBoxContainer\">\r\n    <button class=\"ucButton ucButtonGrey\" id=\"removeBtn\">Remove</button>\r\n    <div class=\"ucIconBtn\" id=\"<%= cropAndRotateBtnId %>\">\r\n      <div class=\"cropAndRotateImg\"></div>\r\n      <span>CROP &amp; ROTATE</span>\r\n    </div>\r\n    <div class=\"ucIconBtn\" id=\"<%= enhanceBtnId %>\">\r\n      <div class=\"enhanceImg\"></div>\r\n      <span>ENHANCE</span>\r\n    </div>\r\n    <div class=\"ucIconBtn\" id=\"<%= sharpenBtnId %>\">\r\n      <div class=\"sharpenImg\"></div>\r\n      <span>SHARPEN</span>\r\n    </div>\r\n    <div class=\"ucIconBtn\" id=\"grayscaleBtn\">\r\n      <div class=\"grayScaleImg\"></div>\r\n      <span>GRAYSCALE</span>\r\n    </div>\r\n    <button class=\"ucButton ucButtonPrimary\" id=\"doneBtn\">Done</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <button class=\"ucButton ucButtonGrey hideScreen\" id=\"removeBtn\">Remove</button>\r\n    <h1>Preview</h1>\r\n    <button class=\"ucButton ucButtonPrimary hideScreen\" id=\"doneBtn\">Done</button>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n  </div>\r\n  <div class=\"toolBoxContainer align-top\">\r\n    <button class=\"ucButton ucButtonGrey hideMobile\" id=\"removeBtn\">Remove</button>\r\n    <div class=\"ucIconBtn\" id=\"<%= cropAndRotateBtnId %>\">\r\n      <div class=\"cropAndRotateImg\"></div>\r\n      <span>CROP &amp; ROTATE</span>\r\n    </div>\r\n    <div class=\"ucIconBtn\" id=\"<%= enhanceBtnId %>\">\r\n      <div class=\"enhanceImg\"></div>\r\n      <span>ENHANCE</span>\r\n      <% if(appliedEnhance) { %>\r\n        <div class=\"applied\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"ucIconBtn\" id=\"<%= sharpenBtnId %>\">\r\n      <div class=\"sharpenImg\"></div>\r\n      <span>SHARPEN</span>\r\n      <% if(appliedSharpen) { %>\r\n        <div class=\"applied\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"ucIconBtn\" id=\"<%= grayscaleBtnId %>\">\r\n      <div class=\"grayScaleImg\"></div>\r\n      <span>GRAYSCALE</span>\r\n      <% if(appliedGrayscale) { %>\r\n        <div class=\"applied\"></div>\r\n      <% } %>\r\n    </div>\r\n    <button class=\"ucButton ucButtonPrimary hideMobile\" id=\"doneBtn\">Done</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
 /* 25 */
@@ -1882,7 +1901,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".ucButton {\n  border-radius: 24px;\n  height: 48px;\n  font-size: 17px;\n  letter-spacing: 0.3px;\n  padding-left: 42px;\n  padding-right: 42px;\n  padding-top: 14px;\n  padding-bottom: 14px;\n  border: 0px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  .ucButton:focus {\n    outline: none; }\n  .ucButton:hover {\n    cursor: pointer; }\n  .ucButton.ucButtonGrey {\n    color: #ffffff;\n    background: #5D5D5D; }\n  .ucButton.ucButtonPrimary {\n    color: #ffffff;\n    background: #3787EC; }\n  .ucButton.ucButtonWhite {\n    color: #3787EC;\n    background: #ffffff; }\n\n.ucIconBtn {\n  border: 0px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  text-align: center;\n  color: #454545;\n  background: none;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center; }\n  .ucIconBtn.white {\n    color: #ffffff; }\n  .ucIconBtn:focus {\n    outline: none; }\n  .ucIconBtn:hover {\n    cursor: pointer; }\n", ""]);
+	exports.push([module.id, ".ucButton {\n  border-radius: 24px;\n  height: 48px;\n  font-size: 17px;\n  letter-spacing: 0.3px;\n  padding-left: 42px;\n  padding-right: 42px;\n  padding-top: 14px;\n  padding-bottom: 14px;\n  border: 0px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  @media screen and (max-width: 759px) {\n    .ucButton {\n      margin-left: 0;\n      margin-right: 0;\n      padding-left: 0px;\n      padding-right: 0px; } }\n  .ucButton:focus {\n    outline: none; }\n  .ucButton:hover {\n    cursor: pointer; }\n  @media screen and (max-width: 759px) {\n    .ucButton.ucButtonGrey {\n      font-family: SFUIText-Regular;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    .ucButton.ucButtonGrey {\n      color: #ffffff;\n      background: #5D5D5D; } }\n  @media screen and (max-width: 759px) {\n    .ucButton.ucButtonPrimary {\n      font-family: SFUIText-Regular;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    .ucButton.ucButtonPrimary {\n      color: #ffffff;\n      background: #3787EC; } }\n  .ucButton.ucButtonWhite {\n    color: #3787EC;\n    background: #ffffff; }\n\n.ucIconBtn {\n  border: 0px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  text-align: center;\n  color: #454545;\n  background: none;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative; }\n  @media screen and (max-width: 760px) {\n    .ucIconBtn {\n      font-family: SFUIText-Regular;\n      font-size: 10px;\n      letter-spacing: 0.41px; } }\n  .ucIconBtn.white {\n    color: #ffffff; }\n  .ucIconBtn:focus {\n    outline: none; }\n  .ucIconBtn:hover {\n    cursor: pointer; }\n  .ucIconBtn .applied {\n    margin-top: 10px;\n    border-radius: 50%;\n    width: 8px;\n    height: 8px;\n    background: #3787EC;\n    position: absolute;\n    bottom: -15px;\n    left: calc(50% - 4px); }\n\n@media screen and (max-width: 760px) {\n  .hideMobile {\n    display: none; } }\n\n@media screen and (min-width: 760px) {\n  .hideScreen {\n    display: none; } }\n", ""]);
 	
 	// exports
 
@@ -2321,7 +2340,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".viewContainer {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  background-color: #ffffff;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -ms-flex-line-pack: center;\n      align-content: center; }\n  .viewContainer .headerBlock {\n    padding-top: 30px;\n    padding-bottom: 10px; }\n    .viewContainer .headerBlock h1 {\n      font-family: SFUIText-Medium;\n      font-size: 28px;\n      text-align: center;\n      letter-spacing: 0px;\n      line-height: 40px; }\n  .viewContainer .imageBlock {\n    padding-top: 16px;\n    -webkit-box-flex: 1;\n        -ms-flex: 1 auto;\n            flex: 1 auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    .viewContainer .imageBlock img {\n      margin-bottom: 20px;\n      margin-left: 10px;\n      margin-right: 10px; }\n  .viewContainer .toolBoxContainer {\n    width: 100%;\n    height: 150px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    .viewContainer .toolBoxContainer.blue {\n      background-color: #3787EC; }\n", ""]);
+	exports.push([module.id, "@media screen and (max-width: 760px) {\n  .uploadcare-responsive-panel .uploadcare-dialog-tabs-panel {\n    min-height: 100% !important;\n    height: 100% !important; } }\n\n.viewContainer {\n  width: 100%;\n  min-height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  background-color: #ffffff;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -ms-flex-line-pack: center;\n      align-content: center;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between; }\n  .viewContainer .headerBlock {\n    padding-top: 30px;\n    padding-bottom: 10px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%; }\n    @media screen and (max-width: 760px) {\n      .viewContainer .headerBlock {\n        padding-top: 10px; } }\n    .viewContainer .headerBlock h1 {\n      font-family: SFUIText-Medium;\n      font-size: 28px;\n      text-align: center;\n      letter-spacing: 0px;\n      line-height: 40px; }\n      @media screen and (max-width: 760px) {\n        .viewContainer .headerBlock h1 {\n          font-family: SFUIText-Medium;\n          font-size: 16px;\n          letter-spacing: 0.4px; } }\n  .viewContainer .imageBlock {\n    padding-top: 16px;\n    -webkit-box-flex: 1;\n        -ms-flex: 1 auto;\n            flex: 1 auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    .viewContainer .imageBlock img {\n      margin-bottom: 20px;\n      margin-left: 10px;\n      margin-right: 10px;\n      width: 100%; }\n  .viewContainer .toolBoxContainer {\n    width: 100%;\n    height: 150px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    .viewContainer .toolBoxContainer.blue {\n      background-color: #3787EC; }\n", ""]);
 	
 	// exports
 
@@ -2429,6 +2448,12 @@
 	      $('#carApplyBtn').click(function (ev) {
 	        return _this.carApplyClick(ev);
 	      });
+	      $('#carCancelMobBtn').click(function (ev) {
+	        return _this.carCancelClick(ev);
+	      });
+	      $('#carApplyMobBtn').click(function (ev) {
+	        return _this.carApplyClick(ev);
+	      });
 	    }
 	  }, {
 	    key: 'carCancelClick',
@@ -2454,7 +2479,7 @@
 /* 49 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <h1>Crop &amp; Rotate</h1>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <button class=\"ucIconBtn white\">\r\n      <div class=\"rotateLeftImg\"></div>\r\n    </button>\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n    <button class=\"ucIconBtn white\">\r\n      <div class=\"rotateRightImg\"></div>\r\n    </button>\r\n  </div>\r\n  <div class=\"toolBoxContainer blue\">\r\n    <button class=\"ucButton ucButtonGrey\" id=\"carCancelBtn\">Cancel</button>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"freeRatioImg\"></div>\r\n      <span>FREE</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"originalRatioImg\"></div>\r\n      <span>ORIG</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"oneToOneRatioImg\"></div>\r\n      <span>1:1</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"threeToFourRatioImg\"></div>\r\n      <span>3:4</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"fourToThreeRatioImg\"></div>\r\n      <span>4:3</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"sixteenToNineRatioImg\"></div>\r\n      <span>16:9</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"nineToSixteenRatioImg\"></div>\r\n      <span>9:16</span>\r\n    </div>\r\n    <button class=\"ucButton ucButtonWhite\" id=\"carApplyBtn\">Apply</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <button class=\"ucButton ucButtonGrey hideScreen\" id=\"carCancelMobBtn\">Cancel</button>\r\n    <h1>Crop &amp; Rotate</h1>\r\n    <button class=\"ucButton ucButtonWhite hideScreen\" id=\"carApplyMobBtn\">Apply</button>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <button class=\"ucIconBtn white\">\r\n      <div class=\"rotateLeftImg\"></div>\r\n    </button>\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n    <button class=\"ucIconBtn white\">\r\n      <div class=\"rotateRightImg\"></div>\r\n    </button>\r\n  </div>\r\n  <div class=\"toolBoxContainer blue\">\r\n    <button class=\"ucButton ucButtonGrey hideMobile\" id=\"carCancelBtn\">Cancel</button>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"freeRatioImg\"></div>\r\n      <span>FREE</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"originalRatioImg\"></div>\r\n      <span>ORIG</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"oneToOneRatioImg\"></div>\r\n      <span>1:1</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"threeToFourRatioImg\"></div>\r\n      <span>3:4</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"fourToThreeRatioImg\"></div>\r\n      <span>4:3</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"sixteenToNineRatioImg\"></div>\r\n      <span>16:9</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"nineToSixteenRatioImg\"></div>\r\n      <span>9:16</span>\r\n    </div>\r\n    <button class=\"ucButton ucButtonWhite hideMobile\" id=\"carApplyBtn\">Apply</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
 /* 50 */
@@ -2544,6 +2569,12 @@
 	      $(parentEl).find('#enhanceApplyBtn').click(function (ev) {
 	        return _this2.enhanceApplyClick(ev);
 	      });
+	      $(parentEl).find('#enhanceCancelMobBtn').click(function (ev) {
+	        return _this2.enhanceCancelClick(ev);
+	      });
+	      $(parentEl).find('#enhanceApplyMobBtn').click(function (ev) {
+	        return _this2.enhanceApplyClick(ev);
+	      });
 	    }
 	  }, {
 	    key: 'enhanceCancelClick',
@@ -2583,7 +2614,7 @@
 /* 51 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <h1>Enhance</h1>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" id=\"<%= previewImageId%>\"/>\r\n  </div>\r\n  <div class=\"toolBoxContainer blue\">\r\n    <button class=\"ucButton ucButtonGrey\" id=\"enhanceCancelBtn\">Cancel</button>\r\n    <div class=\"slider\" id=\"<%= sliderId%>\"></div>\r\n    <button class=\"ucButton ucButtonWhite\" id=\"enhanceApplyBtn\">Apply</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <button class=\"ucButton ucButtonGrey hideScreen\" id=\"enhanceCancelMobBtn\">Cancel</button>\r\n    <h1>Enhance</h1>\r\n    <button class=\"ucButton ucButtonWhite hideScreen\" id=\"enhanceApplyMobBtn\">Apply</button>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" id=\"<%= previewImageId%>\"/>\r\n  </div>\r\n  <div class=\"toolBoxContainer blue\">\r\n    <button class=\"ucButton ucButtonGrey hideMobile\" id=\"enhanceCancelBtn\">Cancel</button>\r\n    <div class=\"slider\" id=\"<%= sliderId%>\"></div>\r\n    <button class=\"ucButton ucButtonWhite hideMobile\" id=\"enhanceApplyBtn\">Apply</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
 /* 52 */
@@ -2658,7 +2689,7 @@
 	
 	      this.$pointer = $(parentEl).find("#" + this.POINTER_ID);
 	
-	      this.$pointer.on("mousedown click touchstart", function (ev) {
+	      this.$pointer.on("mousedown touchstart", function (ev) {
 	        return _this.pointerMouseDown(ev);
 	      });
 	    }
@@ -2837,6 +2868,12 @@
 	      $(parentEl).find('#sharpenApplyBtn').click(function (ev) {
 	        return _this2.sharpenApplyClick(ev);
 	      });
+	      $(parentEl).find('#sharpenCancelMobBtn').click(function (ev) {
+	        return _this2.sharpenCancelClick(ev);
+	      });
+	      $(parentEl).find('#sharpenApplyMobBtn').click(function (ev) {
+	        return _this2.sharpenApplyClick(ev);
+	      });
 	    }
 	  }, {
 	    key: 'sharpenCancelClick',
@@ -2876,7 +2913,7 @@
 /* 56 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <h1>Sharpen</h1>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" id=\"<%= previewImageId%>\"/>\r\n  </div>\r\n  <div class=\"toolBoxContainer blue\">\r\n    <button class=\"ucButton ucButtonGrey\" id=\"sharpenCancelBtn\">Cancel</button>\r\n    <div class=\"slider\" id=\"<%= sliderId%>\"></div>\r\n    <button class=\"ucButton ucButtonWhite\" id=\"sharpenApplyBtn\">Apply</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <button class=\"ucButton ucButtonGrey hideScreen\" id=\"sharpenCancelMobBtn\">Cancel</button>\r\n    <h1>Sharpen</h1>\r\n    <button class=\"ucButton ucButtonWhite hideScreen\" id=\"sharpenApplyMobBtn\">Apply</button>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" id=\"<%= previewImageId%>\"/>\r\n  </div>\r\n  <div class=\"toolBoxContainer blue\">\r\n    <button class=\"ucButton ucButtonGrey hideMobile\" id=\"sharpenCancelBtn\">Cancel</button>\r\n    <div class=\"slider\" id=\"<%= sliderId %>\"></div>\r\n    <button class=\"ucButton ucButtonWhite hideMobile\" id=\"sharpenApplyBtn\">Apply</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
 /* 57 */
