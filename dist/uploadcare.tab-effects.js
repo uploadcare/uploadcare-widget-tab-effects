@@ -87,18 +87,10 @@
 	      var model = new _effectsModel2.default('ucarecdn.com/');
 	      model.parseUrl(fileInfo.cdnUrl);
 	      var previewView = new _previewView2.default(container, model);
-	      previewView.render(container);
-	    });
-	  });
-	
-	  dialogApi.then(function (res) {
-	    console.log("promise resolved");
-	  });
-	
-	  dialogApi.always(function (result) {
-	    console.log(result);
-	    result[0].then(function (s) {
-	      console.log(s);
+	      previewView.render().then(function (type) {
+	        fileInfo.cdnUrl = model.getPreviewUrl();
+	        dialogApi.resolve();
+	      });
 	    });
 	  });
 	}
@@ -137,19 +129,23 @@
 	
 	var _preview2 = _interopRequireDefault(_preview);
 	
-	__webpack_require__(25);
+	var _buttons = __webpack_require__(25);
 	
-	__webpack_require__(29);
+	var _buttons2 = _interopRequireDefault(_buttons);
 	
-	__webpack_require__(44);
+	var _images = __webpack_require__(29);
 	
-	__webpack_require__(46);
+	var _images2 = _interopRequireDefault(_images);
 	
-	var _cropAndRotateView = __webpack_require__(48);
+	var _viewContainer = __webpack_require__(44);
+	
+	var _viewContainer2 = _interopRequireDefault(_viewContainer);
+	
+	var _cropAndRotateView = __webpack_require__(46);
 	
 	var _cropAndRotateView2 = _interopRequireDefault(_cropAndRotateView);
 	
-	var _enhanceView = __webpack_require__(50);
+	var _enhanceView = __webpack_require__(49);
 	
 	var _enhanceView2 = _interopRequireDefault(_enhanceView);
 	
@@ -157,16 +153,11 @@
 	
 	var _sharpenView2 = _interopRequireDefault(_sharpenView);
 	
-	var _IdGenerator = __webpack_require__(54);
+	var _IdGenerator = __webpack_require__(48);
 	
 	var _IdGenerator2 = _interopRequireDefault(_IdGenerator);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var CROP_AND_ROTATE_BTN_ID = "cropAndRotateBtn_" + _IdGenerator2.default.Generate();
-	var ENHANCE_BTN_ID = "enhanceBtn_" + _IdGenerator2.default.Generate();
-	var SHARPEN_BTN_ID = "sharpenBtn_" + _IdGenerator2.default.Generate();
-	var GRAYSCALE_BTN_ID = "grayScaleBtn_" + _IdGenerator2.default.Generate();
 	
 	var $ = uploadcare.jQuery;
 	
@@ -180,6 +171,17 @@
 	    this.cropAndRotateView = new _cropAndRotateView2.default(container, effectsModel);
 	    this.enhanceView = new _enhanceView2.default(container, effectsModel);
 	    this.sharpenView = new _sharpenView2.default(container, effectsModel);
+	
+	    this.CROP_AND_ROTATE_BTN_ID = "cropAndRotateBtn_" + _IdGenerator2.default.Generate();
+	    this.ENHANCE_BTN_ID = "enhanceBtn_" + _IdGenerator2.default.Generate();
+	    this.SHARPEN_BTN_ID = "sharpenBtn_" + _IdGenerator2.default.Generate();
+	    this.GRAYSCALE_BTN_ID = "grayScaleBtn_" + _IdGenerator2.default.Generate();
+	
+	    this.DONE_BTN_ID = "doneBtn_" + _IdGenerator2.default.Generate();
+	    this.REMOVE_BTN_ID = "removeBtn_" + _IdGenerator2.default.Generate();
+	
+	    this.DONE_MOB_BTN_ID = "doneMobBtn_" + _IdGenerator2.default.Generate();
+	    this.REMOVE_MOB_BTN_ID = "removeMobBtn_" + _IdGenerator2.default.Generate();
 	  }
 	
 	  (0, _createClass3.default)(PreviewView, [{
@@ -188,38 +190,61 @@
 	      var parentEl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.container;
 	
 	      this.container = parentEl;
-	
+	      if (!this.viewDeferred || this.viewDeferred.state() === "resolved") {
+	        this.viewDeferred = $.Deferred();
+	      }
 	      var renderData = {
 	        previewUrl: this.model.getPreviewUrl(800, 382),
-	        cropAndRotateBtnId: CROP_AND_ROTATE_BTN_ID,
-	        enhanceBtnId: ENHANCE_BTN_ID,
-	        sharpenBtnId: SHARPEN_BTN_ID,
-	        grayscaleBtnId: GRAYSCALE_BTN_ID,
+	        cropAndRotateBtnId: this.CROP_AND_ROTATE_BTN_ID,
+	        enhanceBtnId: this.ENHANCE_BTN_ID,
+	        sharpenBtnId: this.SHARPEN_BTN_ID,
+	        grayscaleBtnId: this.GRAYSCALE_BTN_ID,
+	        doneBtn: this.DONE_BTN_ID,
+	        removeBtn: this.REMOVE_BTN_ID,
+	        doneMobBtn: this.DONE_MOB_BTN_ID,
+	        removeMobBtn: this.REMOVE_MOB_BTN_ID,
 	
 	        appliedGrayscale: this.model.grayscale === null,
 	        appliedSharpen: this.model.sharp ? true : false,
-	        appliedEnhance: this.model.enhance ? true : false
+	        appliedEnhance: this.model.enhance ? true : false,
+	        buttonStyles: _buttons2.default,
+	        imageStyles: _images2.default,
+	        layoutStyles: _viewContainer2.default
 	      };
 	      var markupStr = _ejs2.default.render(_preview2.default, renderData);
 	      parentEl.html(markupStr);
 	      this.setupHandlers(parentEl);
+	      return this.viewDeferred.promise();
 	    }
 	  }, {
 	    key: 'setupHandlers',
 	    value: function setupHandlers(parentEl) {
 	      var _this = this;
 	
-	      $(parentEl).find("#" + CROP_AND_ROTATE_BTN_ID).click(function (ev) {
+	      $(parentEl).find("#" + this.CROP_AND_ROTATE_BTN_ID).click(function (ev) {
 	        return _this.cropAndRotateClick(ev);
 	      });
-	      $(parentEl).find("#" + ENHANCE_BTN_ID).click(function (ev) {
+	      $(parentEl).find("#" + this.ENHANCE_BTN_ID).click(function (ev) {
 	        return _this.enhanceClick(ev);
 	      });
-	      $(parentEl).find("#" + SHARPEN_BTN_ID).click(function (ev) {
+	      $(parentEl).find("#" + this.SHARPEN_BTN_ID).click(function (ev) {
 	        return _this.sharpenClick(ev);
 	      });
-	      $(parentEl).find("#" + GRAYSCALE_BTN_ID).click(function (ev) {
+	      $(parentEl).find("#" + this.GRAYSCALE_BTN_ID).click(function (ev) {
 	        return _this.grayScaleClick(ev);
+	      });
+	
+	      $(parentEl).find("#" + this.REMOVE_BTN_ID).click(function (ev) {
+	        return _this.removeClick(ev);
+	      });
+	      $(parentEl).find("#" + this.REMOVE_MOB_BTN_ID).click(function (ev) {
+	        return _this.removeClick(ev);
+	      });
+	      $(parentEl).find("#" + this.DONE_BTN_ID).click(function (ev) {
+	        return _this.doneClick(ev);
+	      });
+	      $(parentEl).find("#" + this.DONE_MOB_BTN_ID).click(function (ev) {
+	        return _this.doneClick(ev);
 	      });
 	    }
 	  }, {
@@ -257,6 +282,21 @@
 	      } else {
 	        this.model.grayscale = null;
 	      }
+	      this.render();
+	    }
+	  }, {
+	    key: 'doneClick',
+	    value: function doneClick(ev) {
+	      this.viewDeferred.resolve({
+	        reason: "Done"
+	      });
+	    }
+	  }, {
+	    key: 'removeClick',
+	    value: function removeClick(ev) {
+	      this.model.enhance = undefined;
+	      this.model.sharp = undefined;
+	      this.model.grayscale = undefined;
 	      this.render();
 	    }
 	  }]);
@@ -1864,7 +1904,7 @@
 /* 24 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <button class=\"ucButton ucButtonGrey hideScreen\" id=\"removeBtn\">Remove</button>\r\n    <h1>Preview</h1>\r\n    <button class=\"ucButton ucButtonPrimary hideScreen\" id=\"doneBtn\">Done</button>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n  </div>\r\n  <div class=\"toolBoxContainer align-top\">\r\n    <button class=\"ucButton ucButtonGrey hideMobile\" id=\"removeBtn\">Remove</button>\r\n    <div class=\"ucIconBtn\" id=\"<%= cropAndRotateBtnId %>\">\r\n      <div class=\"cropAndRotateImg\"></div>\r\n      <span>CROP &amp; ROTATE</span>\r\n    </div>\r\n    <div class=\"ucIconBtn\" id=\"<%= enhanceBtnId %>\">\r\n      <div class=\"enhanceImg\"></div>\r\n      <span>ENHANCE</span>\r\n      <% if(appliedEnhance) { %>\r\n        <div class=\"applied\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"ucIconBtn\" id=\"<%= sharpenBtnId %>\">\r\n      <div class=\"sharpenImg\"></div>\r\n      <span>SHARPEN</span>\r\n      <% if(appliedSharpen) { %>\r\n        <div class=\"applied\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"ucIconBtn\" id=\"<%= grayscaleBtnId %>\">\r\n      <div class=\"grayScaleImg\"></div>\r\n      <span>GRAYSCALE</span>\r\n      <% if(appliedGrayscale) { %>\r\n        <div class=\"applied\"></div>\r\n      <% } %>\r\n    </div>\r\n    <button class=\"ucButton ucButtonPrimary hideMobile\" id=\"doneBtn\">Done</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n                   <%= buttonStyles.ucButtonPrimary %> \r\n                   <%= buttonStyles.hideScreen %>\" id=\"<%= removeMobBtn %>\">Remove</button>\r\n    <h1>Preview</h1>\r\n    <button class=\"<%=buttonStyles.ucButton %>\r\n                   <%=buttonStyles.ucButtonPrimary %> \r\n                   <%=buttonStyles.hideScreen %>\" id=\"<%= doneMobBtn %>\">Done</button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.imageBlock %>\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.align-top %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= removeBtn %>\">Remove</button>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= cropAndRotateBtnId %>\">\r\n      <div class=\"<%= imageStyles.cropAndRotateImg %>\"></div>\r\n      <span>CROP &amp; ROTATE</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= enhanceBtnId %>\">\r\n      <div class=\"<%= imageStyles.enhanceImg %>\"></div>\r\n      <span>ENHANCE</span>\r\n      <% if(appliedEnhance) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= sharpenBtnId %>\">\r\n      <div class=\"<%= imageStyles.sharpenImg %>\"></div>\r\n      <span>SHARPEN</span>\r\n      <% if(appliedSharpen) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= grayscaleBtnId %>\">\r\n      <div class=\"<%= imageStyles.grayScaleImg %>\"></div>\r\n      <span>GRAYSCALE</span>\r\n      <% if(appliedGrayscale) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonPrimary %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= doneBtn %>\">Done</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
 /* 25 */
@@ -1882,8 +1922,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./buttons.scss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./buttons.scss");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./buttons.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./buttons.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1901,10 +1941,20 @@
 	
 	
 	// module
-	exports.push([module.id, ".ucButton {\n  border-radius: 24px;\n  height: 48px;\n  font-size: 17px;\n  letter-spacing: 0.3px;\n  padding-left: 42px;\n  padding-right: 42px;\n  padding-top: 14px;\n  padding-bottom: 14px;\n  border: 0px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  @media screen and (max-width: 759px) {\n    .ucButton {\n      margin-left: 0;\n      margin-right: 0;\n      padding-left: 0px;\n      padding-right: 0px; } }\n  .ucButton:focus {\n    outline: none; }\n  .ucButton:hover {\n    cursor: pointer; }\n  @media screen and (max-width: 759px) {\n    .ucButton.ucButtonGrey {\n      font-family: SFUIText-Regular;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    .ucButton.ucButtonGrey {\n      color: #ffffff;\n      background: #5D5D5D; } }\n  @media screen and (max-width: 759px) {\n    .ucButton.ucButtonPrimary {\n      font-family: SFUIText-Regular;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    .ucButton.ucButtonPrimary {\n      color: #ffffff;\n      background: #3787EC; } }\n  .ucButton.ucButtonWhite {\n    color: #3787EC;\n    background: #ffffff; }\n\n.ucIconBtn {\n  border: 0px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  text-align: center;\n  color: #454545;\n  background: none;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative; }\n  @media screen and (max-width: 760px) {\n    .ucIconBtn {\n      font-family: SFUIText-Regular;\n      font-size: 10px;\n      letter-spacing: 0.41px; } }\n  .ucIconBtn.white {\n    color: #ffffff; }\n  .ucIconBtn:focus {\n    outline: none; }\n  .ucIconBtn:hover {\n    cursor: pointer; }\n  .ucIconBtn .applied {\n    margin-top: 10px;\n    border-radius: 50%;\n    width: 8px;\n    height: 8px;\n    background: #3787EC;\n    position: absolute;\n    bottom: -15px;\n    left: calc(50% - 4px); }\n\n@media screen and (max-width: 760px) {\n  .hideMobile {\n    display: none; } }\n\n@media screen and (min-width: 760px) {\n  .hideScreen {\n    display: none; } }\n", ""]);
+	exports.push([module.id, "._3xeIIB3_G8yFK94QYxH8K {\n  border-radius: 24px;\n  height: 48px;\n  font-size: 17px;\n  letter-spacing: 0.3px;\n  padding-left: 42px;\n  padding-right: 42px;\n  padding-top: 14px;\n  padding-bottom: 14px;\n  border: 0px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  @media screen and (max-width: 759px) {\n    ._3xeIIB3_G8yFK94QYxH8K {\n      margin-left: 0;\n      margin-right: 0;\n      padding-left: 0px;\n      padding-right: 0px; } }\n  ._3xeIIB3_G8yFK94QYxH8K:focus {\n    outline: none; }\n  ._3xeIIB3_G8yFK94QYxH8K:hover {\n    cursor: pointer; }\n  @media screen and (max-width: 759px) {\n    ._3xeIIB3_G8yFK94QYxH8K.w0eFRZb6qHbqLf3Jhq5ub {\n      font-family: SFUIText-Regular;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    ._3xeIIB3_G8yFK94QYxH8K.w0eFRZb6qHbqLf3Jhq5ub {\n      color: #ffffff;\n      background: #5D5D5D; } }\n  @media screen and (max-width: 759px) {\n    ._3xeIIB3_G8yFK94QYxH8K._1JwsOu6Rk1yFV8Fvh0cl4g {\n      font-family: SFUIText-Regular;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    ._3xeIIB3_G8yFK94QYxH8K._1JwsOu6Rk1yFV8Fvh0cl4g {\n      color: #ffffff;\n      background: #3787EC; } }\n  ._3xeIIB3_G8yFK94QYxH8K._1Ma7G-ueySMr_25I0o5Z3z {\n    color: #3787EC;\n    background: #ffffff; }\n\n.p7Tjl644Mzv1zpZaiZr0K {\n  border: 0px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  text-align: center;\n  color: #454545;\n  background: none;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative; }\n  @media screen and (max-width: 760px) {\n    .p7Tjl644Mzv1zpZaiZr0K {\n      font-family: SFUIText-Regular;\n      font-size: 10px;\n      letter-spacing: 0.41px; } }\n  .p7Tjl644Mzv1zpZaiZr0K._12ddhsVD8QRgw1DouCENn0 {\n    color: #ffffff; }\n  .p7Tjl644Mzv1zpZaiZr0K:focus {\n    outline: none; }\n  .p7Tjl644Mzv1zpZaiZr0K:hover {\n    cursor: pointer; }\n  .p7Tjl644Mzv1zpZaiZr0K ._1X7AREp1YWj897h8ycjVzP {\n    margin-top: 10px;\n    border-radius: 50%;\n    width: 8px;\n    height: 8px;\n    background: #3787EC;\n    position: absolute;\n    bottom: -15px;\n    left: calc(50% - 4px); }\n\n@media screen and (max-width: 760px) {\n  ._3HPHUAUjUyPVFC7b66iXHN {\n    display: none; } }\n\n@media screen and (min-width: 760px) {\n  .q6_WBi80lfjdk7GqA_qgK {\n    display: none; } }\n", ""]);
 	
 	// exports
-
+	exports.locals = {
+		"ucButton": "_3xeIIB3_G8yFK94QYxH8K",
+		"ucButtonGrey": "w0eFRZb6qHbqLf3Jhq5ub",
+		"ucButtonPrimary": "_1JwsOu6Rk1yFV8Fvh0cl4g",
+		"ucButtonWhite": "_1Ma7G-ueySMr_25I0o5Z3z",
+		"ucIconBtn": "p7Tjl644Mzv1zpZaiZr0K",
+		"white": "_12ddhsVD8QRgw1DouCENn0",
+		"applied": "_1X7AREp1YWj897h8ycjVzP",
+		"hideMobile": "_3HPHUAUjUyPVFC7b66iXHN",
+		"hideScreen": "q6_WBi80lfjdk7GqA_qgK"
+	};
 
 /***/ },
 /* 27 */
@@ -2203,8 +2253,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./images.scss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./images.scss");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./images.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./images.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -2222,10 +2272,25 @@
 	
 	
 	// module
-	exports.push([module.id, ".btnImage, .cropAndRotateImg, .enhanceImg, .sharpenImg, .grayScaleImg, .freeRatioImg, .originalRatioImg, .oneToOneRatioImg, .threeToFourRatioImg, .fourToThreeRatioImg, .sixteenToNineRatioImg, .nineToSixteenRatioImg, .rotateLeftImg, .rotateRightImg {\n  background-position: center !important;\n  width: 32px;\n  height: 32px; }\n\n.cropAndRotateImg {\n  background: url(" + __webpack_require__(31) + ") 100% 100% no-repeat; }\n\n.enhanceImg {\n  background: url(" + __webpack_require__(32) + ") 100% 100% no-repeat; }\n\n.sharpenImg {\n  background: url(" + __webpack_require__(33) + ") 100% 100% no-repeat; }\n\n.grayScaleImg {\n  background: url(" + __webpack_require__(34) + ") 100% 100% no-repeat; }\n\n.freeRatioImg {\n  background: url(" + __webpack_require__(35) + ") 100% 100% no-repeat; }\n\n.originalRatioImg {\n  background: url(" + __webpack_require__(36) + ") 100% 100% no-repeat; }\n\n.oneToOneRatioImg {\n  background: url(" + __webpack_require__(37) + ") 100% 100% no-repeat; }\n\n.threeToFourRatioImg {\n  background: url(" + __webpack_require__(38) + ") 100% 100% no-repeat; }\n\n.fourToThreeRatioImg {\n  background: url(" + __webpack_require__(39) + ") 100% 100% no-repeat; }\n\n.sixteenToNineRatioImg {\n  background: url(" + __webpack_require__(40) + ") 100% 100% no-repeat; }\n\n.nineToSixteenRatioImg {\n  background: url(" + __webpack_require__(41) + ") 100% 100% no-repeat; }\n\n.rotateLeftImg {\n  background: url(" + __webpack_require__(42) + ") 100% 100% no-repeat; }\n\n.rotateRightImg {\n  background: url(" + __webpack_require__(43) + ") 100% 100% no-repeat; }\n", ""]);
+	exports.push([module.id, "._1OhXUVeHiX4jOF-rdsum4W, ._13HUF5cVmhRCBHgeuAZXvo, .ZeWrEuWC04y7iE9MWH-Da, ._2ujRd4EiqZcQJvJ_VC4jsT, .WkvKsgu_DdWylMjuMeOMD, ._2LXIaYOTk7zE0O-b3teycp, .joNmbIWjTDhxDjJPGG65I, ._1b5NJqKljCey8UuzOfiZcb, ._3asWOdoLJ1YpsD-KId6Dxm, .XC-K8RPm7WSUQY_VTnW6, ._2hDVBXObDK8fyCjIC_ulD4, .H4ZfPVKUMtQGkPJCgdPFr, .qPmdTXSMHqJak3iUjLONT, ._1xzTyVj-sZ9m0TRW9PZ04j {\n  background-position: center !important;\n  width: 32px;\n  height: 32px; }\n\n._13HUF5cVmhRCBHgeuAZXvo {\n  background: url(" + __webpack_require__(31) + ") 100% 100% no-repeat; }\n\n.ZeWrEuWC04y7iE9MWH-Da {\n  background: url(" + __webpack_require__(32) + ") 100% 100% no-repeat; }\n\n._2ujRd4EiqZcQJvJ_VC4jsT {\n  background: url(" + __webpack_require__(33) + ") 100% 100% no-repeat; }\n\n.WkvKsgu_DdWylMjuMeOMD {\n  background: url(" + __webpack_require__(34) + ") 100% 100% no-repeat; }\n\n._2LXIaYOTk7zE0O-b3teycp {\n  background: url(" + __webpack_require__(35) + ") 100% 100% no-repeat; }\n\n.joNmbIWjTDhxDjJPGG65I {\n  background: url(" + __webpack_require__(36) + ") 100% 100% no-repeat; }\n\n._1b5NJqKljCey8UuzOfiZcb {\n  background: url(" + __webpack_require__(37) + ") 100% 100% no-repeat; }\n\n._3asWOdoLJ1YpsD-KId6Dxm {\n  background: url(" + __webpack_require__(38) + ") 100% 100% no-repeat; }\n\n.XC-K8RPm7WSUQY_VTnW6 {\n  background: url(" + __webpack_require__(39) + ") 100% 100% no-repeat; }\n\n._2hDVBXObDK8fyCjIC_ulD4 {\n  background: url(" + __webpack_require__(40) + ") 100% 100% no-repeat; }\n\n.H4ZfPVKUMtQGkPJCgdPFr {\n  background: url(" + __webpack_require__(41) + ") 100% 100% no-repeat; }\n\n.qPmdTXSMHqJak3iUjLONT {\n  background: url(" + __webpack_require__(42) + ") 100% 100% no-repeat; }\n\n._1xzTyVj-sZ9m0TRW9PZ04j {\n  background: url(" + __webpack_require__(43) + ") 100% 100% no-repeat; }\n", ""]);
 	
 	// exports
-
+	exports.locals = {
+		"btnImage": "_1OhXUVeHiX4jOF-rdsum4W",
+		"cropAndRotateImg": "_13HUF5cVmhRCBHgeuAZXvo",
+		"enhanceImg": "ZeWrEuWC04y7iE9MWH-Da",
+		"sharpenImg": "_2ujRd4EiqZcQJvJ_VC4jsT",
+		"grayScaleImg": "WkvKsgu_DdWylMjuMeOMD",
+		"freeRatioImg": "_2LXIaYOTk7zE0O-b3teycp",
+		"originalRatioImg": "joNmbIWjTDhxDjJPGG65I",
+		"oneToOneRatioImg": "_1b5NJqKljCey8UuzOfiZcb",
+		"threeToFourRatioImg": "_3asWOdoLJ1YpsD-KId6Dxm",
+		"fourToThreeRatioImg": "XC-K8RPm7WSUQY_VTnW6",
+		"sixteenToNineRatioImg": "_2hDVBXObDK8fyCjIC_ulD4",
+		"nineToSixteenRatioImg": "H4ZfPVKUMtQGkPJCgdPFr",
+		"rotateLeftImg": "qPmdTXSMHqJak3iUjLONT",
+		"rotateRightImg": "_1xzTyVj-sZ9m0TRW9PZ04j"
+	};
 
 /***/ },
 /* 31 */
@@ -2321,8 +2386,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./viewContainer.scss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./viewContainer.scss");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./viewContainer.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./viewContainer.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -2340,53 +2405,19 @@
 	
 	
 	// module
-	exports.push([module.id, "@media screen and (max-width: 760px) {\n  .uploadcare-responsive-panel .uploadcare-dialog-tabs-panel {\n    min-height: 100% !important;\n    height: 100% !important; } }\n\n.viewContainer {\n  width: 100%;\n  min-height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  background-color: #ffffff;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -ms-flex-line-pack: center;\n      align-content: center;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between; }\n  .viewContainer .headerBlock {\n    padding-top: 30px;\n    padding-bottom: 10px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%; }\n    @media screen and (max-width: 760px) {\n      .viewContainer .headerBlock {\n        padding-top: 10px; } }\n    .viewContainer .headerBlock h1 {\n      font-family: SFUIText-Medium;\n      font-size: 28px;\n      text-align: center;\n      letter-spacing: 0px;\n      line-height: 40px; }\n      @media screen and (max-width: 760px) {\n        .viewContainer .headerBlock h1 {\n          font-family: SFUIText-Medium;\n          font-size: 16px;\n          letter-spacing: 0.4px; } }\n  .viewContainer .imageBlock {\n    padding-top: 16px;\n    -webkit-box-flex: 1;\n        -ms-flex: 1 auto;\n            flex: 1 auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    .viewContainer .imageBlock img {\n      margin-bottom: 20px;\n      margin-left: 10px;\n      margin-right: 10px;\n      width: 100%; }\n  .viewContainer .toolBoxContainer {\n    width: 100%;\n    height: 150px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    .viewContainer .toolBoxContainer.blue {\n      background-color: #3787EC; }\n", ""]);
+	exports.push([module.id, "._1BfQnaibTmiy62RnJydXEd {\n  width: 100%;\n  min-height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  background-color: #ffffff;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -ms-flex-line-pack: center;\n      align-content: center;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between; }\n  ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU {\n    padding-top: 30px;\n    padding-bottom: 10px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%; }\n    @media screen and (max-width: 760px) {\n      ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU {\n        padding-top: 10px; } }\n    ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU h1 {\n      font-family: SFUIText-Medium;\n      font-size: 28px;\n      text-align: center;\n      letter-spacing: 0px;\n      line-height: 40px; }\n      @media screen and (max-width: 760px) {\n        ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU h1 {\n          font-family: SFUIText-Medium;\n          font-size: 16px;\n          letter-spacing: 0.4px; } }\n  ._1BfQnaibTmiy62RnJydXEd .x2L71BzL40SumZ5r5CMFX {\n    -webkit-box-flex: 1;\n        -ms-flex: 1 auto;\n            flex: 1 auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    ._1BfQnaibTmiy62RnJydXEd .x2L71BzL40SumZ5r5CMFX img {\n      margin-left: 10px;\n      margin-right: 10px;\n      width: 100%; }\n  ._1BfQnaibTmiy62RnJydXEd ._18J7DHBZqGNnLqNG8zzvvP {\n    width: 100%;\n    height: 150px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    ._1BfQnaibTmiy62RnJydXEd ._18J7DHBZqGNnLqNG8zzvvP._38E6ueRHMS4rpx8QXdbNy5 {\n      background-color: #3787EC; }\n", ""]);
 	
 	// exports
-
+	exports.locals = {
+		"viewContainer": "_1BfQnaibTmiy62RnJydXEd",
+		"headerBlock": "_2wpcUR2x7dltEvVzikjxwU",
+		"imageBlock": "x2L71BzL40SumZ5r5CMFX",
+		"toolBoxContainer": "_18J7DHBZqGNnLqNG8zzvvP",
+		"blue": "_38E6ueRHMS4rpx8QXdbNy5"
+	};
 
 /***/ },
 /* 46 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(47);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(28)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./slider.scss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./slider.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(27)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, ".slider {\n  -webkit-box-flex: 1;\n      -ms-flex: 1 auto;\n          flex: 1 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: nowrap;\n      flex-wrap: nowrap;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 48px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  .slider .backLineBlock {\n    padding-left: 8px;\n    padding-right: 8px;\n    display: block;\n    width: 100%;\n    height: 3px; }\n  .slider .backLine {\n    background: #ffffff;\n    width: calc(100% - 16px);\n    height: 3px;\n    position: absolute; }\n  .slider .pointer {\n    border-radius: 50%;\n    position: absolute;\n    background: #ffffff;\n    width: 16px;\n    height: 16px;\n    top: -7px;\n    z-index: 100; }\n    .slider .pointer:hover {\n      cursor: pointer; }\n", ""]);
-	
-	// exports
-
-
-/***/ },
-/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2407,9 +2438,25 @@
 	
 	var _ejs2 = _interopRequireDefault(_ejs);
 	
-	var _cropAndRotate = __webpack_require__(49);
+	var _cropAndRotate = __webpack_require__(47);
 	
 	var _cropAndRotate2 = _interopRequireDefault(_cropAndRotate);
+	
+	var _IdGenerator = __webpack_require__(48);
+	
+	var _IdGenerator2 = _interopRequireDefault(_IdGenerator);
+	
+	var _buttons = __webpack_require__(25);
+	
+	var _buttons2 = _interopRequireDefault(_buttons);
+	
+	var _images = __webpack_require__(29);
+	
+	var _images2 = _interopRequireDefault(_images);
+	
+	var _viewContainer = __webpack_require__(44);
+	
+	var _viewContainer2 = _interopRequireDefault(_viewContainer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2421,6 +2468,11 @@
 	
 	    this.container = container;
 	    this.model = effectsModel;
+	
+	    this.CAR_APPLY_BTN_ID = "carApplyBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_CANCEL_BTN_ID = "carCancelBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_APPLY_MOB_BTN_ID = "carApplyMobBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_CANCEL_MOB_BTN_ID = "carCancelMobBtn" + _IdGenerator2.default.Generate();
 	  }
 	
 	  (0, _createClass3.default)(CropAndRotateView, [{
@@ -2428,30 +2480,44 @@
 	    value: function render() {
 	      var parentEl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.container;
 	
-	      this.viewDeferred = $.Deferred();
+	      if (!this.viewDeferred || this.viewDeferred.state() === "resolved") {
+	        this.viewDeferred = $.Deferred();
+	      }
+	
+	      this.container = parentEl;
+	
 	      var renderData = {
-	        previewUrl: this.model.getPreviewUrl(800, 382)
+	        previewUrl: this.model.getPreviewUrl(800, 382),
+	        carApplyBtn: this.CAR_APPLY_BTN_ID,
+	        carCancelBtn: this.CAR_CANCEL_BTN_ID,
+	        carApplyMobBtn: this.CAR_APPLY_MOB_BTN_ID,
+	        carCancelMobBtn: this.CAR_CANCEL_MOB_BTN_ID,
+	        buttonStyles: _buttons2.default,
+	        imageStyles: _images2.default,
+	        layoutStyles: _viewContainer2.default
 	      };
+	
 	      var markupStr = _ejs2.default.render(_cropAndRotate2.default, renderData);
 	      parentEl.html(markupStr);
-	      this.setupHandlers();
+	      this.setupHandlers(parentEl);
+	
 	      return this.viewDeferred.promise();
 	    }
 	  }, {
 	    key: 'setupHandlers',
-	    value: function setupHandlers() {
+	    value: function setupHandlers(parentEl) {
 	      var _this = this;
 	
-	      $('#carCancelBtn').click(function (ev) {
+	      $(parentEl).find("#" + this.CAR_CANCEL_BTN_ID).click(function (ev) {
 	        return _this.carCancelClick(ev);
 	      });
-	      $('#carApplyBtn').click(function (ev) {
+	      $(parentEl).find("#" + this.CAR_APPLY_BTN_ID).click(function (ev) {
 	        return _this.carApplyClick(ev);
 	      });
-	      $('#carCancelMobBtn').click(function (ev) {
+	      $(parentEl).find("#" + this.CAR_CANCEL_MOB_BTN_ID).click(function (ev) {
 	        return _this.carCancelClick(ev);
 	      });
-	      $('#carApplyMobBtn').click(function (ev) {
+	      $(parentEl).find("#" + this.CAR_APPLY_MOB_BTN_ID).click(function (ev) {
 	        return _this.carApplyClick(ev);
 	      });
 	    }
@@ -2476,13 +2542,28 @@
 	exports.default = CropAndRotateView;
 
 /***/ },
-/* 49 */
+/* 47 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <button class=\"ucButton ucButtonGrey hideScreen\" id=\"carCancelMobBtn\">Cancel</button>\r\n    <h1>Crop &amp; Rotate</h1>\r\n    <button class=\"ucButton ucButtonWhite hideScreen\" id=\"carApplyMobBtn\">Apply</button>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <button class=\"ucIconBtn white\">\r\n      <div class=\"rotateLeftImg\"></div>\r\n    </button>\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n    <button class=\"ucIconBtn white\">\r\n      <div class=\"rotateRightImg\"></div>\r\n    </button>\r\n  </div>\r\n  <div class=\"toolBoxContainer blue\">\r\n    <button class=\"ucButton ucButtonGrey hideMobile\" id=\"carCancelBtn\">Cancel</button>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"freeRatioImg\"></div>\r\n      <span>FREE</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"originalRatioImg\"></div>\r\n      <span>ORIG</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"oneToOneRatioImg\"></div>\r\n      <span>1:1</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"threeToFourRatioImg\"></div>\r\n      <span>3:4</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"fourToThreeRatioImg\"></div>\r\n      <span>4:3</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"sixteenToNineRatioImg\"></div>\r\n      <span>16:9</span>\r\n    </div>\r\n    <div class=\"ucIconBtn white\">\r\n      <div class=\"nineToSixteenRatioImg\"></div>\r\n      <span>9:16</span>\r\n    </div>\r\n    <button class=\"ucButton ucButtonWhite hideMobile\" id=\"carApplyBtn\">Apply</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <button class=\"<%=buttonStyles.ucButton %>\r\n                   <%=buttonStyles.ucButtonPrimary %> \r\n                   <%=buttonStyles.hideScreen %>\" id=\"<%= carCancelMobBtn %>\">Cancel</button>\r\n    <h1>Crop &amp; Rotate</h1>\r\n    <button class=\"<%=buttonStyles.ucButton %>\r\n                   <%=buttonStyles.ucButtonPrimary %> \r\n                   <%=buttonStyles.hideScreen %>\" id=\"<%= carApplyMobBtn %>\">Apply</button>\r\n  </div>\r\n  <div class=\"<%=layoutStyles.imageBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.rotateLeftImg %>\"></div>\r\n    </button>\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.rotateRightImg %>\"></div>\r\n    </button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.blue %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= carCancelBtn %>\">Cancel</button>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.freeRatioImg %>\"></div>\r\n      <span>FREE</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.originalRatioImg %>\"></div>\r\n      <span>ORIG</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.oneToOneRatioImg %>\"></div>\r\n      <span>1:1</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.threeToFourRatioImg %>\"></div>\r\n      <span>3:4</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.fourToThreeRatioImg %>\"></div>\r\n      <span>4:3</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.sixteenToNineRatioImg %>\"></div>\r\n      <span>16:9</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.nineToSixteenRatioImg %>\"></div>\r\n      <span>9:16</span>\r\n    </div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonWhite %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= carApplyBtn %>\">Apply</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
-/* 50 */
+/* 48 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  Generate: function Generate() {
+	    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1) + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+	  }
+	};
+
+/***/ },
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2503,17 +2584,33 @@
 	
 	var _ejs2 = _interopRequireDefault(_ejs);
 	
-	var _enhance = __webpack_require__(51);
+	var _enhance = __webpack_require__(50);
 	
 	var _enhance2 = _interopRequireDefault(_enhance);
 	
-	var _slider = __webpack_require__(52);
+	var _slider = __webpack_require__(51);
 	
 	var _slider2 = _interopRequireDefault(_slider);
 	
-	var _IdGenerator = __webpack_require__(54);
+	var _IdGenerator = __webpack_require__(48);
 	
 	var _IdGenerator2 = _interopRequireDefault(_IdGenerator);
+	
+	var _buttons = __webpack_require__(25);
+	
+	var _buttons2 = _interopRequireDefault(_buttons);
+	
+	var _images = __webpack_require__(29);
+	
+	var _images2 = _interopRequireDefault(_images);
+	
+	var _viewContainer = __webpack_require__(44);
+	
+	var _viewContainer2 = _interopRequireDefault(_viewContainer);
+	
+	var _slider3 = __webpack_require__(53);
+	
+	var _slider4 = _interopRequireDefault(_slider3);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2536,6 +2633,12 @@
 	
 	    this.SLIDER_ID = "slider_" + _IdGenerator2.default.Generate();
 	    this.PREVIEW_IMG_ID = "preview_mage_" + _IdGenerator2.default.Generate();
+	
+	    this.ENHANCE_APPLY_BTN_ID = "enhanceApplyBtn_" + _IdGenerator2.default.Generate();
+	    this.ENHANCE_CANCEL_BTN_ID = "enhanceCancelBtn_" + _IdGenerator2.default.Generate();
+	
+	    this.ENHANCE_APPLY_MOB_BTN_ID = "enhanceApplyMobBtn_" + _IdGenerator2.default.Generate();
+	    this.ENHANCE_CANCEL_MOB_BTN_ID = "enhanceCancelMobBtn_" + _IdGenerator2.default.Generate();
 	  }
 	
 	  (0, _createClass3.default)(EnhanceView, [{
@@ -2543,11 +2646,24 @@
 	    value: function render() {
 	      var parentEl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.container;
 	
-	      this.viewDeferred = $.Deferred();
+	
+	      if (!this.viewDeferred || this.viewDeferred.state() === "resolved") {
+	        this.viewDeferred = $.Deferred();
+	      }
+	      this.container = parentEl;
+	
 	      var renderData = {
 	        previewUrl: this.model.getPreviewUrl(800, 382),
 	        sliderId: this.SLIDER_ID,
-	        previewImageId: this.PREVIEW_IMG_ID
+	        previewImageId: this.PREVIEW_IMG_ID,
+	        enhanceApplyBtn: this.ENHANCE_APPLY_BTN_ID,
+	        enhanceCancelBtn: this.ENHANCE_CANCEL_BTN_ID,
+	        enhanceApplyMobBtn: this.ENHANCE_APPLY_MOB_BTN_ID,
+	        enhanceCancelMobBtn: this.ENHANCE_CANCEL_MOB_BTN_ID,
+	        buttonStyles: _buttons2.default,
+	        imageStyles: _images2.default,
+	        layoutStyles: _viewContainer2.default,
+	        sliderStyles: _slider4.default
 	      };
 	      var markupStr = _ejs2.default.render(_enhance2.default, renderData);
 	      parentEl.html(markupStr);
@@ -2563,16 +2679,16 @@
 	    value: function setupHandlers(parentEl) {
 	      var _this2 = this;
 	
-	      $(parentEl).find('#enhanceCancelBtn').click(function (ev) {
+	      $(parentEl).find('#' + this.ENHANCE_CANCEL_BTN_ID).click(function (ev) {
 	        return _this2.enhanceCancelClick(ev);
 	      });
-	      $(parentEl).find('#enhanceApplyBtn').click(function (ev) {
+	      $(parentEl).find('#' + this.ENHANCE_APPLY_BTN_ID).click(function (ev) {
 	        return _this2.enhanceApplyClick(ev);
 	      });
-	      $(parentEl).find('#enhanceCancelMobBtn').click(function (ev) {
+	      $(parentEl).find('#' + this.ENHANCE_CANCEL_MOB_BTN_ID).click(function (ev) {
 	        return _this2.enhanceCancelClick(ev);
 	      });
-	      $(parentEl).find('#enhanceApplyMobBtn').click(function (ev) {
+	      $(parentEl).find('#' + this.ENHANCE_APPLY_MOB_BTN_ID).click(function (ev) {
 	        return _this2.enhanceApplyClick(ev);
 	      });
 	    }
@@ -2611,13 +2727,13 @@
 	exports.default = EnhanceView;
 
 /***/ },
-/* 51 */
+/* 50 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <button class=\"ucButton ucButtonGrey hideScreen\" id=\"enhanceCancelMobBtn\">Cancel</button>\r\n    <h1>Enhance</h1>\r\n    <button class=\"ucButton ucButtonWhite hideScreen\" id=\"enhanceApplyMobBtn\">Apply</button>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" id=\"<%= previewImageId%>\"/>\r\n  </div>\r\n  <div class=\"toolBoxContainer blue\">\r\n    <button class=\"ucButton ucButtonGrey hideMobile\" id=\"enhanceCancelBtn\">Cancel</button>\r\n    <div class=\"slider\" id=\"<%= sliderId%>\"></div>\r\n    <button class=\"ucButton ucButtonWhite hideMobile\" id=\"enhanceApplyBtn\">Apply</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n                   <%= buttonStyles.ucButtonPrimary %> \r\n                   <%= buttonStyles.hideScreen %>\" id=\"<%= enhanceCancelMobBtn %>\">Cancel</button>\r\n    <h1>Enhance</h1>\r\n    <button class=\"<%=buttonStyles.ucButton %>\r\n                   <%=buttonStyles.ucButtonPrimary %> \r\n                   <%=buttonStyles.hideScreen %>\" id=\"<%= enhanceApplyMobBtn %>\">Apply</button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.imageBlock %>\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" id=\"<%= previewImageId%>\"/>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.blue %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= enhanceCancelBtn %>\">Cancel</button>\r\n    <div class=\"<%= sliderStyles.slider %>\" id=\"<%= sliderId%>\"></div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonWhite %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= enhanceApplyBtn %>\">Apply</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
-/* 52 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2638,15 +2754,15 @@
 	
 	var _ejs2 = _interopRequireDefault(_ejs);
 	
-	var _slider = __webpack_require__(53);
+	var _slider = __webpack_require__(52);
 	
 	var _slider2 = _interopRequireDefault(_slider);
 	
-	var _slider3 = __webpack_require__(46);
+	var _slider3 = __webpack_require__(53);
 	
 	var _slider4 = _interopRequireDefault(_slider3);
 	
-	var _IdGenerator = __webpack_require__(54);
+	var _IdGenerator = __webpack_require__(48);
 	
 	var _IdGenerator2 = _interopRequireDefault(_IdGenerator);
 	
@@ -2673,7 +2789,8 @@
 	
 	      this.container = parentEl;
 	      var markupStr = _ejs2.default.render(_slider2.default, {
-	        pointerId: this.POINTER_ID
+	        pointerId: this.POINTER_ID,
+	        styles: _slider4.default
 	      });
 	      parentEl.html(markupStr);
 	      this.setupHandlers(parentEl);
@@ -2759,24 +2876,54 @@
 	exports.default = Slider;
 
 /***/ },
-/* 53 */
+/* 52 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"backLineBlock\">\r\n    <dib class=\"backLine\">\r\n        <div class=\"pointer\" id=\"<%= pointerId %>\"></div>\r\n    </dib>\r\n</div>\r\n"
+	module.exports = "<div class=\"<%= styles.backLineBlock %>\">\r\n    <dib class=\"<%= styles.backLine %>\">\r\n        <div class=\"<%= styles.pointer %>\" id=\"<%= pointerId %>\"></div>\r\n    </dib>\r\n</div>\r\n"
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(54);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(28)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./slider.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./slider.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
 
 /***/ },
 /* 54 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	exports = module.exports = __webpack_require__(27)();
+	// imports
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  Generate: function Generate() {
-	    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1) + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-	  }
+	
+	// module
+	exports.push([module.id, "._1rx5WoXsKqbwShENBAMQ9D {\n  -webkit-box-flex: 1;\n      -ms-flex: 1 auto;\n          flex: 1 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: nowrap;\n      flex-wrap: nowrap;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 48px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  ._1rx5WoXsKqbwShENBAMQ9D ._1Q06EO8XnkGG3TM6QZ8KKW {\n    padding-left: 8px;\n    padding-right: 8px;\n    display: block;\n    width: 100%;\n    height: 3px; }\n  ._1rx5WoXsKqbwShENBAMQ9D ._2PRMXABLlJorBaekS_nibM {\n    background: #ffffff;\n    width: calc(100% - 16px);\n    height: 3px;\n    position: absolute; }\n  ._1rx5WoXsKqbwShENBAMQ9D ._2_Ya-_PjgpGRFiKJcrZ1L6 {\n    border-radius: 50%;\n    position: absolute;\n    background: #ffffff;\n    width: 16px;\n    height: 16px;\n    top: -7px;\n    z-index: 100; }\n    ._1rx5WoXsKqbwShENBAMQ9D ._2_Ya-_PjgpGRFiKJcrZ1L6:hover {\n      cursor: pointer; }\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"slider": "_1rx5WoXsKqbwShENBAMQ9D",
+		"backLineBlock": "_1Q06EO8XnkGG3TM6QZ8KKW",
+		"backLine": "_2PRMXABLlJorBaekS_nibM",
+		"pointer": "_2_Ya-_PjgpGRFiKJcrZ1L6"
 	};
 
 /***/ },
@@ -2805,13 +2952,29 @@
 	
 	var _sharpen2 = _interopRequireDefault(_sharpen);
 	
-	var _slider = __webpack_require__(52);
+	var _slider = __webpack_require__(51);
 	
 	var _slider2 = _interopRequireDefault(_slider);
 	
-	var _IdGenerator = __webpack_require__(54);
+	var _IdGenerator = __webpack_require__(48);
 	
 	var _IdGenerator2 = _interopRequireDefault(_IdGenerator);
+	
+	var _buttons = __webpack_require__(25);
+	
+	var _buttons2 = _interopRequireDefault(_buttons);
+	
+	var _images = __webpack_require__(29);
+	
+	var _images2 = _interopRequireDefault(_images);
+	
+	var _viewContainer = __webpack_require__(44);
+	
+	var _viewContainer2 = _interopRequireDefault(_viewContainer);
+	
+	var _slider3 = __webpack_require__(53);
+	
+	var _slider4 = _interopRequireDefault(_slider3);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2832,6 +2995,10 @@
 	
 	    this.SLIDER_ID = "slider_" + _IdGenerator2.default.Generate();
 	    this.PREVIEW_IMG_ID = "preview_mage_" + _IdGenerator2.default.Generate();
+	    this.SHARPEN_APPLY_BTN_ID = "sharpenApplyBtn" + +_IdGenerator2.default.Generate();
+	    this.SHARPEN_CANCEL_BTN_ID = "sharpenCancelBtn" + +_IdGenerator2.default.Generate();
+	    this.SHARPEN_APPLY_MOB_BTN_ID = "sharpenApplyMobBtn" + +_IdGenerator2.default.Generate();
+	    this.SHARPEN_CANCEL_MOB_BTN_ID = "sharpenCancelMobBtn" + +_IdGenerator2.default.Generate();
 	  }
 	
 	  (0, _createClass3.default)(SharpenView, [{
@@ -2839,13 +3006,24 @@
 	    value: function render() {
 	      var parentEl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.container;
 	
-	      this.viewDeferred = $.Deferred();
+	
+	      if (!this.viewDeferred || this.viewDeferred.state() === "resolved") {
+	        this.viewDeferred = $.Deferred();
+	      }
 	      this.container = parentEl;
 	
 	      var renderData = {
 	        previewUrl: this.model.getPreviewUrl(800, 382),
 	        sliderId: this.SLIDER_ID,
-	        previewImageId: this.PREVIEW_IMG_ID
+	        previewImageId: this.PREVIEW_IMG_ID,
+	        sharpenApplyBtn: this.SHARPEN_APPLY_BTN_ID,
+	        sharpenCancelBtn: this.SHARPEN_CANCEL_BTN_ID,
+	        sharpenCancelMobBtn: this.SHARPEN_CANCEL_MOB_BTN_ID,
+	        sharpenApplyMobBtn: this.SHARPEN_APPLY_MOB_BTN_ID,
+	        buttonStyles: _buttons2.default,
+	        imageStyles: _images2.default,
+	        layoutStyles: _viewContainer2.default,
+	        sliderStyles: _slider4.default
 	      };
 	
 	      var markupStr = _ejs2.default.render(_sharpen2.default, renderData);
@@ -2862,16 +3040,16 @@
 	    value: function setupHandlers(parentEl) {
 	      var _this2 = this;
 	
-	      $(parentEl).find('#sharpenCancelBtn').click(function (ev) {
+	      $(parentEl).find('#' + this.SHARPEN_CANCEL_BTN_ID).click(function (ev) {
 	        return _this2.sharpenCancelClick(ev);
 	      });
-	      $(parentEl).find('#sharpenApplyBtn').click(function (ev) {
+	      $(parentEl).find('#' + this.SHARPEN_APPLY_BTN_ID).click(function (ev) {
 	        return _this2.sharpenApplyClick(ev);
 	      });
-	      $(parentEl).find('#sharpenCancelMobBtn').click(function (ev) {
+	      $(parentEl).find('#' + this.SHARPEN_CANCEL_MOB_BTN_ID).click(function (ev) {
 	        return _this2.sharpenCancelClick(ev);
 	      });
-	      $(parentEl).find('#sharpenApplyMobBtn').click(function (ev) {
+	      $(parentEl).find('#' + this.SHARPEN_APPLY_MOB_BTN_ID).click(function (ev) {
 	        return _this2.sharpenApplyClick(ev);
 	      });
 	    }
@@ -2913,7 +3091,7 @@
 /* 56 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"viewContainer\">\r\n  <div class=\"headerBlock\">\r\n    <button class=\"ucButton ucButtonGrey hideScreen\" id=\"sharpenCancelMobBtn\">Cancel</button>\r\n    <h1>Sharpen</h1>\r\n    <button class=\"ucButton ucButtonWhite hideScreen\" id=\"sharpenApplyMobBtn\">Apply</button>\r\n  </div>\r\n  <div class=\"imageBlock\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" id=\"<%= previewImageId%>\"/>\r\n  </div>\r\n  <div class=\"toolBoxContainer blue\">\r\n    <button class=\"ucButton ucButtonGrey hideMobile\" id=\"sharpenCancelBtn\">Cancel</button>\r\n    <div class=\"slider\" id=\"<%= sliderId %>\"></div>\r\n    <button class=\"ucButton ucButtonWhite hideMobile\" id=\"sharpenApplyBtn\">Apply</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n                   <%= buttonStyles.ucButtonPrimary %> \r\n                   <%= buttonStyles.hideScreen %>\" id=\"<%= sharpenCancelMobBtn %>\">Cancel</button>\r\n    <h1>Sharpen</h1>\r\n    <button class=\"<%=buttonStyles.ucButton %>\r\n                   <%=buttonStyles.ucButtonPrimary %> \r\n                   <%=buttonStyles.hideScreen %>\" id=\"<%= sharpenApplyMobBtn %>\">Apply</button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.imageBlock %>\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" id=\"<%= previewImageId%>\"/>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.blue %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= sharpenCancelBtn %>\">Cancel</button>\r\n    <div class=\"<%= sliderStyles.slider %>\" id=\"<%= sliderId %>\"></div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonWhite %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= sharpenApplyBtn %>\">Apply</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
 /* 57 */
@@ -3013,7 +3191,17 @@
 	  };
 	
 	  this.getPreviewUrl = function (width, height) {
-	    return this.getFinalUrl() + '-/preview/' + width + 'x' + height + '/';
+	    var res = this.getFinalUrl() + '-/preview/';
+	    if (width) {
+	      res += width;
+	    }
+	    if (height) {
+	      res += "x" + height;
+	    }
+	    if (width || height) {
+	      res += "/";
+	    }
+	    return res;
 	  };
 	}
 
