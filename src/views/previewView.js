@@ -2,10 +2,9 @@
 import ejs from '../../node_modules/ejs/ejs';
 import previewTemplate from '../templates/preview.html';
 
-import '../styles/buttons.scss';
-import '../styles/images.scss';
-import '../styles/viewContainer.scss';
-import '../styles/slider.scss';
+import buttonStyles from '../styles/buttons.scss';
+import imageStyles from '../styles/images.scss';
+import layoutStyles from '../styles/viewContainer.scss';
 
 import CropAndRotateView from './cropAndRotateView.js';
 import EnhanceView from './enhanceView.js';
@@ -40,7 +39,6 @@ export default class PreviewView {
     if(!this.viewDeferred || this.viewDeferred.state() === "resolved") {
       this.viewDeferred = $.Deferred();
     }
-
     let renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
       cropAndRotateBtnId: this.CROP_AND_ROTATE_BTN_ID,
@@ -54,7 +52,10 @@ export default class PreviewView {
 
       appliedGrayscale: this.model.grayscale === null,
       appliedSharpen: this.model.sharp ? true : false,
-      appliedEnhance: this.model.enhance ? true : false      
+      appliedEnhance: this.model.enhance ? true : false,
+      buttonStyles,
+      imageStyles,
+      layoutStyles
     };
     let markupStr = ejs.render(previewTemplate, renderData);
     parentEl.html(markupStr);

@@ -5,6 +5,11 @@ import enhanceTemplate from '../templates/enhance.html';
 import Slider from "../components/slider.js";
 import IdGenerator from '../tools/IdGenerator.js';
 
+import buttonStyles from '../styles/buttons.scss';
+import imageStyles from '../styles/images.scss';
+import layoutStyles from '../styles/viewContainer.scss';
+import sliderStyles from '../styles/slider.scss';
+
 let $ = uploadcare.jQuery;
 
 export default class EnhanceView {
@@ -43,7 +48,11 @@ export default class EnhanceView {
       enhanceApplyBtn: this.ENHANCE_APPLY_BTN_ID,
       enhanceCancelBtn: this.ENHANCE_CANCEL_BTN_ID,
       enhanceApplyMobBtn: this.ENHANCE_APPLY_MOB_BTN_ID,
-      enhanceCancelMobBtn: this.ENHANCE_CANCEL_MOB_BTN_ID
+      enhanceCancelMobBtn: this.ENHANCE_CANCEL_MOB_BTN_ID,
+      buttonStyles,
+      imageStyles,
+      layoutStyles,
+      sliderStyles
     };
     let markupStr = ejs.render(enhanceTemplate, renderData);
     parentEl.html(markupStr);

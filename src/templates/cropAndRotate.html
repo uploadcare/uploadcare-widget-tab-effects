@@ -1,48 +1,59 @@
-<div class="viewContainer">
-  <div class="headerBlock">
-    <button class="ucButton ucButtonGrey hideScreen" id="<%= carCancelMobBtn %>">Cancel</button>
+<div class="<%= layoutStyles.viewContainer %>">
+  <div class="<%= layoutStyles.headerBlock %>">
+    <button class="<%=buttonStyles.ucButton %>
+                   <%=buttonStyles.ucButtonPrimary %> 
+                   <%=buttonStyles.hideScreen %>" id="<%= carCancelMobBtn %>">Cancel</button>
     <h1>Crop &amp; Rotate</h1>
-    <button class="ucButton ucButtonWhite hideScreen" id="<%= carApplyMobBtn %>">Apply</button>
+    <button class="<%=buttonStyles.ucButton %>
+                   <%=buttonStyles.ucButtonPrimary %> 
+                   <%=buttonStyles.hideScreen %>" id="<%= carApplyMobBtn %>">Apply</button>
   </div>
-  <div class="imageBlock">
-    <button class="ucIconBtn white">
-      <div class="rotateLeftImg"></div>
+  <div class="<%=layoutStyles.imageBlock %>">
+    <button class="<%= buttonStyles.ucIconBtn %> 
+                  <%= buttonStyles.white %>">
+      <div class="<%= imageStyles.rotateLeftImg %>"></div>
     </button>
     <img src="<%= previewUrl %>" alt="">
-    <button class="ucIconBtn white">
-      <div class="rotateRightImg"></div>
+    <button class="<%= buttonStyles.ucIconBtn %> 
+                  <%= buttonStyles.white %>">
+      <div class="<%= imageStyles.rotateRightImg %>"></div>
     </button>
   </div>
-  <div class="toolBoxContainer blue">
-    <button class="ucButton ucButtonGrey hideMobile" id="<%= carCancelBtn %>">Cancel</button>
-    <div class="ucIconBtn white">
-      <div class="freeRatioImg"></div>
+  <div class="<%= layoutStyles.toolBoxContainer %>
+              <%= layoutStyles.blue %>">
+    <button class="<%= buttonStyles.ucButton %>
+       <%= buttonStyles.ucButtonGrey %>
+       <%= buttonStyles.hideMobile %>" id="<%= carCancelBtn %>">Cancel</button>
+    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
+      <div class="<%= imageStyles.freeRatioImg %>"></div>
       <span>FREE</span>
     </div>
-    <div class="ucIconBtn white">
-      <div class="originalRatioImg"></div>
+    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
+      <div class="<%= imageStyles.originalRatioImg %>"></div>
       <span>ORIG</span>
     </div>
-    <div class="ucIconBtn white">
-      <div class="oneToOneRatioImg"></div>
+    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
+      <div class="<%= imageStyles.oneToOneRatioImg %>"></div>
       <span>1:1</span>
     </div>
-    <div class="ucIconBtn white">
-      <div class="threeToFourRatioImg"></div>
+    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
+      <div class="<%= imageStyles.threeToFourRatioImg %>"></div>
       <span>3:4</span>
     </div>
-    <div class="ucIconBtn white">
-      <div class="fourToThreeRatioImg"></div>
+    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
+      <div class="<%= imageStyles.fourToThreeRatioImg %>"></div>
       <span>4:3</span>
     </div>
-    <div class="ucIconBtn white">
-      <div class="sixteenToNineRatioImg"></div>
+    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
+      <div class="<%= imageStyles.sixteenToNineRatioImg %>"></div>
       <span>16:9</span>
     </div>
-    <div class="ucIconBtn white">
-      <div class="nineToSixteenRatioImg"></div>
+    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
+      <div class="<%= imageStyles.nineToSixteenRatioImg %>"></div>
       <span>9:16</span>
     </div>
-    <button class="ucButton ucButtonWhite hideMobile" id="<%= carApplyBtn %>">Apply</button>
+    <button class="<%= buttonStyles.ucButton %>
+       <%= buttonStyles.ucButtonWhite %>
+       <%= buttonStyles.hideMobile %>" id="<%= carApplyBtn %>">Apply</button>
   </div>
 </div>

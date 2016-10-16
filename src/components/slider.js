@@ -1,7 +1,7 @@
 'use strict'
 import ejs from '../../node_modules/ejs/ejs';
 import sliderTemplate from '../templates/slider.html';
-import slider from '../styles/slider.scss';
+import sliderStyles from '../styles/slider.scss';
 import IdGenerator from '../tools/IdGenerator.js';
 
 const $ = uploadcare.jQuery;
@@ -12,12 +12,14 @@ export default class Slider {
     this.onChangeHandler = null;
     this.maxValue = maxValue;
     this.POINTER_ID = "pointer_" + IdGenerator.Generate();
+
   }
 
   render(parentEl = this.container, value = 0) {
     this.container = parentEl;
     let markupStr = ejs.render(sliderTemplate, {
-      pointerId: this.POINTER_ID 
+      pointerId: this.POINTER_ID,
+      styles: sliderStyles
     });
     parentEl.html(markupStr);
     this.setupHandlers(parentEl);

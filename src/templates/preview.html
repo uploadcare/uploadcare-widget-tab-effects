@@ -1,39 +1,48 @@
-<div class="viewContainer">
-  <div class="headerBlock">
-    <button class="ucButton ucButtonGrey hideScreen" id="<%= removeMobBtn %>">Remove</button>
+<div class="<%= layoutStyles.viewContainer %>">
+  <div class="<%= layoutStyles.headerBlock %>">
+    <button class="<%= buttonStyles.ucButton %>
+                   <%= buttonStyles.ucButtonPrimary %> 
+                   <%= buttonStyles.hideScreen %>" id="<%= removeMobBtn %>">Remove</button>
     <h1>Preview</h1>
-    <button class="ucButton ucButtonPrimary hideScreen" id="<%= doneMobBtn %>">Done</button>
+    <button class="<%=buttonStyles.ucButton %>
+                   <%=buttonStyles.ucButtonPrimary %> 
+                   <%=buttonStyles.hideScreen %>" id="<%= doneMobBtn %>">Done</button>
   </div>
-  <div class="imageBlock">
+  <div class="<%= layoutStyles.imageBlock %>">
     <img src="<%= previewUrl %>" alt="">
   </div>
-  <div class="toolBoxContainer align-top">
-    <button class="ucButton ucButtonGrey hideMobile" id="<%= removeBtn %>">Remove</button>
-    <div class="ucIconBtn" id="<%= cropAndRotateBtnId %>">
-      <div class="cropAndRotateImg"></div>
+  <div class="<%= layoutStyles.toolBoxContainer %>
+              <%= layoutStyles.align-top %>">
+    <button class="<%= buttonStyles.ucButton %>
+       <%= buttonStyles.ucButtonGrey %>
+       <%= buttonStyles.hideMobile %>" id="<%= removeBtn %>">Remove</button>
+    <div class="<%= buttonStyles.ucIconBtn %>" id="<%= cropAndRotateBtnId %>">
+      <div class="<%= imageStyles.cropAndRotateImg %>"></div>
       <span>CROP &amp; ROTATE</span>
     </div>
-    <div class="ucIconBtn" id="<%= enhanceBtnId %>">
-      <div class="enhanceImg"></div>
+    <div class="<%= buttonStyles.ucIconBtn %>" id="<%= enhanceBtnId %>">
+      <div class="<%= imageStyles.enhanceImg %>"></div>
       <span>ENHANCE</span>
       <% if(appliedEnhance) { %>
-        <div class="applied"></div>
+        <div class="<%= buttonStyles.applied %>"></div>
       <% } %>
     </div>
-    <div class="ucIconBtn" id="<%= sharpenBtnId %>">
-      <div class="sharpenImg"></div>
+    <div class="<%= buttonStyles.ucIconBtn %>" id="<%= sharpenBtnId %>">
+      <div class="<%= imageStyles.sharpenImg %>"></div>
       <span>SHARPEN</span>
       <% if(appliedSharpen) { %>
-        <div class="applied"></div>
+        <div class="<%= buttonStyles.applied %>"></div>
       <% } %>
     </div>
-    <div class="ucIconBtn" id="<%= grayscaleBtnId %>">
-      <div class="grayScaleImg"></div>
+    <div class="<%= buttonStyles.ucIconBtn %>" id="<%= grayscaleBtnId %>">
+      <div class="<%= imageStyles.grayScaleImg %>"></div>
       <span>GRAYSCALE</span>
       <% if(appliedGrayscale) { %>
-        <div class="applied"></div>
+        <div class="<%= buttonStyles.applied %>"></div>
       <% } %>
     </div>
-    <button class="ucButton ucButtonPrimary hideMobile" id="<%= doneBtn %>">Done</button>
+    <button class="<%= buttonStyles.ucButton %>
+       <%= buttonStyles.ucButtonPrimary %>
+       <%= buttonStyles.hideMobile %>" id="<%= doneBtn %>">Done</button>
   </div>
 </div>

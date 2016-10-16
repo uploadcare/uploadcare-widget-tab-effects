@@ -1,15 +1,24 @@
-<div class="viewContainer">
-  <div class="headerBlock">
-    <button class="ucButton ucButtonGrey hideScreen" id="<%= sharpenCancelMobBtn %>">Cancel</button>
+<div class="<%= layoutStyles.viewContainer %>">
+  <div class="<%= layoutStyles.headerBlock %>">
+    <button class="<%= buttonStyles.ucButton %>
+                   <%= buttonStyles.ucButtonPrimary %> 
+                   <%= buttonStyles.hideScreen %>" id="<%= sharpenCancelMobBtn %>">Cancel</button>
     <h1>Sharpen</h1>
-    <button class="ucButton ucButtonWhite hideScreen" id="<%= sharpenApplyMobBtn %>">Apply</button>
+    <button class="<%=buttonStyles.ucButton %>
+                   <%=buttonStyles.ucButtonPrimary %> 
+                   <%=buttonStyles.hideScreen %>" id="<%= sharpenApplyMobBtn %>">Apply</button>
   </div>
-  <div class="imageBlock">
+  <div class="<%= layoutStyles.imageBlock %>">
     <img src="<%= previewUrl %>" alt="" id="<%= previewImageId%>"/>
   </div>
-  <div class="toolBoxContainer blue">
-    <button class="ucButton ucButtonGrey hideMobile" id="<%= sharpenCancelBtn %>">Cancel</button>
-    <div class="slider" id="<%= sliderId %>"></div>
-    <button class="ucButton ucButtonWhite hideMobile" id="<%= sharpenApplyBtn %>">Apply</button>
+  <div class="<%= layoutStyles.toolBoxContainer %>
+              <%= layoutStyles.blue %>">
+    <button class="<%= buttonStyles.ucButton %>
+       <%= buttonStyles.ucButtonGrey %>
+       <%= buttonStyles.hideMobile %>" id="<%= sharpenCancelBtn %>">Cancel</button>
+    <div class="<%= sliderStyles.slider %>" id="<%= sliderId %>"></div>
+    <button class="<%= buttonStyles.ucButton %>
+       <%= buttonStyles.ucButtonWhite %>
+       <%= buttonStyles.hideMobile %>" id="<%= sharpenApplyBtn %>">Apply</button>
   </div>
 </div>
