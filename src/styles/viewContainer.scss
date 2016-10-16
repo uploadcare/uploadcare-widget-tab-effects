@@ -1,12 +1,5 @@
 @import 'constants';
 
-.uploadcare-responsive-panel .uploadcare-dialog-tabs-panel {
-  @media screen and (max-width: 760px) {
-    min-height: 100% !important;
-    height: 100% !important;
-  }
-}
-
 .viewContainer { 
   width: 100%;
   min-height: 100%;
