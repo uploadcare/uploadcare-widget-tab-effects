@@ -54,7 +54,7 @@ export default class Slider {
       return this.bodyTouchMove(ev); 
     });
 
-    $("body").on("mouseup", ev => { 
+    $("body").on("mouseup touchend", ev => { 
       return this.bodyMouseUp(ev)
     });
   }
