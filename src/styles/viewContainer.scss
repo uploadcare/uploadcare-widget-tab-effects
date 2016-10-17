@@ -16,12 +16,12 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-
+    width: 100%;
+    
     @media screen and (max-width: 760px) {
       padding-top: 10px;
     }
 
-    width: 100%;
 
     h1 {
 
@@ -48,7 +48,10 @@
     img {
       margin-left: 10px;
       margin-right: 10px;
-      width: 100%;
+
+      @media screen and (max-width: 760px) {
+        width: calc(100% - 84px);
+      }
     }
   }
 
