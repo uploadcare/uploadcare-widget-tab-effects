@@ -48,9 +48,12 @@
     img {
       margin-left: 10px;
       margin-right: 10px;
-
-      @media screen and (max-width: 760px) {
-        width: calc(100% - 84px);
+      width: 100%;
+      
+      &.sideButtons {
+        @media screen and (max-width: 760px) {
+          width: calc(100% - 84px);
+        }
       }
     }
   }
