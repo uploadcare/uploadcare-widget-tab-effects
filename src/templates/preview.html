@@ -1,48 +1,50 @@
-<div class="<%= layoutStyles.viewContainer %>">
-  <div class="<%= layoutStyles.headerBlock %>">
-    <button class="<%= buttonStyles.ucButton %>
-                   <%= buttonStyles.ucButtonPrimary %> 
-                   <%= buttonStyles.hideScreen %>" id="<%= removeMobBtn %>">Remove</button>
-    <h1>Preview</h1>
-    <button class="<%=buttonStyles.ucButton %>
-                   <%=buttonStyles.ucButtonPrimary %> 
-                   <%=buttonStyles.hideScreen %>" id="<%= doneMobBtn %>">Done</button>
-  </div>
-  <div class="<%= layoutStyles.imageBlock %>">
-    <img src="<%= previewUrl %>" alt="">
-  </div>
-  <div class="<%= layoutStyles.toolBoxContainer %>
-              <%= layoutStyles.align-top %>">
-    <button class="<%= buttonStyles.ucButton %>
-       <%= buttonStyles.ucButtonGrey %>
-       <%= buttonStyles.hideMobile %>" id="<%= removeBtn %>">Remove</button>
-    <div class="<%= buttonStyles.ucIconBtn %>" id="<%= cropAndRotateBtnId %>">
-      <div class="<%= imageStyles.cropAndRotateImg %>"></div>
-      <span>CROP &amp; ROTATE</span>
-    </div>
-    <div class="<%= buttonStyles.ucIconBtn %>" id="<%= enhanceBtnId %>">
-      <div class="<%= imageStyles.enhanceImg %>"></div>
-      <span>ENHANCE</span>
-      <% if(appliedEnhance) { %>
-        <div class="<%= buttonStyles.applied %>"></div>
-      <% } %>
-    </div>
-    <div class="<%= buttonStyles.ucIconBtn %>" id="<%= sharpenBtnId %>">
-      <div class="<%= imageStyles.sharpenImg %>"></div>
-      <span>SHARPEN</span>
-      <% if(appliedSharpen) { %>
-        <div class="<%= buttonStyles.applied %>"></div>
-      <% } %>
-    </div>
-    <div class="<%= buttonStyles.ucIconBtn %>" id="<%= grayscaleBtnId %>">
-      <div class="<%= imageStyles.grayScaleImg %>"></div>
-      <span>GRAYSCALE</span>
-      <% if(appliedGrayscale) { %>
-        <div class="<%= buttonStyles.applied %>"></div>
-      <% } %>
-    </div>
-    <button class="<%= buttonStyles.ucButton %>
-       <%= buttonStyles.ucButtonPrimary %>
-       <%= buttonStyles.hideMobile %>" id="<%= doneBtn %>">Done</button>
-  </div>
+<div class="uploadcare--panel__heading">
+	<div class="uploadcare--panel__title uploadcare--preview__title">
+		Preview<!-- TODO Take word from locale -->
+	</div>
+</div>
+
+<div class="uploadcare--panel__content">
+	<div class="uploadcare--preview__image-container uploadcare-dialog-preview-image-wrap">
+		<img src="<%= previewUrl %>" alt=""/>
+	</div>
+</div>
+
+<div class="uploadcare--panel__footer uploadcare-panel-footer">
+	<!-- TODO Change Cancel to Remove -->
+	<div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back uploadcare-dialog-button"
+			 tabindex="0" role="button" id="<%= removeBtn %>"
+	>Cancel<!-- TODO Take word from locale --></div>
+
+	<div class="uploadcare--panel__footer-additions">
+		<div class="<%= buttonStyles.ucIconBtn %>" id="<%= cropAndRotateBtnId %>">
+			<div class="<%= imageStyles.cropAndRotateImg %>"></div>
+			<span>CROP &amp; ROTATE</span>
+		</div>
+		<div class="<%= buttonStyles.ucIconBtn %>" id="<%= enhanceBtnId %>">
+			<div class="<%= imageStyles.enhanceImg %>"></div>
+			<span>ENHANCE</span>
+			<% if(appliedEnhance) { %>
+			<div class="<%= buttonStyles.applied %>"></div>
+			<% } %>
+		</div>
+		<div class="<%= buttonStyles.ucIconBtn %>" id="<%= sharpenBtnId %>">
+			<div class="<%= imageStyles.sharpenImg %>"></div>
+			<span>SHARPEN</span>
+			<% if(appliedSharpen) { %>
+			<div class="<%= buttonStyles.applied %>"></div>
+			<% } %>
+		</div>
+		<div class="<%= buttonStyles.ucIconBtn %>" id="<%= grayscaleBtnId %>">
+			<div class="<%= imageStyles.grayScaleImg %>"></div>
+			<span>GRAYSCALE</span>
+			<% if(appliedGrayscale) { %>
+			<div class="<%= buttonStyles.applied %>"></div>
+			<% } %>
+		</div>
+	</div>
+
+	<div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done uploadcare-dialog-button-success"
+			 tabindex="0" role="button" id="<%= doneBtn %>"
+	>Done<!-- TODO Take word from locale --></div>
 </div>

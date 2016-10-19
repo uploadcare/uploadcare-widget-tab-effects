@@ -29,9 +29,6 @@ export default class PreviewView {
 
     this.DONE_BTN_ID = "doneBtn_" + IdGenerator.Generate();
     this.REMOVE_BTN_ID = "removeBtn_" + IdGenerator.Generate();
-     
-    this.DONE_MOB_BTN_ID = "doneMobBtn_" + IdGenerator.Generate();
-    this.REMOVE_MOB_BTN_ID = "removeMobBtn_" + IdGenerator.Generate();
  }
 
   render(parentEl = this.container) {
@@ -47,8 +44,6 @@ export default class PreviewView {
       grayscaleBtnId: this.GRAYSCALE_BTN_ID,
       doneBtn: this.DONE_BTN_ID,
       removeBtn: this.REMOVE_BTN_ID,
-      doneMobBtn: this.DONE_MOB_BTN_ID,
-      removeMobBtn: this.REMOVE_MOB_BTN_ID,
 
       appliedGrayscale: this.model.grayscale === null,
       appliedSharpen: this.model.sharp ? true : false,
@@ -64,15 +59,13 @@ export default class PreviewView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find("#" + this.CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });   
-    $(parentEl).find("#" + this.ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });   
-    $(parentEl).find("#" + this.SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });   
+    $(parentEl).find("#" + this.CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });
+    $(parentEl).find("#" + this.ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });
+    $(parentEl).find("#" + this.SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });
     $(parentEl).find("#" + this.GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });
-    
+
     $(parentEl).find("#" + this.REMOVE_BTN_ID).click(ev => { return this.removeClick(ev); });
-    $(parentEl).find("#" + this.REMOVE_MOB_BTN_ID).click(ev => { return this.removeClick(ev); });
     $(parentEl).find("#" + this.DONE_BTN_ID).click(ev => { return this.doneClick(ev); });
-    $(parentEl).find("#" + this.DONE_MOB_BTN_ID).click(ev => { return this.doneClick(ev); });
   }
 
   cropAndRotateClick(ev) {
