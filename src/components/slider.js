@@ -60,6 +60,9 @@ export default class Slider {
   }
 
   bodyMouseMove(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    ev.bubbles = false;
     return this.updatePoinerPos(ev.pageX);
   }
 

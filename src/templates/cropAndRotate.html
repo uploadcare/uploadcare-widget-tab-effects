@@ -1,21 +1,17 @@
 <div class="<%= layoutStyles.viewContainer %>">
   <div class="<%= layoutStyles.headerBlock %>">
-    <button class="<%=buttonStyles.ucButton %>
-                   <%=buttonStyles.ucButtonPrimary %> 
-                   <%=buttonStyles.hideScreen %>" id="<%= carCancelMobBtn %>">Cancel</button>
     <h1>Crop &amp; Rotate</h1>
-    <button class="<%=buttonStyles.ucButton %>
-                   <%=buttonStyles.ucButtonPrimary %> 
-                   <%=buttonStyles.hideScreen %>" id="<%= carApplyMobBtn %>">Apply</button>
   </div>
   <div class="<%=layoutStyles.imageBlock %>">
     <button class="<%= buttonStyles.ucIconBtn %> 
-                  <%= buttonStyles.white %>">
+                  <%= buttonStyles.white %>
+                  <%= carRotateLeftBtn %>">
       <div class="<%= imageStyles.rotateLeftImg %>"></div>
     </button>
     <img src="<%= previewUrl %>" alt="" class="<%=layoutStyles.sideButtons %>">
     <button class="<%= buttonStyles.ucIconBtn %> 
-                  <%= buttonStyles.white %>">
+                  <%= buttonStyles.white %>
+                  <%= carRotateRightBtn %>">
       <div class="<%= imageStyles.rotateRightImg %>"></div>
     </button>
   </div>
@@ -23,7 +19,7 @@
               <%= layoutStyles.blue %>">
     <button class="<%= buttonStyles.ucButton %>
        <%= buttonStyles.ucButtonGrey %>
-       <%= buttonStyles.hideMobile %>" id="<%= carCancelBtn %>">Cancel</button>
+       <%= buttonStyles.hideMobile %> <%= carCancelBtn %>">Cancel</button>
     <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
       <div class="<%= imageStyles.freeRatioImg %>"></div>
       <span>FREE</span>
@@ -54,6 +50,6 @@
     </div>
     <button class="<%= buttonStyles.ucButton %>
        <%= buttonStyles.ucButtonWhite %>
-       <%= buttonStyles.hideMobile %>" id="<%= carApplyBtn %>">Apply</button>
+       <%= buttonStyles.hideMobile %> <%= carApplyBtn %>">Apply</button>
   </div>
 </div>

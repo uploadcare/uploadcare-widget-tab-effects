@@ -53,6 +53,7 @@ export default class PreviewView {
       appliedGrayscale: this.model.grayscale === null,
       appliedSharpen: this.model.sharp ? true : false,
       appliedEnhance: this.model.enhance ? true : false,
+      appliedCar: (this.model.rotate || this.model.crop) ? true : false,
       buttonStyles,
       imageStyles,
       layoutStyles
@@ -115,6 +116,7 @@ export default class PreviewView {
     this.model.enhance = undefined;
     this.model.sharp = undefined;
     this.model.grayscale = undefined;
+    this.model.rotate = undefined;
     this.render();
   }
 }

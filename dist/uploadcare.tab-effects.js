@@ -207,6 +207,7 @@
 	        appliedGrayscale: this.model.grayscale === null,
 	        appliedSharpen: this.model.sharp ? true : false,
 	        appliedEnhance: this.model.enhance ? true : false,
+	        appliedCar: this.model.rotate || this.model.crop ? true : false,
 	        buttonStyles: _buttons2.default,
 	        imageStyles: _images2.default,
 	        layoutStyles: _viewContainer2.default
@@ -297,6 +298,7 @@
 	      this.model.enhance = undefined;
 	      this.model.sharp = undefined;
 	      this.model.grayscale = undefined;
+	      this.model.rotate = undefined;
 	      this.render();
 	    }
 	  }]);
@@ -1904,7 +1906,7 @@
 /* 24 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n                   <%= buttonStyles.ucButtonPrimary %> \r\n                   <%= buttonStyles.hideScreen %>\" id=\"<%= removeMobBtn %>\">Remove</button>\r\n    <h1>Preview</h1>\r\n    <button class=\"<%=buttonStyles.ucButton %>\r\n                   <%=buttonStyles.ucButtonPrimary %> \r\n                   <%=buttonStyles.hideScreen %>\" id=\"<%= doneMobBtn %>\">Done</button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.imageBlock %>\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.align-top %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= removeBtn %>\">Remove</button>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= cropAndRotateBtnId %>\">\r\n      <div class=\"<%= imageStyles.cropAndRotateImg %>\"></div>\r\n      <span>CROP &amp; ROTATE</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= enhanceBtnId %>\">\r\n      <div class=\"<%= imageStyles.enhanceImg %>\"></div>\r\n      <span>ENHANCE</span>\r\n      <% if(appliedEnhance) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= sharpenBtnId %>\">\r\n      <div class=\"<%= imageStyles.sharpenImg %>\"></div>\r\n      <span>SHARPEN</span>\r\n      <% if(appliedSharpen) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= grayscaleBtnId %>\">\r\n      <div class=\"<%= imageStyles.grayScaleImg %>\"></div>\r\n      <span>GRAYSCALE</span>\r\n      <% if(appliedGrayscale) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonPrimary %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= doneBtn %>\">Done</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n                   <%= buttonStyles.ucButtonPrimary %> \r\n                   <%= buttonStyles.hideScreen %>\" id=\"<%= removeMobBtn %>\">Remove</button>\r\n    <h1>Preview</h1>\r\n    <button class=\"<%=buttonStyles.ucButton %>\r\n                   <%=buttonStyles.ucButtonPrimary %> \r\n                   <%=buttonStyles.hideScreen %>\" id=\"<%= doneMobBtn %>\">Done</button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.imageBlock %>\">\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.align-top %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= removeBtn %>\">Remove</button>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= cropAndRotateBtnId %>\">\r\n      <div class=\"<%= imageStyles.cropAndRotateImg %>\"></div>\r\n      <span>CROP &amp; ROTATE</span>\r\n      <% if(appliedCar) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= enhanceBtnId %>\">\r\n      <div class=\"<%= imageStyles.enhanceImg %>\"></div>\r\n      <span>ENHANCE</span>\r\n      <% if(appliedEnhance) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= sharpenBtnId %>\">\r\n      <div class=\"<%= imageStyles.sharpenImg %>\"></div>\r\n      <span>SHARPEN</span>\r\n      <% if(appliedSharpen) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %>\" id=\"<%= grayscaleBtnId %>\">\r\n      <div class=\"<%= imageStyles.grayScaleImg %>\"></div>\r\n      <span>GRAYSCALE</span>\r\n      <% if(appliedGrayscale) { %>\r\n        <div class=\"<%= buttonStyles.applied %>\"></div>\r\n      <% } %>\r\n    </div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonPrimary %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= doneBtn %>\">Done</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
 /* 25 */
@@ -1941,7 +1943,7 @@
 	
 	
 	// module
-	exports.push([module.id, "._3xeIIB3_G8yFK94QYxH8K {\n  border-radius: 24px;\n  height: 48px;\n  font-size: 17px;\n  letter-spacing: 0.3px;\n  padding-left: 42px;\n  padding-right: 42px;\n  padding-top: 14px;\n  padding-bottom: 14px;\n  border: 0px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  @media screen and (max-width: 759px) {\n    ._3xeIIB3_G8yFK94QYxH8K {\n      margin-left: 0;\n      margin-right: 0;\n      padding-left: 0px;\n      padding-right: 0px; } }\n  ._3xeIIB3_G8yFK94QYxH8K:focus {\n    outline: none; }\n  ._3xeIIB3_G8yFK94QYxH8K:hover {\n    cursor: pointer; }\n  @media screen and (max-width: 759px) {\n    ._3xeIIB3_G8yFK94QYxH8K.w0eFRZb6qHbqLf3Jhq5ub {\n      font-family: SFUIText-Regular;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    ._3xeIIB3_G8yFK94QYxH8K.w0eFRZb6qHbqLf3Jhq5ub {\n      color: #ffffff;\n      background: #5D5D5D; } }\n  @media screen and (max-width: 759px) {\n    ._3xeIIB3_G8yFK94QYxH8K._1JwsOu6Rk1yFV8Fvh0cl4g {\n      font-family: SFUIText-Regular;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    ._3xeIIB3_G8yFK94QYxH8K._1JwsOu6Rk1yFV8Fvh0cl4g {\n      color: #ffffff;\n      background: #3787EC; } }\n  ._3xeIIB3_G8yFK94QYxH8K._1Ma7G-ueySMr_25I0o5Z3z {\n    color: #3787EC;\n    background: #ffffff; }\n\n.p7Tjl644Mzv1zpZaiZr0K {\n  border: 0px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  text-align: center;\n  color: #454545;\n  background: none;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative; }\n  @media screen and (max-width: 760px) {\n    .p7Tjl644Mzv1zpZaiZr0K {\n      font-family: SFUIText-Regular;\n      font-size: 10px;\n      letter-spacing: 0.41px; } }\n  .p7Tjl644Mzv1zpZaiZr0K._12ddhsVD8QRgw1DouCENn0 {\n    color: #ffffff; }\n  .p7Tjl644Mzv1zpZaiZr0K:focus {\n    outline: none; }\n  .p7Tjl644Mzv1zpZaiZr0K:hover {\n    cursor: pointer; }\n  .p7Tjl644Mzv1zpZaiZr0K ._1X7AREp1YWj897h8ycjVzP {\n    margin-top: 10px;\n    border-radius: 50%;\n    width: 8px;\n    height: 8px;\n    background: #3787EC;\n    position: absolute;\n    bottom: -15px;\n    left: calc(50% - 4px); }\n\n@media screen and (max-width: 760px) {\n  ._3HPHUAUjUyPVFC7b66iXHN {\n    display: none; } }\n\n@media screen and (min-width: 760px) {\n  .q6_WBi80lfjdk7GqA_qgK {\n    display: none; } }\n", ""]);
+	exports.push([module.id, "._3xeIIB3_G8yFK94QYxH8K {\n  border-radius: 24px;\n  height: 48px;\n  font-size: 17px;\n  letter-spacing: 0.3px;\n  padding-left: 42px;\n  padding-right: 42px;\n  padding-top: 14px;\n  padding-bottom: 14px;\n  border: 0px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  @media screen and (max-width: 759px) {\n    ._3xeIIB3_G8yFK94QYxH8K {\n      margin-left: 0;\n      margin-right: 0;\n      padding-left: 0px;\n      padding-right: 0px; } }\n  ._3xeIIB3_G8yFK94QYxH8K:focus {\n    outline: none; }\n  ._3xeIIB3_G8yFK94QYxH8K:hover {\n    cursor: pointer; }\n  @media screen and (max-width: 759px) {\n    ._3xeIIB3_G8yFK94QYxH8K.w0eFRZb6qHbqLf3Jhq5ub {\n      font-family: -apple-system, Roboto, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    ._3xeIIB3_G8yFK94QYxH8K.w0eFRZb6qHbqLf3Jhq5ub {\n      color: #ffffff;\n      background: #5D5D5D; } }\n  @media screen and (max-width: 759px) {\n    ._3xeIIB3_G8yFK94QYxH8K._1JwsOu6Rk1yFV8Fvh0cl4g {\n      font-family: -apple-system, Roboto, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;\n      font-size: 16px;\n      letter-spacing: 0.3px;\n      line-height: 18px;\n      color: #3787EC;\n      background: none; } }\n  @media screen and (min-width: 760px) {\n    ._3xeIIB3_G8yFK94QYxH8K._1JwsOu6Rk1yFV8Fvh0cl4g {\n      color: #ffffff;\n      background: #3787EC; } }\n  ._3xeIIB3_G8yFK94QYxH8K._1Ma7G-ueySMr_25I0o5Z3z {\n    color: #3787EC;\n    background: #ffffff; }\n\n.p7Tjl644Mzv1zpZaiZr0K {\n  border: 0px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  text-align: center;\n  color: #454545;\n  background: none;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative; }\n  @media screen and (max-width: 760px) {\n    .p7Tjl644Mzv1zpZaiZr0K {\n      font-family: -apple-system, Roboto, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;\n      font-size: 10px;\n      letter-spacing: 0.41px; } }\n  .p7Tjl644Mzv1zpZaiZr0K._12ddhsVD8QRgw1DouCENn0 {\n    color: #ffffff; }\n  .p7Tjl644Mzv1zpZaiZr0K:focus {\n    outline: none; }\n  .p7Tjl644Mzv1zpZaiZr0K:hover {\n    cursor: pointer; }\n  .p7Tjl644Mzv1zpZaiZr0K ._1X7AREp1YWj897h8ycjVzP {\n    margin-top: 10px;\n    border-radius: 50%;\n    width: 8px;\n    height: 8px;\n    background: #3787EC;\n    position: absolute;\n    bottom: -15px;\n    left: calc(50% - 4px); }\n\n@media screen and (max-width: 760px) {\n  ._3HPHUAUjUyPVFC7b66iXHN {\n    display: none; } }\n\n@media screen and (min-width: 760px) {\n  .q6_WBi80lfjdk7GqA_qgK {\n    display: none; } }\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -2405,13 +2407,14 @@
 	
 	
 	// module
-	exports.push([module.id, "._1BfQnaibTmiy62RnJydXEd {\n  width: 100%;\n  min-height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  background-color: #ffffff;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -ms-flex-line-pack: center;\n      align-content: center;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between; }\n  ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU {\n    padding-top: 30px;\n    padding-bottom: 10px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%; }\n    @media screen and (max-width: 760px) {\n      ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU {\n        padding-top: 10px; } }\n    ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU h1 {\n      font-family: SFUIText-Medium;\n      font-size: 28px;\n      text-align: center;\n      letter-spacing: 0px;\n      line-height: 40px; }\n      @media screen and (max-width: 760px) {\n        ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU h1 {\n          font-family: SFUIText-Medium;\n          font-size: 16px;\n          letter-spacing: 0.4px; } }\n  ._1BfQnaibTmiy62RnJydXEd .x2L71BzL40SumZ5r5CMFX {\n    -webkit-box-flex: 1;\n        -ms-flex: 1 auto;\n            flex: 1 auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    ._1BfQnaibTmiy62RnJydXEd .x2L71BzL40SumZ5r5CMFX img {\n      margin-left: 10px;\n      margin-right: 10px;\n      width: 100%; }\n  ._1BfQnaibTmiy62RnJydXEd ._18J7DHBZqGNnLqNG8zzvvP {\n    width: 100%;\n    height: 150px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    ._1BfQnaibTmiy62RnJydXEd ._18J7DHBZqGNnLqNG8zzvvP._38E6ueRHMS4rpx8QXdbNy5 {\n      background-color: #3787EC; }\n", ""]);
+	exports.push([module.id, "._1BfQnaibTmiy62RnJydXEd {\n  width: 100%;\n  min-height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  background-color: #ffffff;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -ms-flex-line-pack: center;\n      align-content: center;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between; }\n  ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU {\n    padding-top: 30px;\n    padding-bottom: 10px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%; }\n    @media screen and (max-width: 760px) {\n      ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU {\n        padding-top: 10px; } }\n    ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU h1 {\n      font-family: -apple-system, Roboto, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;\n      font-size: 28px;\n      text-align: center;\n      letter-spacing: 0px;\n      line-height: 40px; }\n      @media screen and (max-width: 760px) {\n        ._1BfQnaibTmiy62RnJydXEd ._2wpcUR2x7dltEvVzikjxwU h1 {\n          font-family: -apple-system, Roboto, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;\n          font-size: 16px;\n          letter-spacing: 0.4px; } }\n  ._1BfQnaibTmiy62RnJydXEd .x2L71BzL40SumZ5r5CMFX {\n    -webkit-box-flex: 1;\n        -ms-flex: 1 auto;\n            flex: 1 auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    ._1BfQnaibTmiy62RnJydXEd .x2L71BzL40SumZ5r5CMFX img {\n      margin-left: 10px;\n      margin-right: 10px;\n      width: 100%;\n      height: auto; }\n      @media screen and (max-width: 760px) {\n        ._1BfQnaibTmiy62RnJydXEd .x2L71BzL40SumZ5r5CMFX img._3iQC4XWAfwObI3tiEzjh3H {\n          width: calc(100% - 84px); } }\n  ._1BfQnaibTmiy62RnJydXEd ._18J7DHBZqGNnLqNG8zzvvP {\n    width: 100%;\n    height: 150px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-pack: distribute;\n        justify-content: space-around;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center; }\n    ._1BfQnaibTmiy62RnJydXEd ._18J7DHBZqGNnLqNG8zzvvP._38E6ueRHMS4rpx8QXdbNy5 {\n      background-color: #3787EC; }\n", ""]);
 	
 	// exports
 	exports.locals = {
 		"viewContainer": "_1BfQnaibTmiy62RnJydXEd",
 		"headerBlock": "_2wpcUR2x7dltEvVzikjxwU",
 		"imageBlock": "x2L71BzL40SumZ5r5CMFX",
+		"sideButtons": "_3iQC4XWAfwObI3tiEzjh3H",
 		"toolBoxContainer": "_18J7DHBZqGNnLqNG8zzvvP",
 		"blue": "_38E6ueRHMS4rpx8QXdbNy5"
 	};
@@ -2471,8 +2474,16 @@
 	
 	    this.CAR_APPLY_BTN_ID = "carApplyBtn" + _IdGenerator2.default.Generate();
 	    this.CAR_CANCEL_BTN_ID = "carCancelBtn" + _IdGenerator2.default.Generate();
-	    this.CAR_APPLY_MOB_BTN_ID = "carApplyMobBtn" + _IdGenerator2.default.Generate();
-	    this.CAR_CANCEL_MOB_BTN_ID = "carCancelMobBtn" + _IdGenerator2.default.Generate();
+	
+	    this.CAR_FREE_RATIO_BTN_ID = "carFreeRatioBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_ORIG_RATIO_BTN_ID = "carOrigRatioBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_ONE_TO_ONE_RATIO_BTN_ID = "carOneToOneRatioBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_THREE_TO_FOUR_RATIO_BTN_ID = "carThreeToFourRatioBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_FOUR_TO_THREE_RATIO_BTN_ID = "carFourToThreeRatioBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID = "carSixteenToNineRatioBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID = "carNineToSixteenRatioBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_ROTATE_LEFT_BTN = "carRotateLeftBtn" + _IdGenerator2.default.Generate();
+	    this.CAR_ROTATE_RIGHT_BTN = "carRotateRightBtn" + _IdGenerator2.default.Generate();
 	  }
 	
 	  (0, _createClass3.default)(CropAndRotateView, [{
@@ -2492,6 +2503,8 @@
 	        carCancelBtn: this.CAR_CANCEL_BTN_ID,
 	        carApplyMobBtn: this.CAR_APPLY_MOB_BTN_ID,
 	        carCancelMobBtn: this.CAR_CANCEL_MOB_BTN_ID,
+	        carRotateLeftBtn: this.CAR_ROTATE_LEFT_BTN,
+	        carRotateRightBtn: this.CAR_ROTATE_RIGHT_BTN,
 	        buttonStyles: _buttons2.default,
 	        imageStyles: _images2.default,
 	        layoutStyles: _viewContainer2.default
@@ -2508,22 +2521,23 @@
 	    value: function setupHandlers(parentEl) {
 	      var _this = this;
 	
-	      $(parentEl).find("#" + this.CAR_CANCEL_BTN_ID).click(function (ev) {
+	      $(parentEl).find("." + this.CAR_CANCEL_BTN_ID).click(function (ev) {
 	        return _this.carCancelClick(ev);
 	      });
-	      $(parentEl).find("#" + this.CAR_APPLY_BTN_ID).click(function (ev) {
+	      $(parentEl).find("." + this.CAR_APPLY_BTN_ID).click(function (ev) {
 	        return _this.carApplyClick(ev);
 	      });
-	      $(parentEl).find("#" + this.CAR_CANCEL_MOB_BTN_ID).click(function (ev) {
-	        return _this.carCancelClick(ev);
+	      $(parentEl).find("." + this.CAR_ROTATE_LEFT_BTN).click(function (ev) {
+	        return _this.carRotateClick(1); /* rotate left */
 	      });
-	      $(parentEl).find("#" + this.CAR_APPLY_MOB_BTN_ID).click(function (ev) {
-	        return _this.carApplyClick(ev);
+	      $(parentEl).find("." + this.CAR_ROTATE_RIGHT_BTN).click(function (ev) {
+	        return _this.carRotateClick(0); /* rotate right */
 	      });
 	    }
 	  }, {
 	    key: 'carCancelClick',
 	    value: function carCancelClick(ev) {
+	      this.model.rotate = undefined;
 	      this.viewDeferred.resolve({
 	        reason: "Cancel"
 	      });
@@ -2535,6 +2549,28 @@
 	        reason: "Apply"
 	      });
 	    }
+	  }, {
+	    key: 'carRotateClick',
+	    value: function carRotateClick(direction) {
+	      var valArray = [undefined, 90, 180, 270];
+	      var curVal = this.model.rotate;
+	      var ind = valArray.findIndex(function (val, i, arr) {
+	        return val === curVal;
+	      });
+	      if (direction) {
+	        ind++;
+	        if (ind >= valArray.length) {
+	          ind = 0;
+	        }
+	      } else {
+	        ind--;
+	        if (ind < 0) {
+	          ind = valArray.length - 1;
+	        }
+	      }
+	      this.model.rotate = valArray[ind];
+	      this.render();
+	    }
 	  }]);
 	  return CropAndRotateView;
 	}();
@@ -2545,7 +2581,7 @@
 /* 47 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <button class=\"<%=buttonStyles.ucButton %>\r\n                   <%=buttonStyles.ucButtonPrimary %> \r\n                   <%=buttonStyles.hideScreen %>\" id=\"<%= carCancelMobBtn %>\">Cancel</button>\r\n    <h1>Crop &amp; Rotate</h1>\r\n    <button class=\"<%=buttonStyles.ucButton %>\r\n                   <%=buttonStyles.ucButtonPrimary %> \r\n                   <%=buttonStyles.hideScreen %>\" id=\"<%= carApplyMobBtn %>\">Apply</button>\r\n  </div>\r\n  <div class=\"<%=layoutStyles.imageBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.rotateLeftImg %>\"></div>\r\n    </button>\r\n    <img src=\"<%= previewUrl %>\" alt=\"\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.rotateRightImg %>\"></div>\r\n    </button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.blue %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= carCancelBtn %>\">Cancel</button>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.freeRatioImg %>\"></div>\r\n      <span>FREE</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.originalRatioImg %>\"></div>\r\n      <span>ORIG</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.oneToOneRatioImg %>\"></div>\r\n      <span>1:1</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.threeToFourRatioImg %>\"></div>\r\n      <span>3:4</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.fourToThreeRatioImg %>\"></div>\r\n      <span>4:3</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.sixteenToNineRatioImg %>\"></div>\r\n      <span>16:9</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.nineToSixteenRatioImg %>\"></div>\r\n      <span>9:16</span>\r\n    </div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonWhite %>\r\n       <%= buttonStyles.hideMobile %>\" id=\"<%= carApplyBtn %>\">Apply</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <h1>Crop &amp; Rotate</h1>\r\n  </div>\r\n  <div class=\"<%=layoutStyles.imageBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\r\n                  <%= carRotateLeftBtn %>\">\r\n      <div class=\"<%= imageStyles.rotateLeftImg %>\"></div>\r\n    </button>\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" class=\"<%=layoutStyles.sideButtons %>\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\r\n                  <%= carRotateRightBtn %>\">\r\n      <div class=\"<%= imageStyles.rotateRightImg %>\"></div>\r\n    </button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.blue %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %> <%= carCancelBtn %>\">Cancel</button>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.freeRatioImg %>\"></div>\r\n      <span>FREE</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.originalRatioImg %>\"></div>\r\n      <span>ORIG</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.oneToOneRatioImg %>\"></div>\r\n      <span>1:1</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.threeToFourRatioImg %>\"></div>\r\n      <span>3:4</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.fourToThreeRatioImg %>\"></div>\r\n      <span>4:3</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.sixteenToNineRatioImg %>\"></div>\r\n      <span>16:9</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.nineToSixteenRatioImg %>\"></div>\r\n      <span>9:16</span>\r\n    </div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonWhite %>\r\n       <%= buttonStyles.hideMobile %> <%= carApplyBtn %>\">Apply</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
 /* 48 */
@@ -2829,13 +2865,16 @@
 	        return _this2.bodyTouchMove(ev);
 	      });
 	
-	      $("body").on("mouseup", function (ev) {
+	      $("body").on("mouseup touchend", function (ev) {
 	        return _this2.bodyMouseUp(ev);
 	      });
 	    }
 	  }, {
 	    key: 'bodyMouseMove',
 	    value: function bodyMouseMove(ev) {
+	      ev.preventDefault();
+	      ev.stopPropagation();
+	      ev.bubbles = false;
 	      return this.updatePoinerPos(ev.pageX);
 	    }
 	  }, {
@@ -2916,7 +2955,7 @@
 	
 	
 	// module
-	exports.push([module.id, "._1rx5WoXsKqbwShENBAMQ9D {\n  -webkit-box-flex: 1;\n      -ms-flex: 1 auto;\n          flex: 1 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: nowrap;\n      flex-wrap: nowrap;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 48px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  ._1rx5WoXsKqbwShENBAMQ9D ._1Q06EO8XnkGG3TM6QZ8KKW {\n    padding-left: 8px;\n    padding-right: 8px;\n    display: block;\n    width: 100%;\n    height: 3px; }\n  ._1rx5WoXsKqbwShENBAMQ9D ._2PRMXABLlJorBaekS_nibM {\n    background: #ffffff;\n    width: calc(100% - 16px);\n    height: 3px;\n    position: absolute; }\n  ._1rx5WoXsKqbwShENBAMQ9D ._2_Ya-_PjgpGRFiKJcrZ1L6 {\n    border-radius: 50%;\n    position: absolute;\n    background: #ffffff;\n    width: 16px;\n    height: 16px;\n    top: -7px;\n    z-index: 100; }\n    ._1rx5WoXsKqbwShENBAMQ9D ._2_Ya-_PjgpGRFiKJcrZ1L6:hover {\n      cursor: pointer; }\n", ""]);
+	exports.push([module.id, "._1rx5WoXsKqbwShENBAMQ9D {\n  -webkit-box-flex: 1;\n      -ms-flex: 1 auto;\n          flex: 1 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: nowrap;\n      flex-wrap: nowrap;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 48px;\n  margin-left: 20px;\n  margin-right: 20px; }\n  ._1rx5WoXsKqbwShENBAMQ9D ._1Q06EO8XnkGG3TM6QZ8KKW {\n    padding-left: 8px;\n    padding-right: 8px;\n    display: block;\n    width: 100%;\n    height: 3px; }\n  ._1rx5WoXsKqbwShENBAMQ9D ._2PRMXABLlJorBaekS_nibM {\n    background: #ffffff;\n    width: calc(100% - 16px);\n    height: 3px;\n    position: absolute;\n    left: 0; }\n  ._1rx5WoXsKqbwShENBAMQ9D ._2_Ya-_PjgpGRFiKJcrZ1L6 {\n    border-radius: 50%;\n    position: absolute;\n    background: #ffffff;\n    width: 16px;\n    height: 16px;\n    top: -7px;\n    z-index: 100; }\n    ._1rx5WoXsKqbwShENBAMQ9D ._2_Ya-_PjgpGRFiKJcrZ1L6:hover {\n      cursor: pointer; }\n", ""]);
 	
 	// exports
 	exports.locals = {

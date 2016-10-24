@@ -19,6 +19,9 @@
     <div class="<%= buttonStyles.ucIconBtn %>" id="<%= cropAndRotateBtnId %>">
       <div class="<%= imageStyles.cropAndRotateImg %>"></div>
       <span>CROP &amp; ROTATE</span>
+      <% if(appliedCar) { %>
+        <div class="<%= buttonStyles.applied %>"></div>
+      <% } %>
     </div>
     <div class="<%= buttonStyles.ucIconBtn %>" id="<%= enhanceBtnId %>">
       <div class="<%= imageStyles.enhanceImg %>"></div>
