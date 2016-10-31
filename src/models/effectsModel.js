@@ -1,20 +1,18 @@
 'use strict'
 
-export const FORMAT_EFFECT = 'format';
-export const PROGRESSIVE_EFFECT = 'progressive';
-export const QUALITY_EFFECT = 'quality';
-
-export const ROTATE_EFFECT = 'rotate';
-export const AUTOROTATE_EFFECT = 'autorotate';
-export const FLIP_EFFECT = 'flip';
-export const MIRROR_EFFECT = 'mirror';
-
-export const ENHANCE_EFFECT = 'enhance';
-export const SHARP_EFFECT = 'sharp';
-export const BLUR_EFFECT = 'blur';
-export const GRAYSCALE_EFFECT = 'grayscale';
-export const INVERT_EFFECT = 'invert';
-export const CROP_EFFECT = 'crop';
+const FORMAT_EFFECT = 'format';
+const PROGRESSIVE_EFFECT = 'progressive';
+const QUALITY_EFFECT = 'quality';
+const ROTATE_EFFECT = 'rotate';
+const AUTOROTATE_EFFECT = 'autorotate';
+const FLIP_EFFECT = 'flip';
+const MIRROR_EFFECT = 'mirror';
+const ENHANCE_EFFECT = 'enhance';
+const SHARP_EFFECT = 'sharp';
+const BLUR_EFFECT = 'blur';
+const GRAYSCALE_EFFECT = 'grayscale';
+const INVERT_EFFECT = 'invert';
+const CROP_EFFECT = 'crop';
 
 export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
   this.cdn_url = cdn_url;
@@ -56,16 +54,19 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
       enumerable: true,
       set: function(value) {
         if(value) {
+          if((typeof value) !== 'string') {
+            throw new Error('`value` param can be only a string');
+          }
           let valArr = value.split("/");
-          effectsData["crop"] = valArr[1] + "/" + valArr[2];
+          effectsData[CROP_EFFECT] = valArr[1] + "/" + valArr[2];
         } else {
-          effectsData["crop"] = value;
+          effectsData[CROP_EFFECT] = value;
         }
         return value;
       },
 
       get: function() {
-        return effectsData["crop"]  ? effectsData["crop"] : undefined;
+        return effectsData[CROP_EFFECT] ? effectsData[CROP_EFFECT] : undefined;
       }
     }
   }
@@ -121,11 +122,11 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
   }
 
   this.setCropSize = function(width, height) {
-    if(effectsData["crop"]) {
-      var valArr = effectsData["crop"].split('/');
-      effectsData["crop"] = Math.round(width) + 'x' + Math.round(height) + "/" + valArr[1]; 
+    if(effectsData[CROP_EFFECT]) {
+      var valArr = effectsData[CROP_EFFECT].split('/');
+      effectsData[CROP_EFFECT] = Math.round(width) + 'x' + Math.round(height) + "/" + valArr[1]; 
     } else {
-      effectsData["crop"] = Math.round(width) + 'x' + Math.round(height) + "/" + "center";
+      effectsData[CROP_EFFECT] = Math.round(width) + 'x' + Math.round(height) + "/" + "center";
     }
   }
 
