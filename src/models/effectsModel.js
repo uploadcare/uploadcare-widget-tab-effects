@@ -55,9 +55,12 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
     return {
       enumerable: true,
       set: function(value) {
-        debugger;
-        let valArr = value.split("/");
-        effectsData["crop"] = valArr[1] + "/" + valArr[2];
+        if(value) {
+          let valArr = value.split("/");
+          effectsData["crop"] = valArr[1] + "/" + valArr[2];
+        } else {
+          effectsData["crop"] = value;
+        }
         return value;
       },
 

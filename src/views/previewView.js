@@ -117,6 +117,7 @@ export default class PreviewView {
     this.model.sharp = undefined;
     this.model.grayscale = undefined;
     this.model.rotate = undefined;
+    this.model.crop = undefined;
     this.render();
   }
 }
