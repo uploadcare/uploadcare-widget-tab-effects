@@ -31,7 +31,7 @@
   &.ucButtonGrey {
 
     @media screen and (max-width: 759px) {
-      font-family: SFUIText-Regular;
+      font-family: -apple-system, Roboto, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
       font-size: 16px;
       letter-spacing: 0.3px;
       line-height: 18px;
@@ -48,7 +48,7 @@
   &.ucButtonPrimary {
 
     @media screen and (max-width: 759px) {
-      font-family: SFUIText-Regular;
+      font-family: -apple-system, Roboto, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
       font-size: 16px;
       letter-spacing: 0.3px;
       line-height: 18px;
@@ -79,7 +79,7 @@
   position: relative;
 
   @media screen and (max-width: 760px) {
-    font-family: SFUIText-Regular;
+    font-family: -apple-system, Roboto, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     font-size: 10px;
     letter-spacing: 0.41px;
   }
