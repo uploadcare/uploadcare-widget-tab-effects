@@ -43,7 +43,13 @@ export default class CropAndRotateView {
       carApplyMobBtn: this.CAR_APPLY_MOB_BTN_ID,
       carCancelMobBtn: this.CAR_CANCEL_MOB_BTN_ID,
       carRotateLeftBtn: this.CAR_ROTATE_LEFT_BTN, 
-      carRotateRightBtn: this.CAR_ROTATE_RIGHT_BTN, 
+      carRotateRightBtn: this.CAR_ROTATE_RIGHT_BTN,
+      carOrigRatioBtn: this.CAR_ORIG_RATIO_BTN_ID,
+      carOneToOneRatioBtn: this.CAR_ONE_TO_ONE_RATIO_BTN_ID,
+      carThreeToFourRatioBtn: this.CAR_THREE_TO_FOUR_RATIO_BTN_ID,
+      carFourToThreeRatioBtn: this.CAR_FOUR_TO_THREE_RATIO_BTN_ID,
+      carSixteenToNineRatioBtn: this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID,
+      carNineToSixteenRatioBtn: this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID,
       buttonStyles,
       imageStyles,
       layoutStyles
@@ -61,6 +67,12 @@ export default class CropAndRotateView {
     $(parentEl).find("." + this.CAR_APPLY_BTN_ID).click(ev => { return this.carApplyClick(ev); });
     $(parentEl).find("." + this.CAR_ROTATE_LEFT_BTN).click(ev => { return this.carRotateClick(1); /* rotate left */ });
     $(parentEl).find("." + this.CAR_ROTATE_RIGHT_BTN).click(ev => { return this.carRotateClick(0); /* rotate right */ });
+    $(parentEl).find("." + this.CAR_ORIG_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(null); });
+    $(parentEl).find("." + this.CAR_ONE_TO_ONE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(1); });
+    $(parentEl).find("." + this.CAR_THREE_TO_FOUR_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(3/4); });
+    $(parentEl).find("." + this.CAR_FOUR_TO_THREE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(4/3); });
+    $(parentEl).find("." + this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(16/9); });
+    $(parentEl).find("." + this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(9/16); });
   } 
 
   carCancelClick(ev) {
@@ -94,6 +106,35 @@ export default class CropAndRotateView {
       }
     }
     this.model.rotate = valArray[ind];
+    this.render();
+  }
+
+  carSetCropRatio(ratio) {
+    
+    if(!ratio)
+    {
+      this.model.setCropSize(this.model.imgWidth, this.model.imgHeight);
+    } else if (ratio === 1) {
+      const squareSize = Math.min(this.model.imgWidth, this.model.imgHeight);
+      this.model.setCropSize(squareSize, squareSize);
+    } else {
+      const squareSize = Math.min(this.model.imgWidth, this.model.imgHeight);
+      const curRatio = this.model.imgWidth / this.model.imgHeight;
+      if(curRatio > 1) {
+        if(ratio < curRatio) {
+          this.model.setCropSize(ratio*squareSize, squareSize);
+        } else {
+          this.model.setCropSize(squareSize, 1/ratio*squareSize);
+        }
+      } else {
+        if(ratio < curRatio) {
+          this.model.setCropSize(squareSize, ratio*squareSize);
+        } else {
+          this.model.setCropSize(1/ratio*squareSize, squareSize);
+        }
+      }
+    }
+    
     this.render();
   }
 }

@@ -14,9 +14,12 @@ export const SHARP_EFFECT = 'sharp';
 export const BLUR_EFFECT = 'blur';
 export const GRAYSCALE_EFFECT = 'grayscale';
 export const INVERT_EFFECT = 'invert';
+export const CROP_EFFECT = 'crop';
 
-export default function EffectsModel (cdn_url) {
+export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
   this.cdn_url = cdn_url;
+  this.imgWidth = imgWidth;
+  this.imgHeight = imgHeight;
   var effectsData = {};
 
   Object.defineProperty(this, FORMAT_EFFECT, definePropOptions(FORMAT_EFFECT));
@@ -31,6 +34,7 @@ export default function EffectsModel (cdn_url) {
   Object.defineProperty(this, BLUR_EFFECT, definePropOptions(BLUR_EFFECT));
   Object.defineProperty(this, GRAYSCALE_EFFECT, definePropOptions(GRAYSCALE_EFFECT));
   Object.defineProperty(this, INVERT_EFFECT, definePropOptions(INVERT_EFFECT));
+  Object.defineProperty(this, CROP_EFFECT, defineCropPropOptions());
 
 
   function definePropOptions(propertyName) {
@@ -43,6 +47,22 @@ export default function EffectsModel (cdn_url) {
 
       get: function() {
         return effectsData[propertyName];
+      }
+    }
+  }
+
+  function defineCropPropOptions() {
+    return {
+      enumerable: true,
+      set: function(value) {
+        debugger;
+        let valArr = value.split("/");
+        effectsData["crop"] = valArr[1] + "/" + valArr[2];
+        return value;
+      },
+
+      get: function() {
+        return effectsData["crop"]  ? effectsData["crop"] : undefined;
       }
     }
   }
@@ -62,8 +82,12 @@ export default function EffectsModel (cdn_url) {
   }
 
   this.parseValue = function(formatString) {
-   var formatArr = formatString.split('/');
-   this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+    var formatArr = formatString.split('/');
+    if(formatArr[0] == "crop" ) {
+      this[formatArr[0]] = formatString ? formatString : null;
+    } else {
+      this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+    }
   }
 
   this.getFinalUrl = function() {
@@ -91,5 +115,22 @@ export default function EffectsModel (cdn_url) {
       res += "/";
     } 
     return res;
+  }
+
+  this.setCropSize = function(width, height) {
+    if(effectsData["crop"]) {
+      var valArr = effectsData["crop"].split('/');
+      effectsData["crop"] = Math.round(width) + 'x' + Math.round(height) + "/" + valArr[1]; 
+    } else {
+      effectsData["crop"] = Math.round(width) + 'x' + Math.round(height) + "/" + "center";
+    }
+  }
+
+  this.setCropPosCenter = function() {
+    effectsData["cropPos"] = "center";
+  }
+
+  this.setCropPos = function(posX, posY) {
+    effectsData["cropPos"] = posX + 'x' + posY;
   }
 }
