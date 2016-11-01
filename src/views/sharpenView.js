@@ -25,12 +25,10 @@ export default class SharpenView {
     this.PREVIEW_IMG_ID = "preview_mage_" + IdGenerator.Generate();
     this.SHARPEN_APPLY_BTN_ID = "sharpenApplyBtn" + + IdGenerator.Generate();
     this.SHARPEN_CANCEL_BTN_ID = "sharpenCancelBtn" + + IdGenerator.Generate();
-    this.SHARPEN_APPLY_MOB_BTN_ID = "sharpenApplyMobBtn" + + IdGenerator.Generate();
-    this.SHARPEN_CANCEL_MOB_BTN_ID = "sharpenCancelMobBtn" + + IdGenerator.Generate();
   }
 
   render(parentEl = this.container) {
-    
+
     if(!this.viewDeferred || this.viewDeferred.state() === "resolved") {
       this.viewDeferred = $.Deferred();
     }
@@ -42,8 +40,6 @@ export default class SharpenView {
       previewImageId: this.PREVIEW_IMG_ID,
       sharpenApplyBtn: this.SHARPEN_APPLY_BTN_ID,
       sharpenCancelBtn: this.SHARPEN_CANCEL_BTN_ID,
-      sharpenCancelMobBtn: this.SHARPEN_CANCEL_MOB_BTN_ID,
-      sharpenApplyMobBtn: this.SHARPEN_APPLY_MOB_BTN_ID,
       buttonStyles,
       imageStyles,
       layoutStyles,
@@ -63,9 +59,7 @@ export default class SharpenView {
   setupHandlers(parentEl) {
     $(parentEl).find('#' + this.SHARPEN_CANCEL_BTN_ID).click(ev => { return this.sharpenCancelClick(ev); });
     $(parentEl).find('#' + this.SHARPEN_APPLY_BTN_ID).click(ev => { return this.sharpenApplyClick(ev); });
-    $(parentEl).find('#' + this.SHARPEN_CANCEL_MOB_BTN_ID).click(ev => { return this.sharpenCancelClick(ev); });
-    $(parentEl).find('#' + this.SHARPEN_APPLY_MOB_BTN_ID).click(ev => { return this.sharpenApplyClick(ev); });
-  } 
+  }
 
   sharpenCancelClick(ev) {
     this.model.sharp = undefined;
@@ -81,7 +75,7 @@ export default class SharpenView {
   }
 
   onChangeSlider(newVal) {
-    
+
     if(this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
