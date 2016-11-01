@@ -1,18 +1,17 @@
-<div class="uploadcare--panel__heading">
+<div class="uploadcare--panel__header">
 	<div class="uploadcare--panel__title uploadcare--preview__title">
 		Preview<!-- TODO Take word from locale -->
 	</div>
 </div>
 
 <div class="uploadcare--panel__content">
-	<div class="uploadcare--preview__image-container uploadcare-dialog-preview-image-wrap">
-		<img src="<%= previewUrl %>" alt=""/>
+	<div class="uploadcare--preview__image-container">
+		<img src="<%= previewUrl %>" alt="" class="uploadcare--preview__image"/>
 	</div>
 </div>
 
-<div class="uploadcare--panel__footer uploadcare-panel-footer">
-	<!-- TODO Change Cancel to Remove -->
-	<div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back uploadcare-dialog-button"
+<div class="uploadcare--panel__footer">
+	<div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back"
 			 tabindex="0" role="button" id="<%= removeBtn %>"
 	>Cancel<!-- TODO Take word from locale --></div>
 
@@ -47,7 +46,7 @@
 		</div>
 	</div>
 
-	<div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done uploadcare-dialog-button-success"
+	<div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done"
 			 tabindex="0" role="button" id="<%= doneBtn %>"
 	>Done<!-- TODO Take word from locale --></div>
 </div>
