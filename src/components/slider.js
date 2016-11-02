@@ -36,7 +36,6 @@ export default class Slider {
   }
 
   change(ev) {
-    console.log(ev);
     if(this.onChangeHandler) {
       this.onChangeHandler(ev.currentTarget.value);
     }
