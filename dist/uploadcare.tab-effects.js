@@ -84,7 +84,7 @@
 	      if (fileInfo.isImage) {
 	        isFileTaken = true;
 	      }
-	      var model = new _effectsModel2.default('ucarecdn.com/');
+	      var model = new _effectsModel2.default('ucarecdn.com/', fileInfo.originalImageInfo.width, fileInfo.originalImageInfo.height);
 	      model.parseUrl(fileInfo.cdnUrl);
 	      var previewView = new _previewView2.default(container, model);
 	      previewView.render().then(function (type) {
@@ -2505,6 +2505,12 @@
 	        carCancelMobBtn: this.CAR_CANCEL_MOB_BTN_ID,
 	        carRotateLeftBtn: this.CAR_ROTATE_LEFT_BTN,
 	        carRotateRightBtn: this.CAR_ROTATE_RIGHT_BTN,
+	        carOrigRatioBtn: this.CAR_ORIG_RATIO_BTN_ID,
+	        carOneToOneRatioBtn: this.CAR_ONE_TO_ONE_RATIO_BTN_ID,
+	        carThreeToFourRatioBtn: this.CAR_THREE_TO_FOUR_RATIO_BTN_ID,
+	        carFourToThreeRatioBtn: this.CAR_FOUR_TO_THREE_RATIO_BTN_ID,
+	        carSixteenToNineRatioBtn: this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID,
+	        carNineToSixteenRatioBtn: this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID,
 	        buttonStyles: _buttons2.default,
 	        imageStyles: _images2.default,
 	        layoutStyles: _viewContainer2.default
@@ -2532,6 +2538,24 @@
 	      });
 	      $(parentEl).find("." + this.CAR_ROTATE_RIGHT_BTN).click(function (ev) {
 	        return _this.carRotateClick(0); /* rotate right */
+	      });
+	      $(parentEl).find("." + this.CAR_ORIG_RATIO_BTN_ID).click(function (ev) {
+	        return _this.carSetCropRatio(null);
+	      });
+	      $(parentEl).find("." + this.CAR_ONE_TO_ONE_RATIO_BTN_ID).click(function (ev) {
+	        return _this.carSetCropRatio(1);
+	      });
+	      $(parentEl).find("." + this.CAR_THREE_TO_FOUR_RATIO_BTN_ID).click(function (ev) {
+	        return _this.carSetCropRatio(3 / 4);
+	      });
+	      $(parentEl).find("." + this.CAR_FOUR_TO_THREE_RATIO_BTN_ID).click(function (ev) {
+	        return _this.carSetCropRatio(4 / 3);
+	      });
+	      $(parentEl).find("." + this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID).click(function (ev) {
+	        return _this.carSetCropRatio(16 / 9);
+	      });
+	      $(parentEl).find("." + this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID).click(function (ev) {
+	        return _this.carSetCropRatio(9 / 16);
 	      });
 	    }
 	  }, {
@@ -2571,6 +2595,35 @@
 	      this.model.rotate = valArray[ind];
 	      this.render();
 	    }
+	  }, {
+	    key: 'carSetCropRatio',
+	    value: function carSetCropRatio(ratio) {
+	
+	      if (!ratio) {
+	        this.model.setCropSize(this.model.imgWidth, this.model.imgHeight);
+	      } else if (ratio === 1) {
+	        var squareSize = Math.min(this.model.imgWidth, this.model.imgHeight);
+	        this.model.setCropSize(squareSize, squareSize);
+	      } else {
+	        var _squareSize = Math.min(this.model.imgWidth, this.model.imgHeight);
+	        var curRatio = this.model.imgWidth / this.model.imgHeight;
+	        if (curRatio > 1) {
+	          if (ratio < curRatio) {
+	            this.model.setCropSize(ratio * _squareSize, _squareSize);
+	          } else {
+	            this.model.setCropSize(_squareSize, 1 / ratio * _squareSize);
+	          }
+	        } else {
+	          if (ratio < curRatio) {
+	            this.model.setCropSize(_squareSize, ratio * _squareSize);
+	          } else {
+	            this.model.setCropSize(1 / ratio * _squareSize, _squareSize);
+	          }
+	        }
+	      }
+	
+	      this.render();
+	    }
 	  }]);
 	  return CropAndRotateView;
 	}();
@@ -2581,7 +2634,7 @@
 /* 47 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <h1>Crop &amp; Rotate</h1>\r\n  </div>\r\n  <div class=\"<%=layoutStyles.imageBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\r\n                  <%= carRotateLeftBtn %>\">\r\n      <div class=\"<%= imageStyles.rotateLeftImg %>\"></div>\r\n    </button>\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" class=\"<%=layoutStyles.sideButtons %>\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\r\n                  <%= carRotateRightBtn %>\">\r\n      <div class=\"<%= imageStyles.rotateRightImg %>\"></div>\r\n    </button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.blue %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %> <%= carCancelBtn %>\">Cancel</button>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.freeRatioImg %>\"></div>\r\n      <span>FREE</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.originalRatioImg %>\"></div>\r\n      <span>ORIG</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.oneToOneRatioImg %>\"></div>\r\n      <span>1:1</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.threeToFourRatioImg %>\"></div>\r\n      <span>3:4</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.fourToThreeRatioImg %>\"></div>\r\n      <span>4:3</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.sixteenToNineRatioImg %>\"></div>\r\n      <span>16:9</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.nineToSixteenRatioImg %>\"></div>\r\n      <span>9:16</span>\r\n    </div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonWhite %>\r\n       <%= buttonStyles.hideMobile %> <%= carApplyBtn %>\">Apply</button>\r\n  </div>\r\n</div>\r\n"
+	module.exports = "<div class=\"<%= layoutStyles.viewContainer %>\">\r\n  <div class=\"<%= layoutStyles.headerBlock %>\">\r\n    <h1>Crop &amp; Rotate</h1>\r\n  </div>\r\n  <div class=\"<%=layoutStyles.imageBlock %>\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\r\n                  <%= carRotateLeftBtn %>\">\r\n      <div class=\"<%= imageStyles.rotateLeftImg %>\"></div>\r\n    </button>\r\n    <img src=\"<%= previewUrl %>\" alt=\"\" class=\"<%=layoutStyles.sideButtons %>\">\r\n    <button class=\"<%= buttonStyles.ucIconBtn %> \r\n                  <%= buttonStyles.white %>\r\n                  <%= carRotateRightBtn %>\">\r\n      <div class=\"<%= imageStyles.rotateRightImg %>\"></div>\r\n    </button>\r\n  </div>\r\n  <div class=\"<%= layoutStyles.toolBoxContainer %>\r\n              <%= layoutStyles.blue %>\">\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonGrey %>\r\n       <%= buttonStyles.hideMobile %> <%= carCancelBtn %>\">Cancel</button>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>\">\r\n      <div class=\"<%= imageStyles.freeRatioImg %>\"></div>\r\n      <span>FREE</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %> <%= carOrigRatioBtn %>\">\r\n      <div class=\"<%= imageStyles.originalRatioImg %>\"></div>\r\n      <span>ORIG</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %> <%= carOneToOneRatioBtn %>\">\r\n      <div class=\"<%= imageStyles.oneToOneRatioImg %>\"></div>\r\n      <span>1:1</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %> <%= carThreeToFourRatioBtn %>\">\r\n      <div class=\"<%= imageStyles.threeToFourRatioImg %>\"></div>\r\n      <span>3:4</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %> <%= carFourToThreeRatioBtn %>\">\r\n      <div class=\"<%= imageStyles.fourToThreeRatioImg %>\"></div>\r\n      <span>4:3</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %> <%= carSixteenToNineRatioBtn %>\">\r\n      <div class=\"<%= imageStyles.sixteenToNineRatioImg %>\"></div>\r\n      <span>16:9</span>\r\n    </div>\r\n    <div class=\"<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %> <%= carNineToSixteenRatioBtn %>\">\r\n      <div class=\"<%= imageStyles.nineToSixteenRatioImg %>\"></div>\r\n      <span>9:16</span>\r\n    </div>\r\n    <button class=\"<%= buttonStyles.ucButton %>\r\n       <%= buttonStyles.ucButtonWhite %>\r\n       <%= buttonStyles.hideMobile %> <%= carApplyBtn %>\">Apply</button>\r\n  </div>\r\n</div>\r\n"
 
 /***/ },
 /* 48 */
@@ -3141,7 +3194,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.INVERT_EFFECT = exports.GRAYSCALE_EFFECT = exports.BLUR_EFFECT = exports.SHARP_EFFECT = exports.ENHANCE_EFFECT = exports.MIRROR_EFFECT = exports.FLIP_EFFECT = exports.AUTOROTATE_EFFECT = exports.ROTATE_EFFECT = exports.QUALITY_EFFECT = exports.PROGRESSIVE_EFFECT = exports.FORMAT_EFFECT = undefined;
+	exports.CROP_EFFECT = exports.INVERT_EFFECT = exports.GRAYSCALE_EFFECT = exports.BLUR_EFFECT = exports.SHARP_EFFECT = exports.ENHANCE_EFFECT = exports.MIRROR_EFFECT = exports.FLIP_EFFECT = exports.AUTOROTATE_EFFECT = exports.ROTATE_EFFECT = exports.QUALITY_EFFECT = exports.PROGRESSIVE_EFFECT = exports.FORMAT_EFFECT = undefined;
 	
 	var _defineProperty = __webpack_require__(5);
 	
@@ -3165,9 +3218,12 @@
 	var BLUR_EFFECT = exports.BLUR_EFFECT = 'blur';
 	var GRAYSCALE_EFFECT = exports.GRAYSCALE_EFFECT = 'grayscale';
 	var INVERT_EFFECT = exports.INVERT_EFFECT = 'invert';
+	var CROP_EFFECT = exports.CROP_EFFECT = 'crop';
 	
-	function EffectsModel(cdn_url) {
+	function EffectsModel(cdn_url, imgWidth, imgHeight) {
 	  this.cdn_url = cdn_url;
+	  this.imgWidth = imgWidth;
+	  this.imgHeight = imgHeight;
 	  var effectsData = {};
 	
 	  (0, _defineProperty2.default)(this, FORMAT_EFFECT, definePropOptions(FORMAT_EFFECT));
@@ -3182,6 +3238,7 @@
 	  (0, _defineProperty2.default)(this, BLUR_EFFECT, definePropOptions(BLUR_EFFECT));
 	  (0, _defineProperty2.default)(this, GRAYSCALE_EFFECT, definePropOptions(GRAYSCALE_EFFECT));
 	  (0, _defineProperty2.default)(this, INVERT_EFFECT, definePropOptions(INVERT_EFFECT));
+	  (0, _defineProperty2.default)(this, CROP_EFFECT, defineCropPropOptions());
 	
 	  function definePropOptions(propertyName) {
 	    return {
@@ -3193,6 +3250,22 @@
 	
 	      get: function get() {
 	        return effectsData[propertyName];
+	      }
+	    };
+	  }
+	
+	  function defineCropPropOptions() {
+	    return {
+	      enumerable: true,
+	      set: function set(value) {
+	        debugger;
+	        var valArr = value.split("/");
+	        effectsData["crop"] = valArr[1] + "/" + valArr[2];
+	        return value;
+	      },
+	
+	      get: function get() {
+	        return effectsData["crop"] ? effectsData["crop"] : undefined;
 	      }
 	    };
 	  }
@@ -3213,7 +3286,11 @@
 	
 	  this.parseValue = function (formatString) {
 	    var formatArr = formatString.split('/');
-	    this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+	    if (formatArr[0] == "crop") {
+	      this[formatArr[0]] = formatString ? formatString : null;
+	    } else {
+	      this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+	    }
 	  };
 	
 	  this.getFinalUrl = function () {
@@ -3241,6 +3318,23 @@
 	      res += "/";
 	    }
 	    return res;
+	  };
+	
+	  this.setCropSize = function (width, height) {
+	    if (effectsData["crop"]) {
+	      var valArr = effectsData["crop"].split('/');
+	      effectsData["crop"] = Math.round(width) + 'x' + Math.round(height) + "/" + valArr[1];
+	    } else {
+	      effectsData["crop"] = Math.round(width) + 'x' + Math.round(height) + "/" + "center";
+	    }
+	  };
+	
+	  this.setCropPosCenter = function () {
+	    effectsData["cropPos"] = "center";
+	  };
+	
+	  this.setCropPos = function (posX, posY) {
+	    effectsData["cropPos"] = posX + 'x' + posY;
 	  };
 	}
 

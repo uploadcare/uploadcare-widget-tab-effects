@@ -17,7 +17,7 @@ function effectsTab(container, button, dialogApi, settings) {
       if(fileInfo.isImage) {
         isFileTaken = true;
       }
-        let model = new EffectsModel('ucarecdn.com/');
+        let model = new EffectsModel('ucarecdn.com/', fileInfo.originalImageInfo.width, fileInfo.originalImageInfo.height);
         model.parseUrl(fileInfo.cdnUrl);
         let previewView = new PreviewView(container, model);
         previewView

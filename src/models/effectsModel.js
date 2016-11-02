@@ -1,22 +1,23 @@
 'use strict'
 
-export const FORMAT_EFFECT = 'format';
-export const PROGRESSIVE_EFFECT = 'progressive';
-export const QUALITY_EFFECT = 'quality';
+const FORMAT_EFFECT = 'format';
+const PROGRESSIVE_EFFECT = 'progressive';
+const QUALITY_EFFECT = 'quality';
+const ROTATE_EFFECT = 'rotate';
+const AUTOROTATE_EFFECT = 'autorotate';
+const FLIP_EFFECT = 'flip';
+const MIRROR_EFFECT = 'mirror';
+const ENHANCE_EFFECT = 'enhance';
+const SHARP_EFFECT = 'sharp';
+const BLUR_EFFECT = 'blur';
+const GRAYSCALE_EFFECT = 'grayscale';
+const INVERT_EFFECT = 'invert';
+const CROP_EFFECT = 'crop';
 
-export const ROTATE_EFFECT = 'rotate';
-export const AUTOROTATE_EFFECT = 'autorotate';
-export const FLIP_EFFECT = 'flip';
-export const MIRROR_EFFECT = 'mirror';
-
-export const ENHANCE_EFFECT = 'enhance';
-export const SHARP_EFFECT = 'sharp';
-export const BLUR_EFFECT = 'blur';
-export const GRAYSCALE_EFFECT = 'grayscale';
-export const INVERT_EFFECT = 'invert';
-
-export default function EffectsModel (cdn_url) {
+export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
   this.cdn_url = cdn_url;
+  this.imgWidth = imgWidth;
+  this.imgHeight = imgHeight;
   var effectsData = {};
 
   Object.defineProperty(this, FORMAT_EFFECT, definePropOptions(FORMAT_EFFECT));
@@ -31,6 +32,7 @@ export default function EffectsModel (cdn_url) {
   Object.defineProperty(this, BLUR_EFFECT, definePropOptions(BLUR_EFFECT));
   Object.defineProperty(this, GRAYSCALE_EFFECT, definePropOptions(GRAYSCALE_EFFECT));
   Object.defineProperty(this, INVERT_EFFECT, definePropOptions(INVERT_EFFECT));
+  Object.defineProperty(this, CROP_EFFECT, defineCropPropOptions());
 
 
   function definePropOptions(propertyName) {
@@ -43,6 +45,28 @@ export default function EffectsModel (cdn_url) {
 
       get: function() {
         return effectsData[propertyName];
+      }
+    }
+  }
+
+  function defineCropPropOptions() {
+    return {
+      enumerable: true,
+      set: function(value) {
+        if(value) {
+          if((typeof value) !== 'string') {
+            throw new Error('`value` param can be only a string');
+          }
+          let valArr = value.split("/");
+          effectsData[CROP_EFFECT] = valArr[1] + "/" + valArr[2];
+        } else {
+          effectsData[CROP_EFFECT] = value;
+        }
+        return value;
+      },
+
+      get: function() {
+        return effectsData[CROP_EFFECT] ? effectsData[CROP_EFFECT] : undefined;
       }
     }
   }
@@ -62,8 +86,12 @@ export default function EffectsModel (cdn_url) {
   }
 
   this.parseValue = function(formatString) {
-   var formatArr = formatString.split('/');
-   this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+    var formatArr = formatString.split('/');
+    if(formatArr[0] == "crop" ) {
+      this[formatArr[0]] = formatString ? formatString : null;
+    } else {
+      this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+    }
   }
 
   this.getFinalUrl = function() {
@@ -91,5 +119,22 @@ export default function EffectsModel (cdn_url) {
       res += "/";
     } 
     return res;
+  }
+
+  this.setCropSize = function(width, height) {
+    if(effectsData[CROP_EFFECT]) {
+      var valArr = effectsData[CROP_EFFECT].split('/');
+      effectsData[CROP_EFFECT] = Math.round(width) + 'x' + Math.round(height) + "/" + valArr[1]; 
+    } else {
+      effectsData[CROP_EFFECT] = Math.round(width) + 'x' + Math.round(height) + "/" + "center";
+    }
+  }
+
+  this.setCropPosCenter = function() {
+    effectsData["cropPos"] = "center";
+  }
+
+  this.setCropPos = function(posX, posY) {
+    effectsData["cropPos"] = posX + 'x' + posY;
   }
 }
