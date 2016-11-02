@@ -10,7 +10,7 @@
     <meta name="description" content="Uploadcare effects widget example">
     <!-- The best place for this one is your <HEAD> tag -->
     <script>UPLOADCARE_PUBLIC_KEY = "b2a5dd7667f04ddaac62";</script>
-    
+
     <style>
       @media screen and (max-width: 760px) {
         .uploadcare-responsive-panel .uploadcare-dialog-tabs-panel {
@@ -37,12 +37,12 @@
               uc.jQuery.extend({}, config, {multiple: false})
             );
 
-          
+
             uc.jQuery("#editBtn").click(function(ev) {
               var fileUrl = uc.jQuery("#img").attr("src");
 
               var file = uploadcare.fileFrom('uploaded', fileUrl, settings);
-              
+
               uploadcare.openDialog(file, settings).always(function(result) {
                 result.then(function(imgData) {
                   uc.jQuery("#img").attr("src", imgData.cdnUrl);
@@ -51,12 +51,12 @@
           });
         });
 
-        
+
       };
     </script>
-<!--     
+<!--
     <script src="https://ucarecdn.com/widget/2.10.0/uploadcare/uploadcare.full.min.js" charset="utf-8"></script>
--->    
-    <script charset="utf-8" src="https://ucarecdn.com/widget/3.0.0-alpha/uploadcare/uploadcare.full.min.js"></script>
+-->
+    <script charset="utf-8" src="https://ucarecdn.com/widget/3.0.0-alpha.2/uploadcare/uploadcare.full.min.js"></script>
   </body>
 </html>
