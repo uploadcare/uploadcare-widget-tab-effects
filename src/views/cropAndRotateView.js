@@ -14,7 +14,7 @@ export default class CropAndRotateView {
   constructor(container, effectsModel) {
     this.container = container;
     this.model = effectsModel;
-    
+
     this.CAR_APPLY_BTN_ID = "carApplyBtn" + IdGenerator.Generate();
     this.CAR_CANCEL_BTN_ID = "carCancelBtn" + IdGenerator.Generate();
 
@@ -40,10 +40,8 @@ export default class CropAndRotateView {
       previewUrl: this.model.getPreviewUrl(800, 382),
       carApplyBtn: this.CAR_APPLY_BTN_ID,
       carCancelBtn: this.CAR_CANCEL_BTN_ID,
-      carApplyMobBtn: this.CAR_APPLY_MOB_BTN_ID,
-      carCancelMobBtn: this.CAR_CANCEL_MOB_BTN_ID,
-      carRotateLeftBtn: this.CAR_ROTATE_LEFT_BTN, 
-      carRotateRightBtn: this.CAR_ROTATE_RIGHT_BTN, 
+      carRotateLeftBtn: this.CAR_ROTATE_LEFT_BTN,
+      carRotateRightBtn: this.CAR_ROTATE_RIGHT_BTN,
       buttonStyles,
       imageStyles,
       layoutStyles
@@ -61,7 +59,7 @@ export default class CropAndRotateView {
     $(parentEl).find("." + this.CAR_APPLY_BTN_ID).click(ev => { return this.carApplyClick(ev); });
     $(parentEl).find("." + this.CAR_ROTATE_LEFT_BTN).click(ev => { return this.carRotateClick(1); /* rotate left */ });
     $(parentEl).find("." + this.CAR_ROTATE_RIGHT_BTN).click(ev => { return this.carRotateClick(0); /* rotate right */ });
-  } 
+  }
 
   carCancelClick(ev) {
     this.model.rotate = undefined;

@@ -1,55 +1,62 @@
-<div class="<%= layoutStyles.viewContainer %>">
-  <div class="<%= layoutStyles.headerBlock %>">
-    <h1>Crop &amp; Rotate</h1>
-  </div>
-  <div class="<%=layoutStyles.imageBlock %>">
-    <button class="<%= buttonStyles.ucIconBtn %> 
+<div class="uploadcare--panel__header">
+	<div class="uploadcare--panel__title uploadcare--preview__title">
+		Crop & Rotate<!-- TODO Take word from locale -->
+	</div>
+</div>
+
+<div class="uploadcare--panel__content">
+	<div class="uploadcare--preview__image-container">
+		<button class="<%= buttonStyles.ucIconBtn %>
                   <%= buttonStyles.white %>
                   <%= carRotateLeftBtn %>">
-      <div class="<%= imageStyles.rotateLeftImg %>"></div>
-    </button>
-    <img src="<%= previewUrl %>" alt="" class="<%=layoutStyles.sideButtons %>">
-    <button class="<%= buttonStyles.ucIconBtn %> 
+			<div class="<%= imageStyles.rotateLeftImg %>"></div>
+		</button>
+		<img src="<%= previewUrl %>" alt="" class="uploadcare--preview__image"/>
+		<button class="<%= buttonStyles.ucIconBtn %>
                   <%= buttonStyles.white %>
                   <%= carRotateRightBtn %>">
-      <div class="<%= imageStyles.rotateRightImg %>"></div>
-    </button>
-  </div>
-  <div class="<%= layoutStyles.toolBoxContainer %>
-              <%= layoutStyles.blue %>">
-    <button class="<%= buttonStyles.ucButton %>
-       <%= buttonStyles.ucButtonGrey %>
-       <%= buttonStyles.hideMobile %> <%= carCancelBtn %>">Cancel</button>
-    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
-      <div class="<%= imageStyles.freeRatioImg %>"></div>
-      <span>FREE</span>
-    </div>
-    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
-      <div class="<%= imageStyles.originalRatioImg %>"></div>
-      <span>ORIG</span>
-    </div>
-    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
-      <div class="<%= imageStyles.oneToOneRatioImg %>"></div>
-      <span>1:1</span>
-    </div>
-    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
-      <div class="<%= imageStyles.threeToFourRatioImg %>"></div>
-      <span>3:4</span>
-    </div>
-    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
-      <div class="<%= imageStyles.fourToThreeRatioImg %>"></div>
-      <span>4:3</span>
-    </div>
-    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
-      <div class="<%= imageStyles.sixteenToNineRatioImg %>"></div>
-      <span>16:9</span>
-    </div>
-    <div class="<%= buttonStyles.ucIconBtn %> <%= buttonStyles.white %>">
-      <div class="<%= imageStyles.nineToSixteenRatioImg %>"></div>
-      <span>9:16</span>
-    </div>
-    <button class="<%= buttonStyles.ucButton %>
-       <%= buttonStyles.ucButtonWhite %>
-       <%= buttonStyles.hideMobile %> <%= carApplyBtn %>">Apply</button>
-  </div>
+			<div class="<%= imageStyles.rotateRightImg %>"></div>
+		</button>
+	</div>
+</div>
+
+<div class="uploadcare--panel__footer">
+	<div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back <%= carCancelBtn %>"
+			 tabindex="0" role="button"
+	>Cancel<!-- TODO Take word from locale --></div>
+
+	<div class="uploadcare--panel__footer-additions">
+		<div class="<%= buttonStyles.ucIconBtn %>">
+			<div class="<%= imageStyles.freeRatioImg %>"></div>
+			<span>FREE</span>
+		</div>
+		<div class="<%= buttonStyles.ucIconBtn %>">
+			<div class="<%= imageStyles.originalRatioImg %>"></div>
+			<span>ORIG</span>
+		</div>
+		<div class="<%= buttonStyles.ucIconBtn %>">
+			<div class="<%= imageStyles.oneToOneRatioImg %>"></div>
+			<span>1:1</span>
+		</div>
+		<div class="<%= buttonStyles.ucIconBtn %>">
+			<div class="<%= imageStyles.threeToFourRatioImg %>"></div>
+			<span>3:4</span>
+		</div>
+		<div class="<%= buttonStyles.ucIconBtn %>">
+			<div class="<%= imageStyles.fourToThreeRatioImg %>"></div>
+			<span>4:3</span>
+		</div>
+		<div class="<%= buttonStyles.ucIconBtn %>">
+			<div class="<%= imageStyles.sixteenToNineRatioImg %>"></div>
+			<span>16:9</span>
+		</div>
+		<div class="<%= buttonStyles.ucIconBtn %>">
+			<div class="<%= imageStyles.nineToSixteenRatioImg %>"></div>
+			<span>9:16</span>
+		</div>
+	</div>
+
+	<div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done <%= carApplyBtn %>"
+			 tabindex="0" role="button"
+	>Done<!-- TODO Take word from locale --></div>
 </div>
