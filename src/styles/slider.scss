@@ -1,6 +1,7 @@
 @import 'constants';
 
 .slider {
+  display: none !important;
   flex: 1 auto;
   display: flex;
   justify-content: center;
