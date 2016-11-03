@@ -1,24 +1,25 @@
-<div class="<%= layoutStyles.viewContainer %>">
-  <div class="<%= layoutStyles.headerBlock %>">
-    <button class="<%= buttonStyles.ucButton %>
-                   <%= buttonStyles.ucButtonPrimary %> 
-                   <%= buttonStyles.hideScreen %>" id="<%= sharpenCancelMobBtn %>">Cancel</button>
-    <h1>Sharpen</h1>
-    <button class="<%=buttonStyles.ucButton %>
-                   <%=buttonStyles.ucButtonPrimary %> 
-                   <%=buttonStyles.hideScreen %>" id="<%= sharpenApplyMobBtn %>">Apply</button>
-  </div>
-  <div class="<%= layoutStyles.imageBlock %>">
-    <img src="<%= previewUrl %>" alt="" id="<%= previewImageId%>"/>
-  </div>
-  <div class="<%= layoutStyles.toolBoxContainer %>
-              <%= layoutStyles.blue %>">
-    <button class="<%= buttonStyles.ucButton %>
-       <%= buttonStyles.ucButtonGrey %>
-       <%= buttonStyles.hideMobile %>" id="<%= sharpenCancelBtn %>">Cancel</button>
-    <div class="<%= sliderStyles.slider %>" id="<%= sliderId %>"></div>
-    <button class="<%= buttonStyles.ucButton %>
-       <%= buttonStyles.ucButtonWhite %>
-       <%= buttonStyles.hideMobile %>" id="<%= sharpenApplyBtn %>">Apply</button>
-  </div>
+<div class="uploadcare--panel__header">
+	<div class="uploadcare--panel__title uploadcare--preview__title">
+		Sharpen<!-- TODO Take word from locale -->
+	</div>
+</div>
+
+<div class="uploadcare--panel__content">
+	<div class="uploadcare--preview__image-container">
+		<img src="<%= previewUrl %>" alt="" id="<%= previewImageId%>" class="uploadcare--preview__image"/>
+	</div>
+</div>
+
+<div class="uploadcare--panel__footer uploadcare--panel__footer_inverted">
+	<div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back"
+			 tabindex="0" role="button" id="<%= sharpenCancelBtn %>"
+	>Cancel<!-- TODO Take word from locale --></div>
+
+	<div class="uploadcare--panel__footer-additions">
+		<div class="uploadcare-tab-effects--slider" id="<%= sliderId %>"></div>
+	</div>
+
+	<div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done"
+			 tabindex="0" role="button" id="<%= sharpenApplyBtn %>"
+	>Done<!-- TODO Take word from locale --></div>
 </div>

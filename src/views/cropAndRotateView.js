@@ -4,9 +4,7 @@ import ejs from '../../node_modules/ejs/ejs';
 import cropAndRotateTemplate from '../templates/cropAndRotate.html';
 import IdGenerator from '../tools/IdGenerator.js';
 
-import buttonStyles from '../styles/buttons.scss';
-import imageStyles from '../styles/images.scss';
-import layoutStyles from '../styles/viewContainer.scss';
+import '../styles/rotate-button.pcss';
 
 let $ = uploadcare.jQuery;
 
@@ -14,7 +12,7 @@ export default class CropAndRotateView {
   constructor(container, effectsModel) {
     this.container = container;
     this.model = effectsModel;
-    
+
     this.CAR_APPLY_BTN_ID = "carApplyBtn" + IdGenerator.Generate();
     this.CAR_CANCEL_BTN_ID = "carCancelBtn" + IdGenerator.Generate();
 
@@ -40,19 +38,14 @@ export default class CropAndRotateView {
       previewUrl: this.model.getPreviewUrl(800, 382),
       carApplyBtn: this.CAR_APPLY_BTN_ID,
       carCancelBtn: this.CAR_CANCEL_BTN_ID,
-      carApplyMobBtn: this.CAR_APPLY_MOB_BTN_ID,
-      carCancelMobBtn: this.CAR_CANCEL_MOB_BTN_ID,
-      carRotateLeftBtn: this.CAR_ROTATE_LEFT_BTN, 
+      carRotateLeftBtn: this.CAR_ROTATE_LEFT_BTN,
       carRotateRightBtn: this.CAR_ROTATE_RIGHT_BTN,
-      carOrigRatioBtn: this.CAR_ORIG_RATIO_BTN_ID,
-      carOneToOneRatioBtn: this.CAR_ONE_TO_ONE_RATIO_BTN_ID,
-      carThreeToFourRatioBtn: this.CAR_THREE_TO_FOUR_RATIO_BTN_ID,
-      carFourToThreeRatioBtn: this.CAR_FOUR_TO_THREE_RATIO_BTN_ID,
-      carSixteenToNineRatioBtn: this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID,
-      carNineToSixteenRatioBtn: this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID,
-      buttonStyles,
-      imageStyles,
-      layoutStyles
+			carOrigRatioBtn: this.CAR_ORIG_RATIO_BTN_ID,
+			carOneToOneRatioBtn: this.CAR_ONE_TO_ONE_RATIO_BTN_ID,
+			carThreeToFourRatioBtn: this.CAR_THREE_TO_FOUR_RATIO_BTN_ID,
+			carFourToThreeRatioBtn: this.CAR_FOUR_TO_THREE_RATIO_BTN_ID,
+			carSixteenToNineRatioBtn: this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID,
+			carNineToSixteenRatioBtn: this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID,
     };
 
     let markupStr = ejs.render(cropAndRotateTemplate, renderData);
@@ -73,7 +66,7 @@ export default class CropAndRotateView {
     $(parentEl).find("." + this.CAR_FOUR_TO_THREE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(4/3); });
     $(parentEl).find("." + this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(16/9); });
     $(parentEl).find("." + this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(9/16); });
-  } 
+  }
 
   carCancelClick(ev) {
     this.model.rotate = undefined;
@@ -110,7 +103,7 @@ export default class CropAndRotateView {
   }
 
   carSetCropRatio(ratio) {
-    
+
     if(!ratio)
     {
       this.model.setCropSize(this.model.imgWidth, this.model.imgHeight);
@@ -134,7 +127,7 @@ export default class CropAndRotateView {
         }
       }
     }
-    
+
     this.render();
   }
 }
