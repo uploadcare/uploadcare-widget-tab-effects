@@ -4,9 +4,7 @@ import ejs from '../../node_modules/ejs/ejs';
 import cropAndRotateTemplate from '../templates/cropAndRotate.html';
 import IdGenerator from '../tools/IdGenerator.js';
 
-import buttonStyles from '../styles/buttons.scss';
-import imageStyles from '../styles/images.scss';
-import layoutStyles from '../styles/viewContainer.scss';
+import '../styles/rotate-button.pcss';
 
 let $ = uploadcare.jQuery;
 
@@ -48,9 +46,6 @@ export default class CropAndRotateView {
 			carFourToThreeRatioBtn: this.CAR_FOUR_TO_THREE_RATIO_BTN_ID,
 			carSixteenToNineRatioBtn: this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID,
 			carNineToSixteenRatioBtn: this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID,
-			buttonStyles,
-      imageStyles,
-      layoutStyles
     };
 
     let markupStr = ejs.render(cropAndRotateTemplate, renderData);

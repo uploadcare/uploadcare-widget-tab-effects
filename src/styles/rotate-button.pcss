@@ -1,0 +1,49 @@
+.uploadcare-tab-effects--rotate-button {
+	display: flex;
+	align-items: center;
+
+	height: 60px;
+
+  svg {
+		g {
+			stroke: #454545;
+		}
+  }
+
+	&:hover, &:focus {
+		svg {
+			g {
+				stroke: #282828;
+			}
+		}
+	}
+
+	&:active {
+		svg {
+			g {
+				stroke: #000;
+			}
+		}
+	}
+}
+
+.uploadcare-tab-effects--rotate-button_current {
+	position: relative;
+
+	&:before {
+		content: '';
+		display: block;
+
+		position: absolute;
+		top: 100%;
+		left: 50%;
+
+		width: 6px;
+		height: 6px;
+
+		background: #3787ec;
+		border-radius: 50%;
+
+		transform: translateX(-50%);
+	}
+}

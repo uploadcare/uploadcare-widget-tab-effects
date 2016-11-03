@@ -5,10 +5,7 @@ import sharpenTemplate from '../templates/sharpen.html';
 import Slider from "../components/slider.js";
 import IdGenerator from '../tools/IdGenerator.js';
 
-import buttonStyles from '../styles/buttons.scss';
-import imageStyles from '../styles/images.scss';
-import layoutStyles from '../styles/viewContainer.scss';
-import sliderStyles from '../styles/slider.scss';
+import '../styles/slider.pcss';
 
 let $ = uploadcare.jQuery;
 
@@ -40,10 +37,6 @@ export default class SharpenView {
       previewImageId: this.PREVIEW_IMG_ID,
       sharpenApplyBtn: this.SHARPEN_APPLY_BTN_ID,
       sharpenCancelBtn: this.SHARPEN_CANCEL_BTN_ID,
-      buttonStyles,
-      imageStyles,
-      layoutStyles,
-      sliderStyles
     };
 
     let markupStr = ejs.render(sharpenTemplate, renderData);

@@ -6,17 +6,7 @@
 
 <div class="uploadcare--panel__content">
 	<div class="uploadcare--preview__image-container">
-		<button class="<%= buttonStyles.ucIconBtn %>
-                  <%= buttonStyles.white %>
-                  <%= carRotateLeftBtn %>">
-			<div class="<%= imageStyles.rotateLeftImg %>"></div>
-		</button>
 		<img src="<%= previewUrl %>" alt="" class="uploadcare--preview__image"/>
-		<button class="<%= buttonStyles.ucIconBtn %>
-                  <%= buttonStyles.white %>
-                  <%= carRotateRightBtn %>">
-			<div class="<%= imageStyles.rotateRightImg %>"></div>
-		</button>
 	</div>
 </div>
 
@@ -26,6 +16,10 @@
 	>Cancel<!-- TODO Take word from locale --></div>
 
 	<div class="uploadcare--panel__footer-additions">
+		<div role="button" class="uploadcare-tab-effects--rotate-button <%= carRotateLeftBtn %>">
+			<svg width="29" height="25" viewBox="0 0 29 25" xmlns="http://www.w3.org/2000/svg"><g stroke="#000" fill="none" fill-rule="evenodd"><path d="M5 12.5C5 6.149 10.149 1 16.5 1S28 6.149 28 12.5 22.851 24 16.5 24"/><path d="M9 9l-4 4-4-4"/></g></svg>
+		</div>
+
 		<div class="uploadcare--crop-sizes">
 			<div class="uploadcare--crop-sizes__item" data-caption="free">
 				<div class="uploadcare--crop-sizes__icon uploadcare--crop-sizes__icon_free"></div>
@@ -54,6 +48,10 @@
 			<div class="uploadcare--crop-sizes__item <%= carNineToSixteenRatioBtn %>" data-caption="9:16">
 				<div class="uploadcare--crop-sizes__icon" style="width: 20px; height: 30px;"></div>
 			</div>
+		</div>
+
+		<div role="button" class="uploadcare-tab-effects--rotate-button <%= carRotateRightBtn %>">
+			<svg width="29" height="25" viewBox="0 0 29 25" xmlns="http://www.w3.org/2000/svg"><g stroke="#000" fill="none" fill-rule="evenodd"><path d="M24 12.5C24 6.149 18.851 1 12.5 1S1 6.149 1 12.5 6.149 24 12.5 24"/><path d="M20 9l4 4 4-4"/></g></svg>
 		</div>
 	</div>
 

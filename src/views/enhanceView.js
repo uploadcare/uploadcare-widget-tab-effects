@@ -5,10 +5,7 @@ import enhanceTemplate from '../templates/enhance.html';
 import Slider from "../components/slider.js";
 import IdGenerator from '../tools/IdGenerator.js';
 
-import buttonStyles from '../styles/buttons.scss';
-import imageStyles from '../styles/images.scss';
-import layoutStyles from '../styles/viewContainer.scss';
-import sliderStyles from '../styles/slider.scss';
+import '../styles/slider.pcss';
 
 let $ = uploadcare.jQuery;
 
@@ -44,10 +41,6 @@ export default class EnhanceView {
       previewImageId: this.PREVIEW_IMG_ID,
       enhanceApplyBtn: this.ENHANCE_APPLY_BTN_ID,
       enhanceCancelBtn: this.ENHANCE_CANCEL_BTN_ID,
-      buttonStyles,
-      imageStyles,
-      layoutStyles,
-      sliderStyles
     };
     let markupStr = ejs.render(enhanceTemplate, renderData);
     parentEl.html(markupStr);

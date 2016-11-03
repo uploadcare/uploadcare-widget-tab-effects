@@ -2,14 +2,13 @@
 import ejs from '../../node_modules/ejs/ejs';
 import previewTemplate from '../templates/preview.html';
 
-import buttonStyles from '../styles/buttons.scss';
-import imageStyles from '../styles/images.scss';
-import layoutStyles from '../styles/viewContainer.scss';
-
 import CropAndRotateView from './cropAndRotateView.js';
 import EnhanceView from './enhanceView.js';
 import SharpenView from './sharpenView.js';
 import IdGenerator from '../tools/IdGenerator.js';
+
+import '../styles/effect-buttons.pcss';
+import '../styles/effect-button.pcss';
 
 const $ = uploadcare.jQuery;
 
@@ -49,9 +48,6 @@ export default class PreviewView {
       appliedSharpen: this.model.sharp ? true : false,
       appliedEnhance: this.model.enhance ? true : false,
       appliedCar: (this.model.rotate || this.model.crop) ? true : false,
-      buttonStyles,
-      imageStyles,
-      layoutStyles
     };
     let markupStr = ejs.render(previewTemplate, renderData);
     parentEl.html(markupStr);
