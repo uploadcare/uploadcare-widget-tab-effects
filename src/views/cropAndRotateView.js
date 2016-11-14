@@ -70,6 +70,7 @@ export default class CropAndRotateView {
 
   carCancelClick(ev) {
     this.model.rotate = undefined;
+    this.model.crop = undefined;
     this.viewDeferred.resolve({
       reason: "Cancel"
     });
@@ -106,7 +107,7 @@ export default class CropAndRotateView {
 
     if(!ratio)
     {
-      this.model.setCropSize(this.model.imgWidth, this.model.imgHeight);
+      this.model.crop = undefined;
     } else if (ratio === 1) {
       const squareSize = Math.min(this.model.imgWidth, this.model.imgHeight);
       this.model.setCropSize(squareSize, squareSize);
@@ -120,10 +121,10 @@ export default class CropAndRotateView {
           this.model.setCropSize(squareSize, 1/ratio*squareSize);
         }
       } else {
-        if(ratio < curRatio) {
-          this.model.setCropSize(squareSize, ratio*squareSize);
+        if(ratio > curRatio) {
+          this.model.setCropSize(squareSize, 1/ratio*squareSize);
         } else {
-          this.model.setCropSize(1/ratio*squareSize, squareSize);
+          this.model.setCropSize(ratio*squareSize, squareSize);
         }
       }
     }
