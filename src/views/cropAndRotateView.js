@@ -12,6 +12,7 @@ export default class CropAndRotateView {
   constructor(container, effectsModel) {
     this.container = container;
     this.model = effectsModel;
+    this.cropApi = null;
 
     this.CAR_APPLY_BTN_ID = "carApplyBtn" + IdGenerator.Generate();
     this.CAR_CANCEL_BTN_ID = "carCancelBtn" + IdGenerator.Generate();
@@ -46,17 +47,21 @@ export default class CropAndRotateView {
 			carFourToThreeRatioBtn: this.CAR_FOUR_TO_THREE_RATIO_BTN_ID,
 			carSixteenToNineRatioBtn: this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID,
 			carNineToSixteenRatioBtn: this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID,
+      carFreeRatioBtn: this.CAR_FREE_RATIO_BTN_ID
     };
 
     let markupStr = ejs.render(cropAndRotateTemplate, renderData);
     parentEl.html(markupStr);
+    this.crop_img = $(parentEl).find(".uploadcare--preview__image-container>img");
+    
     this.setupHandlers(parentEl);
-
     return this.viewDeferred.promise();
   }
 
   setupHandlers(parentEl) {
+
     $(parentEl).find("." + this.CAR_CANCEL_BTN_ID).click(ev => { return this.carCancelClick(ev); });
+    $(parentEl).find("." + this.CAR_FREE_RATIO_BTN_ID).click(ev => { return this.carFreeRatio(); });
     $(parentEl).find("." + this.CAR_APPLY_BTN_ID).click(ev => { return this.carApplyClick(ev); });
     $(parentEl).find("." + this.CAR_ROTATE_LEFT_BTN).click(ev => { return this.carRotateClick(1); /* rotate left */ });
     $(parentEl).find("." + this.CAR_ROTATE_RIGHT_BTN).click(ev => { return this.carRotateClick(0); /* rotate right */ });
@@ -77,6 +82,7 @@ export default class CropAndRotateView {
   }
 
   carApplyClick(ev) {
+
     this.viewDeferred.resolve({
       reason: "Apply"
     });
@@ -130,5 +136,38 @@ export default class CropAndRotateView {
     }
 
     this.render();
+  }
+
+  carFreeRatio() {
+
+    this.model.crop = undefined;
+    this.model.rotate = undefined;
+    this.render();
+
+    let trueSize = [ this.model.imgWidth, this.model.imgHeight ];
+//    if(this.model.rotate === 90 || this.model.rotate === 270) {
+//      trueSize = trueSize.reverse();
+//    }
+    this.cropApi = $.Jcrop(this.crop_img, {
+        trueSize,
+        onChange: ev => {
+          const coords = ev;
+          const left = Math.round(Math.max(0, coords.x));
+          const top = Math.round(Math.max(0, coords.y));
+
+          const width = Math.round(Math.min( this.model.imgWidth, coords.x2)) - left;
+          const height = Math.round(Math.min(this.model.imgHeight, coords.y2)) - top;
+
+          this.model.setCropSize(width, height);
+          this.model.setCropPos(left, top);         
+        },
+        baseClass: 'uploadcare--jcrop',
+        addClass: 'uploadcare--crop-widget',
+        createHandles: ['nw','ne','se','sw'],
+        bgColor: 'transparent',
+        bgOpacity: .8});
+
+//    this.cropApi.setSelect(100, 100, 200, 200);
+        
   }
 }

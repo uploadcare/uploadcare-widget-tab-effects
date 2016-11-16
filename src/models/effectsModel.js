@@ -18,6 +18,7 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
   this.cdn_url = cdn_url;
   this.imgWidth = imgWidth;
   this.imgHeight = imgHeight;
+  this.cropPos = undefined;
   var effectsData = {};
 
   Object.defineProperty(this, FORMAT_EFFECT, definePropOptions(FORMAT_EFFECT));
@@ -32,7 +33,7 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
   Object.defineProperty(this, BLUR_EFFECT, definePropOptions(BLUR_EFFECT));
   Object.defineProperty(this, GRAYSCALE_EFFECT, definePropOptions(GRAYSCALE_EFFECT));
   Object.defineProperty(this, INVERT_EFFECT, definePropOptions(INVERT_EFFECT));
-  Object.defineProperty(this, CROP_EFFECT, defineCropPropOptions());
+  Object.defineProperty(this, CROP_EFFECT, definePropOptions(CROP_EFFECT));
 
 
   function definePropOptions(propertyName) {
@@ -45,28 +46,6 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
 
       get: function() {
         return effectsData[propertyName];
-      }
-    }
-  }
-
-  function defineCropPropOptions() {
-    return {
-      enumerable: true,
-      set: function(value) {
-        if(value) {
-          if((typeof value) !== 'string') {
-            throw new Error('`value` param can be only a string');
-          }
-          let valArr = value.split("/");
-          effectsData[CROP_EFFECT] = valArr[1] + "/" + valArr[2];
-        } else {
-          effectsData[CROP_EFFECT] = value;
-        }
-        return value;
-      },
-
-      get: function() {
-        return effectsData[CROP_EFFECT] ? effectsData[CROP_EFFECT] : undefined;
       }
     }
   }
@@ -87,8 +66,9 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
 
   this.parseValue = function(formatString) {
     var formatArr = formatString.split('/');
-    if(formatArr[0] == "crop" ) {
-      this[formatArr[0]] = formatString ? formatString : null;
+    if(formatArr[0] == CROP_EFFECT ) {
+      this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+      this.cropPos = formatArr[2] ? formatArr[2] : undefined;
     } else {
       this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
     }
@@ -96,11 +76,19 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
 
   this.getFinalUrl = function() {
     var baseUrl =  this.protocol + '://' + this.cdn_url + this.imageId + '/';
-    uploadcare.jQuery.each(effectsData, function (key, val) {
+    uploadcare.jQuery.each(effectsData, (key, val) => {
       if(val !== undefined) {
         baseUrl += '-/' + key + '/';
         if (val) {
           baseUrl += val + '/';
+        }
+      } 
+
+      if (key === CROP_EFFECT && val) {
+        if(this.cropPos) {
+          baseUrl += this.cropPos + '/';
+        } else {
+          baseUrl += 'center/';
         }
       }
     });
@@ -122,19 +110,15 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
   }
 
   this.setCropSize = function(width, height) {
-    if(effectsData[CROP_EFFECT]) {
-      var valArr = effectsData[CROP_EFFECT].split('/');
-      effectsData[CROP_EFFECT] = Math.round(width) + 'x' + Math.round(height) + "/" + valArr[1]; 
-    } else {
-      effectsData[CROP_EFFECT] = Math.round(width) + 'x' + Math.round(height) + "/" + "center";
-    }
+      effectsData[CROP_EFFECT] = Math.round(width) + 'x' + Math.round(height);
+      this.cropPos = undefined;
   }
 
   this.setCropPosCenter = function() {
-    effectsData["cropPos"] = "center";
+    this.cropPos = "center";
   }
 
   this.setCropPos = function(posX, posY) {
-    effectsData["cropPos"] = posX + 'x' + posY;
+    this.cropPos = posX + ',' + posY;
   }
 }
