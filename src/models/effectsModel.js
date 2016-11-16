@@ -18,7 +18,8 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
   this.cdn_url = cdn_url;
   this.imgWidth = imgWidth;
   this.imgHeight = imgHeight;
-  this.cropPos = undefined;
+  let cropPos = undefined;
+  const priorityArr = [];
   var effectsData = {};
 
   Object.defineProperty(this, FORMAT_EFFECT, definePropOptions(FORMAT_EFFECT));
@@ -41,6 +42,22 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
       enumerable: true,
       set: function(value) {
         effectsData[propertyName] = value;
+        
+        const propInd = priorityArr.indexOf(propertyName);
+
+        if(value === undefined) {
+          if( propInd !== -1) {
+//            priorityArr.splice(propInd, 1);
+          }
+        } else {
+          if(propInd === -1) {
+            priorityArr.push(propertyName);
+          } 
+//          else {
+//            priorityArr.splice(propInd, 1);
+//            priorityArr.push(propertyName);
+//          }
+        }
         return value;
       },
 
@@ -68,25 +85,29 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
     var formatArr = formatString.split('/');
     if(formatArr[0] == CROP_EFFECT ) {
       this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
-      this.cropPos = formatArr[2] ? formatArr[2] : undefined;
+      cropPos = formatArr[2] ? formatArr[2] : undefined;
     } else {
       this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+    }
+    
+    if(priorityArr.indexOf(formatArr[0]) === -1) {
+      priorityArr.push(formatArr[0]);
     }
   }
 
   this.getFinalUrl = function() {
     var baseUrl =  this.protocol + '://' + this.cdn_url + this.imageId + '/';
-    uploadcare.jQuery.each(effectsData, (key, val) => {
-      if(val !== undefined) {
-        baseUrl += '-/' + key + '/';
-        if (val) {
-          baseUrl += val + '/';
+    uploadcare.jQuery.each(priorityArr, (key, val) => {
+      if(effectsData[val] !== undefined) {
+        baseUrl += '-/' + val + '/';
+        if (effectsData[val]) {
+          baseUrl += effectsData[val] + '/';
         }
       } 
 
-      if (key === CROP_EFFECT && val) {
-        if(this.cropPos) {
-          baseUrl += this.cropPos + '/';
+      if (val === CROP_EFFECT && effectsData[val]) {
+        if(cropPos) {
+          baseUrl += cropPos + '/';
         } else {
           baseUrl += 'center/';
         }
@@ -110,15 +131,15 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
   }
 
   this.setCropSize = function(width, height) {
-      effectsData[CROP_EFFECT] = Math.round(width) + 'x' + Math.round(height);
-      this.cropPos = undefined;
+      this[CROP_EFFECT] = Math.round(width) + 'x' + Math.round(height);
+      cropPos = undefined;
   }
 
   this.setCropPosCenter = function() {
-    this.cropPos = "center";
+    cropPos = "center";
   }
 
   this.setCropPos = function(posX, posY) {
-    this.cropPos = posX + ',' + posY;
+    cropPos = posX + ',' + posY;
   }
 }

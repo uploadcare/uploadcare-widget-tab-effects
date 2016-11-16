@@ -141,13 +141,13 @@ export default class CropAndRotateView {
   carFreeRatio() {
 
     this.model.crop = undefined;
-    this.model.rotate = undefined;
+//    this.model.rotate = undefined;
     this.render();
 
     let trueSize = [ this.model.imgWidth, this.model.imgHeight ];
-//    if(this.model.rotate === 90 || this.model.rotate === 270) {
-//      trueSize = trueSize.reverse();
-//    }
+    if(this.model.rotate === 90 || this.model.rotate === 270) {
+      trueSize = trueSize.reverse();
+    }
     this.cropApi = $.Jcrop(this.crop_img, {
         trueSize,
         onChange: ev => {
@@ -155,8 +155,13 @@ export default class CropAndRotateView {
           const left = Math.round(Math.max(0, coords.x));
           const top = Math.round(Math.max(0, coords.y));
 
-          const width = Math.round(Math.min( this.model.imgWidth, coords.x2)) - left;
-          const height = Math.round(Math.min(this.model.imgHeight, coords.y2)) - top;
+          let width = Math.round(Math.min( this.model.imgWidth, coords.x2)) - left;
+          let height = Math.round(Math.min(this.model.imgHeight, coords.y2)) - top;
+
+          if(this.model.rotate === 90 || this.model.rotate === 270) {
+            width = Math.round(Math.min( this.model.imgHeight, coords.x2)) - left;
+            height = Math.round(Math.min(this.model.imgWidth, coords.y2)) - top;
+          }
 
           this.model.setCropSize(width, height);
           this.model.setCropPos(left, top);         
