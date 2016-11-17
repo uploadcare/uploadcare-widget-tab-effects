@@ -31,7 +31,10 @@ export default class CropAndRotateView {
     this.cropSize = this.model.getCropSize();
     
     this.freeCropFlag = this.cropPos.y ? true : false;
-    this.rotateFlag = this.model.rotate ? true : false; 
+    
+    if(this.model.rotate) {
+      this.rotateFlag = true;
+    } 
   }
 
   render(parentEl = this.container) {
@@ -68,9 +71,12 @@ export default class CropAndRotateView {
       if(this.freeCropFlag) {
         
         let trueSize = [ this.model.imgWidth, this.model.imgHeight ];
-        if(this.model.rotate === 90 || this.model.rotate === 270) {
+        var curRotate = this.model.rotate;
+        if(curRotate === 90 || curRotate === 270) {
           trueSize = trueSize.reverse();
         }
+
+        console.log(trueSize);
         this.cropApi = $.Jcrop(this.crop_img, {
           trueSize,
           onChange: ev => {
@@ -80,11 +86,7 @@ export default class CropAndRotateView {
 
             let width = Math.round(Math.min( this.model.imgWidth, coords.x2)) - left;
             let height = Math.round(Math.min(this.model.imgHeight, coords.y2)) - top;
-
-            if(this.model.rotate === 90 || this.model.rotate === 270) {
-              width = Math.round(Math.min( this.model.imgHeight, coords.x2)) - left;
-              height = Math.round(Math.min(this.model.imgWidth, coords.y2)) - top;
-            }
+            let curRot = this.model.rotate;
 
             this.cropPos.x = left;
             this.cropPos.y = top;
@@ -104,6 +106,7 @@ export default class CropAndRotateView {
             this.cropPos.y, 
             this.cropPos.x + this.cropSize.width, 
             this.cropPos.y + this.cropSize.height];
+          console.log(rect);
           this.cropApi.setSelect(rect); 
         }
       } else {
@@ -133,6 +136,8 @@ export default class CropAndRotateView {
   carCancelClick(ev) {
     this.model.rotate = undefined;
     this.model.crop = undefined;
+    this.freeCropFlag = false;
+
     this.viewDeferred.resolve({
       reason: "Cancel"
     });

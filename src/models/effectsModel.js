@@ -86,7 +86,11 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
       this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
       cropPos = formatArr[2] ? formatArr[2] : undefined;
     } else {
-      this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+      try {
+        this[formatArr[0]] = formatArr[1] ? parseInt(formatArr[1], 10) : null;
+      } catch (ex) {
+        this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
+      }
     }
     
     if(priorityArr.indexOf(formatArr[0]) === -1) {
