@@ -42,21 +42,20 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
       enumerable: true,
       set: function(value) {
         effectsData[propertyName] = value;
-        
-        const propInd = priorityArr.indexOf(propertyName);
 
+        const propInd = priorityArr.indexOf(propertyName);
         if(value === undefined) {
           if( propInd !== -1) {
-//            priorityArr.splice(propInd, 1);
+            priorityArr.splice(propInd, 1);
           }
         } else {
           if(propInd === -1) {
             priorityArr.push(propertyName);
           } 
-//          else {
-//            priorityArr.splice(propInd, 1);
-//            priorityArr.push(propertyName);
-//          }
+          else {
+            priorityArr.splice(propInd, 1);
+            priorityArr.push(propertyName);
+          }
         }
         return value;
       },
@@ -135,11 +134,27 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
       cropPos = undefined;
   }
 
+  this.getCropSize = function() {
+    let sizeArr = this[CROP_EFFECT] ? this[CROP_EFFECT].split('x') : [];
+    return {
+      width:  sizeArr[0] ? parseInt(sizeArr[0], 10) : null, 
+      height: sizeArr[1] ? parseInt(sizeArr[1], 10) : null 
+    }
+  }
+
   this.setCropPosCenter = function() {
     cropPos = "center";
   }
 
   this.setCropPos = function(posX, posY) {
     cropPos = posX + ',' + posY;
+  }
+
+  this.getCropPos = function() {
+    const posArr = cropPos ? cropPos.split(',') : [];
+    return {
+      x: posArr[0] ? parseInt(posArr[0], 10) : null,
+      y: posArr[1] ? parseInt(posArr[1], 10) : null 
+    }
   }
 }

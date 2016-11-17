@@ -26,6 +26,12 @@ export default class CropAndRotateView {
     this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID = "carNineToSixteenRatioBtn" + IdGenerator.Generate();
     this.CAR_ROTATE_LEFT_BTN = "carRotateLeftBtn" + IdGenerator.Generate();
     this.CAR_ROTATE_RIGHT_BTN = "carRotateRightBtn" + IdGenerator.Generate();
+    
+    this.cropPos = this.model.getCropPos();
+    this.cropSize = this.model.getCropSize();
+    
+    this.freeCropFlag = this.cropPos.y ? true : false;
+    this.rotateFlag = this.model.rotate ? true : false; 
   }
 
   render(parentEl = this.container) {
@@ -34,6 +40,9 @@ export default class CropAndRotateView {
     }
 
     this.container = parentEl;
+    if(this.freeCropFlag) {
+      this.model.crop = undefined;
+    }
 
     let renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
@@ -53,6 +62,54 @@ export default class CropAndRotateView {
     let markupStr = ejs.render(cropAndRotateTemplate, renderData);
     parentEl.html(markupStr);
     this.crop_img = $(parentEl).find(".uploadcare--preview__image-container>img");
+
+    this.crop_img.on('load', () => {
+   
+      if(this.freeCropFlag) {
+        
+        let trueSize = [ this.model.imgWidth, this.model.imgHeight ];
+        if(this.model.rotate === 90 || this.model.rotate === 270) {
+          trueSize = trueSize.reverse();
+        }
+        this.cropApi = $.Jcrop(this.crop_img, {
+          trueSize,
+          onChange: ev => {
+            const coords = ev;
+            const left = Math.round(Math.max(0, coords.x));
+            const top = Math.round(Math.max(0, coords.y));
+
+            let width = Math.round(Math.min( this.model.imgWidth, coords.x2)) - left;
+            let height = Math.round(Math.min(this.model.imgHeight, coords.y2)) - top;
+
+            if(this.model.rotate === 90 || this.model.rotate === 270) {
+              width = Math.round(Math.min( this.model.imgHeight, coords.x2)) - left;
+              height = Math.round(Math.min(this.model.imgWidth, coords.y2)) - top;
+            }
+
+            this.cropPos.x = left;
+            this.cropPos.y = top;
+            this.cropSize.width = width;
+            this.cropSize.height = height;
+
+          },
+          baseClass: 'uploadcare--jcrop',
+          addClass: 'uploadcare--crop-widget',
+          createHandles: ['nw','ne','se','sw'],
+          bgColor: 'transparent',
+          bgOpacity: .8
+        });
+        
+        if(this.cropPos.x && this.cropPos.y) {
+          const rect = [this.cropPos.x, 
+            this.cropPos.y, 
+            this.cropPos.x + this.cropSize.width, 
+            this.cropPos.y + this.cropSize.height];
+          this.cropApi.setSelect(rect); 
+        }
+      } else {
+        this.cropApi = undefined;
+      }
+    });
     
     this.setupHandlers(parentEl);
     return this.viewDeferred.promise();
@@ -83,6 +140,11 @@ export default class CropAndRotateView {
 
   carApplyClick(ev) {
 
+    if(this.freeCropFlag) {
+      this.model.setCropSize(this.cropSize.width, this.cropSize.height);
+      this.model.setCropPos(this.cropPos.x, this.cropPos.y);
+    }
+
     this.viewDeferred.resolve({
       reason: "Apply"
     });
@@ -111,6 +173,7 @@ export default class CropAndRotateView {
 
   carSetCropRatio(ratio) {
 
+    this.freeCropFlag = false;
     if(!ratio)
     {
       this.model.crop = undefined;
@@ -139,40 +202,8 @@ export default class CropAndRotateView {
   }
 
   carFreeRatio() {
-
+    this.freeCropFlag = true;
     this.model.crop = undefined;
-//    this.model.rotate = undefined;
     this.render();
-
-    let trueSize = [ this.model.imgWidth, this.model.imgHeight ];
-    if(this.model.rotate === 90 || this.model.rotate === 270) {
-      trueSize = trueSize.reverse();
-    }
-    this.cropApi = $.Jcrop(this.crop_img, {
-        trueSize,
-        onChange: ev => {
-          const coords = ev;
-          const left = Math.round(Math.max(0, coords.x));
-          const top = Math.round(Math.max(0, coords.y));
-
-          let width = Math.round(Math.min( this.model.imgWidth, coords.x2)) - left;
-          let height = Math.round(Math.min(this.model.imgHeight, coords.y2)) - top;
-
-          if(this.model.rotate === 90 || this.model.rotate === 270) {
-            width = Math.round(Math.min( this.model.imgHeight, coords.x2)) - left;
-            height = Math.round(Math.min(this.model.imgWidth, coords.y2)) - top;
-          }
-
-          this.model.setCropSize(width, height);
-          this.model.setCropPos(left, top);         
-        },
-        baseClass: 'uploadcare--jcrop',
-        addClass: 'uploadcare--crop-widget',
-        createHandles: ['nw','ne','se','sw'],
-        bgColor: 'transparent',
-        bgOpacity: .8});
-
-//    this.cropApi.setSelect(100, 100, 200, 200);
-        
   }
 }
