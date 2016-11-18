@@ -45,7 +45,7 @@ export default class EnhanceView {
     let markupStr = ejs.render(enhanceTemplate, renderData);
     parentEl.html(markupStr);
 
-    const sliderContainer = $(parentEl).find("#" + this.SLIDER_ID);
+    const sliderContainer = $(parentEl).find("." + this.SLIDER_ID);
     this.slider.render(sliderContainer, this.model.enhance);
 
     this.setupHandlers(parentEl);
@@ -53,8 +53,8 @@ export default class EnhanceView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find('#' + this.ENHANCE_CANCEL_BTN_ID ).click( ev => { return this.enhanceCancelClick(ev); });
-    $(parentEl).find('#' + this.ENHANCE_APPLY_BTN_ID).click(ev => { return this.enhanceApplyClick(ev); });
+    $(parentEl).find('.' + this.ENHANCE_CANCEL_BTN_ID ).click( ev => { return this.enhanceCancelClick(ev); });
+    $(parentEl).find('.' + this.ENHANCE_APPLY_BTN_ID).click(ev => { return this.enhanceApplyClick(ev); });
 
   }
 
@@ -77,7 +77,7 @@ export default class EnhanceView {
     }
     this.timeoutId = setTimeout(()=> {
       this.model.enhance = newVal;
-      this.container.find("#" + this.PREVIEW_IMG_ID).attr("src", this.model.getPreviewUrl(800, 382));
+      this.container.find("." + this.PREVIEW_IMG_ID).attr("src", this.model.getPreviewUrl(800, 382));
     }, 300);
   }
 }

@@ -56,13 +56,13 @@ export default class PreviewView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find("#" + this.CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });
-    $(parentEl).find("#" + this.ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });
-    $(parentEl).find("#" + this.SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });
-    $(parentEl).find("#" + this.GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });
+    $(parentEl).find("." + this.CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });
+    $(parentEl).find("." + this.ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });
+    $(parentEl).find("." + this.SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });
+    $(parentEl).find("." + this.GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });
 
-    $(parentEl).find("#" + this.REMOVE_BTN_ID).click(ev => { return this.removeClick(ev); });
-    $(parentEl).find("#" + this.DONE_BTN_ID).click(ev => { return this.doneClick(ev); });
+    $(parentEl).find("." + this.REMOVE_BTN_ID).click(ev => { return this.removeClick(ev); });
+    $(parentEl).find("." + this.DONE_BTN_ID).click(ev => { return this.doneClick(ev); });
   }
 
   cropAndRotateClick(ev) {

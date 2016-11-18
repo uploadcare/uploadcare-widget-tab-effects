@@ -42,7 +42,7 @@ export default class SharpenView {
     let markupStr = ejs.render(sharpenTemplate, renderData);
     parentEl.html(markupStr);
 
-    const sliderContainer = $(parentEl).find("#" + this.SLIDER_ID);
+    const sliderContainer = $(parentEl).find("." + this.SLIDER_ID);
     this.slider.render(sliderContainer, this.model.sharp);
 
     this.setupHandlers(parentEl);
@@ -50,8 +50,8 @@ export default class SharpenView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find('#' + this.SHARPEN_CANCEL_BTN_ID).click(ev => { return this.sharpenCancelClick(ev); });
-    $(parentEl).find('#' + this.SHARPEN_APPLY_BTN_ID).click(ev => { return this.sharpenApplyClick(ev); });
+    $(parentEl).find('.' + this.SHARPEN_CANCEL_BTN_ID).click(ev => { return this.sharpenCancelClick(ev); });
+    $(parentEl).find('.' + this.SHARPEN_APPLY_BTN_ID).click(ev => { return this.sharpenApplyClick(ev); });
   }
 
   sharpenCancelClick(ev) {
@@ -74,7 +74,7 @@ export default class SharpenView {
     }
     this.timeoutId = setTimeout(()=> {
       this.model.sharp = newVal;
-      this.container.find("#" + this.PREVIEW_IMG_ID).attr("src", this.model.getPreviewUrl(800, 382));
+      this.container.find("." + this.PREVIEW_IMG_ID).attr("src", this.model.getPreviewUrl(800, 382));
     }, 300);
   }
 }
