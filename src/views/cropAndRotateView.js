@@ -6,7 +6,7 @@ import IdGenerator from '../tools/IdGenerator.js';
 
 import '../styles/rotate-button.pcss';
 
-let $ = uploadcare.jQuery;
+const $ = uploadcare.jQuery;
 
 export default class CropAndRotateView {
   constructor(container, effectsModel) {
@@ -34,6 +34,16 @@ export default class CropAndRotateView {
     
     if(this.model.rotate) {
       this.rotateFlag = true;
+    }
+
+    this.cropConsts = {
+      ORIG_RATIO: 'original',
+      FREE_CROP: 'freeCrop',
+      ONE_TO_ONE: '1:1',
+      THREE_TO_FOUR: '3:4',
+      FOUR_TO_THREE: '4:3',
+      SIXTEEN_TO_NINE: '16:9',
+      NINE_TO_SIXTEEN: '9:16'
     } 
   }
 
@@ -43,23 +53,30 @@ export default class CropAndRotateView {
     }
 
     this.container = parentEl;
+
     if(this.freeCropFlag) {
       this.model.crop = undefined;
     }
 
+    const cropRatio = this.getCropConst();
+    
     let renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
       carApplyBtn: this.CAR_APPLY_BTN_ID,
       carCancelBtn: this.CAR_CANCEL_BTN_ID,
       carRotateLeftBtn: this.CAR_ROTATE_LEFT_BTN,
       carRotateRightBtn: this.CAR_ROTATE_RIGHT_BTN,
+      rotateFlag: this.model.rotate ? true: false,
+      freeCropFlag: this.freeCropFlag,
 			carOrigRatioBtn: this.CAR_ORIG_RATIO_BTN_ID,
 			carOneToOneRatioBtn: this.CAR_ONE_TO_ONE_RATIO_BTN_ID,
 			carThreeToFourRatioBtn: this.CAR_THREE_TO_FOUR_RATIO_BTN_ID,
 			carFourToThreeRatioBtn: this.CAR_FOUR_TO_THREE_RATIO_BTN_ID,
 			carSixteenToNineRatioBtn: this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID,
 			carNineToSixteenRatioBtn: this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID,
-      carFreeRatioBtn: this.CAR_FREE_RATIO_BTN_ID
+      carFreeRatioBtn: this.CAR_FREE_RATIO_BTN_ID,
+      cropRatio,
+      cropRatioConsts: this.cropConsts
     };
 
     let markupStr = ejs.render(cropAndRotateTemplate, renderData);
@@ -76,7 +93,6 @@ export default class CropAndRotateView {
           trueSize = trueSize.reverse();
         }
 
-        console.log(trueSize);
         this.cropApi = $.Jcrop(this.crop_img, {
           trueSize,
           onChange: ev => {
@@ -106,7 +122,6 @@ export default class CropAndRotateView {
             this.cropPos.y, 
             this.cropPos.x + this.cropSize.width, 
             this.cropPos.y + this.cropSize.height];
-          console.log(rect);
           this.cropApi.setSelect(rect); 
         }
       } else {
@@ -210,5 +225,33 @@ export default class CropAndRotateView {
     this.freeCropFlag = true;
     this.model.crop = undefined;
     this.render();
+  }
+
+  getCropConst() {
+    
+    const cropSize = this.model.getCropSize();
+    const cropRate = Math.round(cropSize.width / cropSize.height * 100) / 100;
+    const threeToFourRate = Math.round( 3 / 4 * 100 ) / 100;
+    const fourToThreeRate = Math.round( 4 / 3 * 100 ) / 100;
+    const sixteenToNineRate = Math.round( 16 / 9 * 100 ) / 100;
+    const nineToSixteenRate = Math.round( 9 / 16 * 100 ) / 100;
+
+    if(this.freeCropFlag) {
+      return this.cropConsts.FREE_CROP;
+    } else if (!this.crop && !this.cropSize) {
+      return this.cropConsts.ORIG_RATIO;
+    } else if ( cropRate === 1 ) {
+      return this.cropConsts.ONE_TO_ONE;
+    } else if ( cropRate == fourToThreeRate) {
+      return this.cropConsts.FOUR_TO_THREE;
+    } else if ( cropRate == threeToFourRate) {
+      return this.cropConsts.THREE_TO_FOUR;
+    } else if ( cropRate == sixteenToNineRate) {
+      return this.cropConsts.SIXTEEN_TO_NINE;
+    } else if ( cropRate == nineToSixteenRate) {
+      return this.cropConsts.NINE_TO_SIXTEEN;
+    } else {
+      return this.cropConsts.ORIG_RATIO;
+    }
   }
 }
