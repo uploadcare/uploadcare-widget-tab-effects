@@ -76,7 +76,8 @@ export default class CropAndRotateView {
 			carNineToSixteenRatioBtn: this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID,
       carFreeRatioBtn: this.CAR_FREE_RATIO_BTN_ID,
       cropRatio,
-      cropRatioConsts: this.cropConsts
+      cropRatioConsts: this.cropConsts,
+      locale: this.model.locale
     };
 
     let markupStr = ejs.render(cropAndRotateTemplate, renderData);

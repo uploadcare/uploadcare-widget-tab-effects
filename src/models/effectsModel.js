@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const FORMAT_EFFECT = 'format';
 const PROGRESSIVE_EFFECT = 'progressive';
@@ -14,13 +14,14 @@ const GRAYSCALE_EFFECT = 'grayscale';
 const INVERT_EFFECT = 'invert';
 const CROP_EFFECT = 'crop';
 
-export default function EffectsModel (cdn_url, imgWidth, imgHeight) {
+export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
   this.cdn_url = cdn_url;
   this.imgWidth = imgWidth;
   this.imgHeight = imgHeight;
   let cropPos = undefined;
   const priorityArr = [];
-  var effectsData = {};
+  let effectsData = {};
+  this.locale = locale;
 
   Object.defineProperty(this, FORMAT_EFFECT, definePropOptions(FORMAT_EFFECT));
   Object.defineProperty(this, PROGRESSIVE_EFFECT, definePropOptions(PROGRESSIVE_EFFECT));

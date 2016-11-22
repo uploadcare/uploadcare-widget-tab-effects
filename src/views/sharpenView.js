@@ -37,6 +37,7 @@ export default class SharpenView {
       previewImageId: this.PREVIEW_IMG_ID,
       sharpenApplyBtn: this.SHARPEN_APPLY_BTN_ID,
       sharpenCancelBtn: this.SHARPEN_CANCEL_BTN_ID,
+      locale: this.model.locale
     };
 
     let markupStr = ejs.render(sharpenTemplate, renderData);

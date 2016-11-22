@@ -41,6 +41,7 @@ export default class EnhanceView {
       previewImageId: this.PREVIEW_IMG_ID,
       enhanceApplyBtn: this.ENHANCE_APPLY_BTN_ID,
       enhanceCancelBtn: this.ENHANCE_CANCEL_BTN_ID,
+      locale: this.model.locale
     };
     let markupStr = ejs.render(enhanceTemplate, renderData);
     parentEl.html(markupStr);

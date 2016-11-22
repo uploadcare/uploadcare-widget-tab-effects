@@ -48,6 +48,7 @@ export default class PreviewView {
       appliedSharpen: this.model.sharp ? true : false,
       appliedEnhance: this.model.enhance ? true : false,
       appliedCar: (this.model.rotate || this.model.crop) ? true : false,
+      locale: this.model.locale
     };
     let markupStr = ejs.render(previewTemplate, renderData);
     parentEl.html(markupStr);

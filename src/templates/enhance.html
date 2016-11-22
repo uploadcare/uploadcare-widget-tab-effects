@@ -1,6 +1,6 @@
 <div class="uploadcare--panel__header">
 	<div class="uploadcare--panel__title uploadcare--preview__title">
-		Enhance<!-- TODO Take word from locale -->
+		<%- locale.t('dialog.tabs.effects.captions.enhance') %>
 	</div>
 </div>
 
@@ -12,14 +12,12 @@
 
 <div class="uploadcare--panel__footer uploadcare--panel__footer_inverted">
 	<div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back <%= enhanceCancelBtn %>"
-			 tabindex="0" role="button" 
-	>Cancel<!-- TODO Take word from locale --></div>
+			 tabindex="0" role="button"><%- locale.t('dialog.tabs.effects.buttons.cancel') %></div>
 
 	<div class="uploadcare--panel__footer-additions">
 		<div class="uploadcare-tab-effects--slider <%= sliderId %>"></div>
 	</div>
 
 	<div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done <%= enhanceApplyBtn %>"
-			 tabindex="0" role="button"
-	>Done<!-- TODO Take word from locale --></div>
+			 tabindex="0" role="button"><%- locale.t('dialog.tabs.effects.buttons.done') %></div>
 </div>

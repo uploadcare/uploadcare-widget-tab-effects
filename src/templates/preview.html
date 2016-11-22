@@ -1,6 +1,6 @@
 <div class="uploadcare--panel__header">
 	<div class="uploadcare--panel__title uploadcare--preview__title">
-		Preview<!-- TODO Take word from locale -->
+		<%- locale.t('dialog.tabs.names.preview') %>
 	</div>
 </div>
 
@@ -12,31 +12,29 @@
 
 <div class="uploadcare--panel__footer">
 	<div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back <%= removeBtn %>"
-			 tabindex="0" role="button"
-	>Cancel<!-- TODO Take word from locale --></div>
+			 tabindex="0" role="button"><%- locale.t('dialog.tabs.effects.buttons.remove') %></div>
 
 	<div class="uploadcare--panel__footer-additions">
 		<div class="uploadcare-tab-effects--effect-buttons">
 			<div class="uploadcare-tab-effects--effect-button <% if(appliedCar) { %>uploadcare-tab-effects--effect-button_applied<% } %> <%= cropAndRotateBtnId %>">
 				<svg width="29" height="28" viewBox="0 0 29 28" xmlns="http://www.w3.org/2000/svg"><g stroke="#000" fill="none" fill-rule="evenodd" class="svg-stroke"><path d="M7.5 28V7h21"/><path d="M21 0v21H0"/></g></svg>
-				<div class="uploadcare-tab-effects--effect-button__caption">Crop &amp; Rotate<!-- TODO Take word from locale --></div>
+				<div class="uploadcare-tab-effects--effect-button__caption"><%- locale.t('dialog.tabs.effects.captions.cropAndRotate') %></div>
 			</div>
 			<div class="uploadcare-tab-effects--effect-button <% if(appliedEnhance) { %>uploadcare-tab-effects--effect-button_applied<% } %> <%= enhanceBtnId %>">
 				<svg width="21" height="21" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g stroke="#000" fill="none" fill-rule="evenodd" class="svg-stroke"><path d="M11.616 11.037c-5.015 3.843-1 8.997-1 8.997 5.311 0 9.616-4.26 9.616-9.517C20.232 5.261 15.927 1 10.616 1c0 0 6.016 6.194 1 10.037z" fill="#000" class="svg-fill"/><path d="M10.616 1C5.306 1 1 5.261 1 10.517c0 5.256 4.305 9.517 9.616 9.517"/></g></svg>
-				<div class="uploadcare-tab-effects--effect-button__caption">Enhance<!-- TODO Take word from locale --></div>
+				<div class="uploadcare-tab-effects--effect-button__caption"><%- locale.t('dialog.tabs.effects.captions.enhance') %></div>
 			</div>
 			<div class="uploadcare-tab-effects--effect-button <% if(appliedSharpen) { %>uploadcare-tab-effects--effect-button_applied<% } %> <%= sharpenBtnId %>">
 				<svg width="26" height="22" viewBox="0 0 26 22" xmlns="http://www.w3.org/2000/svg"><g stroke="#000" fill="none" fill-rule="evenodd" stroke-linejoin="round" class="svg-stroke"><path d="M13 22L25 1H1z"/></g></svg>
-				<div class="uploadcare-tab-effects--effect-button__caption">Sharpen<!-- TODO Take word from locale --></div>
+				<div class="uploadcare-tab-effects--effect-button__caption"><%- locale.t('dialog.tabs.effects.captions.sharpen') %></div>
 			</div>
 			<div class="uploadcare-tab-effects--effect-button <% if(appliedGrayscale) { %>uploadcare-tab-effects--effect-button_applied<% } %> <%= grayscaleBtnId %>">
 				<svg width="21" height="21" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g stroke="#000" fill="none" fill-rule="evenodd" class="svg-stroke"><path d="M10.616 20.034c5.311 0 9.616-4.26 9.616-9.517C20.232 5.261 15.927 1 10.616 1" fill="#000" class="svg-fill"/><path d="M10.616 1C5.306 1 1 5.261 1 10.517c0 5.256 4.305 9.517 9.616 9.517"/></g></svg>
-				<div class="uploadcare-tab-effects--effect-button__caption">Grayscale<!-- TODO Take word from locale --></div>
+				<div class="uploadcare-tab-effects--effect-button__caption"><%- locale.t('dialog.tabs.effects.captions.grayscale') %></div>
 			</div>
 		</div>
 	</div>
 
 	<div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done <%= doneBtn %>"
-			 tabindex="0" role="button"
-	>Done<!-- TODO Take word from locale --></div>
+			 tabindex="0" role="button"><%- locale.t('dialog.tabs.effects.buttons.done') %></div>
 </div>

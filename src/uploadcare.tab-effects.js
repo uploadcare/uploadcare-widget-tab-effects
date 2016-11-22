@@ -1,10 +1,12 @@
 import PreviewView from './views/previewView';
 import EffectsModel from './models/effectsModel';
+import LocaleBuilder from './tools/localeBuilder';
 
 function effectsTab(container, button, dialogApi, settings) {
 
 // getting first image for preview;
   let isFileTaken = false;
+  const $ = uploadcare.jQuery;
 
   const fileResolver = function (fileInfo) {
     if (isFileTaken) {
@@ -15,15 +17,26 @@ function effectsTab(container, button, dialogApi, settings) {
       isFileTaken = true;
     }
     
-    let model = new EffectsModel('ucarecdn.com/', fileInfo.originalImageInfo.width, fileInfo.originalImageInfo.height);
-    model.parseUrl(fileInfo.cdnUrl);
-    let previewView = new PreviewView(container, model);
-    previewView
-      .render()
-      .then(type => {
-        fileInfo.cdnUrl = model.getPreviewUrl();
-        dialogApi.resolve();
-      });
+    uploadcare.plugin(function(uc) {
+      const localeBuilder = new LocaleBuilder();
+      localeBuilder.build(uc.locale.translations);
+      uc.locale.rebuild();
+
+      const model = new EffectsModel(
+        'ucarecdn.com/', 
+        fileInfo.originalImageInfo.width, 
+        fileInfo.originalImageInfo.height, 
+        uc.locale);
+      model.parseUrl(fileInfo.cdnUrl);
+      
+      let previewView = new PreviewView(container, model);
+      previewView
+        .render()
+        .then(type => {
+          fileInfo.cdnUrl = model.getPreviewUrl();
+          dialogApi.resolve();
+        });
+    });
   }
 
   dialogApi.fileColl.onAdd.add((promise, i) => {
