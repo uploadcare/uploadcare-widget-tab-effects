@@ -236,6 +236,7 @@ export default class CropAndRotateView {
     const fourToThreeRate = Math.round( 4 / 3 * 100 ) / 100;
     const sixteenToNineRate = Math.round( 16 / 9 * 100 ) / 100;
     const nineToSixteenRate = Math.round( 9 / 16 * 100 ) / 100;
+    const delta = 0.01;
 
     if(this.freeCropFlag) {
       return this.cropConsts.FREE_CROP;
@@ -243,13 +244,13 @@ export default class CropAndRotateView {
       return this.cropConsts.ORIG_RATIO;
     } else if ( cropRate === 1 ) {
       return this.cropConsts.ONE_TO_ONE;
-    } else if ( cropRate == fourToThreeRate) {
+    } else if ( cropRate <= fourToThreeRate + delta && cropRate >= fourToThreeRate - delta) {
       return this.cropConsts.FOUR_TO_THREE;
-    } else if ( cropRate == threeToFourRate) {
+    } else if ( cropRate <= threeToFourRate + delta && cropRate >= threeToFourRate - delta) {
       return this.cropConsts.THREE_TO_FOUR;
-    } else if ( cropRate == sixteenToNineRate) {
+    } else if ( cropRate <= sixteenToNineRate + delta && cropRate >= sixteenToNineRate - delta) {
       return this.cropConsts.SIXTEEN_TO_NINE;
-    } else if ( cropRate == nineToSixteenRate) {
+    } else if ( cropRate <= nineToSixteenRate + delta && cropRate >= nineToSixteenRate - delta) {
       return this.cropConsts.NINE_TO_SIXTEEN;
     } else {
       return this.cropConsts.ORIG_RATIO;
