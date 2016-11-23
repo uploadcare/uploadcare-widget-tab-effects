@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Uploadcare effects widget example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="description" content="Uploadcare effects widget example">
+    <!-- The best place for this one is your <HEAD> tag -->
+    <script>
+      UPLOADCARE_IMAGES_ONLY = false;
+			UPLOADCARE_LIVE = false;
+			UPLOADCARE_MANUAL_START = true;
+			UPLOADCARE_PUBLIC_KEY = "b2a5dd7667f04ddaac62";
+		</script>
+
+    <style>
+      @media screen and (max-width: 760px) {
+        .uploadcare-responsive-panel .uploadcare-dialog-tabs-panel {
+            min-height: 100% !important;
+            height: 100% !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="uc-widget"></div>
+    <button id="editBtn" style="width:100%; height: 35px; font-size: 16px; margin-bottom: 10px;">Edit</button>
+    <img id="img" src="http://ucarecdn.com/7ab139a4-8ac4-4686-ab6c-744aa7b7c64e/" alt="" width="100%">
+    <script>
+      window.onload = function() {
+        uploadcare.plugin(function(uc) {
+          uploadcareTabEffects();
+
+          var config = {};
+            if ( ! ('effects' in config)) {
+              config.effects = true;
+            }
+            var settings = uc.settings.build(
+              uc.jQuery.extend({}, config, {multiple: false})
+            );
+
+
+            uc.jQuery("#editBtn").click(function(ev) {
+              var fileUrl = uc.jQuery("#img").attr("src");
+
+              var file = uploadcare.fileFrom('uploaded', fileUrl, settings);
+
+              uploadcare.openDialog(file, settings).always(function(result) {
+                result.then(function(imgData) {
+                  uc.jQuery("#img").attr("src", imgData.cdnUrl);
+                });
+              });
+          });
+        });
+
+
+      };
+    </script>
+<!--
+    <script src="https://ucarecdn.com/widget/2.10.0/uploadcare/uploadcare.full.min.js" charset="utf-8"></script>
+-->
+    <script charset="utf-8" src="https://ucarecdn.com/widget/3.0.0-alpha.3/uploadcare/uploadcare.full.js"></script>
+  </body>
+</html>

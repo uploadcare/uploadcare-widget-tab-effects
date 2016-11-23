@@ -30,7 +30,7 @@ export default class CropAndRotateView {
     this.cropPos = this.model.getCropPos();
     this.cropSize = this.model.getCropSize();
     
-    this.freeCropFlag = this.cropPos.y ? true : false;
+    this.freeCropFlag = this.cropPos.y !== null ? true : false;
     
     if(this.model.rotate) {
       this.rotateFlag = true;
@@ -123,7 +123,7 @@ export default class CropAndRotateView {
           bgOpacity: .8
         });
         
-        if(this.cropPos.x && this.cropPos.y) {
+        if(this.cropPos.x !== null && this.cropPos.y !== null) {
           const rect = [this.cropPos.x, 
             this.cropPos.y, 
             this.cropPos.x + this.cropSize.width, 
