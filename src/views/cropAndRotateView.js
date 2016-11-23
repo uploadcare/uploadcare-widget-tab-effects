@@ -88,10 +88,12 @@ export default class CropAndRotateView {
    
       if(this.freeCropFlag) {
         
+        let rotateFlag = false;
         let trueSize = [ this.model.imgWidth, this.model.imgHeight ];
         var curRotate = this.model.rotate;
         if(curRotate === 90 || curRotate === 270) {
           trueSize = trueSize.reverse();
+          rotateFlag = true;
         }
 
         this.cropApi = $.Jcrop(this.crop_img, {
@@ -103,7 +105,10 @@ export default class CropAndRotateView {
 
             let width = Math.round(Math.min( this.model.imgWidth, coords.x2)) - left;
             let height = Math.round(Math.min(this.model.imgHeight, coords.y2)) - top;
-            let curRot = this.model.rotate;
+            if(rotateFlag) {
+              width = Math.round(Math.min( this.model.imgHeight, coords.x2)) - left;
+              height = Math.round(Math.min(this.model.imgWidth, coords.y2)) - top;
+            }
 
             this.cropPos.x = left;
             this.cropPos.y = top;

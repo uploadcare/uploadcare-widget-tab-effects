@@ -10,7 +10,7 @@ export default class LocaleBuilder {
         };
     }
     
-//buld to uc.locale.translations.en.dialog.tabs.effects
+//build to uc.locale.translations.en.dialog.tabs.effects
     build(ucStruct) {
         for (var key in this.localeStruct) {
             if (ucStruct.hasOwnProperty(key)) {

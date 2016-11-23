@@ -2,6 +2,8 @@ import PreviewView from './views/previewView';
 import EffectsModel from './models/effectsModel';
 import LocaleBuilder from './tools/localeBuilder';
 
+const ucCdn = 'ucarecdn.com/';
+
 function effectsTab(container, button, dialogApi, settings) {
 
 // getting first image for preview;
@@ -9,12 +11,16 @@ function effectsTab(container, button, dialogApi, settings) {
   const $ = uploadcare.jQuery;
 
   const fileResolver = function (fileInfo) {
+
     if (isFileTaken) {
       return;
     }
-
+    
     if (fileInfo.isImage) {
       isFileTaken = true;
+    } else {
+      dialogApi.hideTab();
+      return;
     }
     
     uploadcare.plugin(function(uc) {
@@ -23,7 +29,7 @@ function effectsTab(container, button, dialogApi, settings) {
       uc.locale.rebuild();
 
       const model = new EffectsModel(
-        'ucarecdn.com/', 
+        ucCdn, 
         fileInfo.originalImageInfo.width, 
         fileInfo.originalImageInfo.height, 
         uc.locale);
@@ -39,6 +45,7 @@ function effectsTab(container, button, dialogApi, settings) {
     });
   }
 
+  let addPromiseArr = [];
   dialogApi.fileColl.onAdd.add((promise, i) => {
     promise.then(fileResolver);
   });
