@@ -1,0 +1,5 @@
+# git log --format='%aN <%aE>' | sort -u
+
+Elijah <ilya@uploadcare.com>
+Nikolay Zherdev <nickzherdev@gmail.com>
+Zarema Khalilova <zarema@uploadcare.com>
