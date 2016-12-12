@@ -32,10 +32,6 @@ export default class CropAndRotateView {
     
     this.freeCropFlag = this.cropPos.y !== null ? true : false;
     
-    if(this.model.rotate) {
-      this.rotateFlag = true;
-    }
-
     this.cropConsts = {
       ORIG_RATIO: 'original',
       FREE_CROP: 'freeCrop',
@@ -118,18 +114,26 @@ export default class CropAndRotateView {
           },
           baseClass: 'uploadcare--jcrop',
           addClass: 'uploadcare--crop-widget',
-          createHandles: ['nw','ne','se','sw'],
+          createHandles: ['nw', 'ne', 'se', 'sw'],
           bgColor: 'transparent',
           bgOpacity: .8
         });
         
+        let rect = [];
         if(this.cropPos.x !== null && this.cropPos.y !== null) {
-          const rect = [this.cropPos.x, 
+          rect = [this.cropPos.x, 
             this.cropPos.y, 
             this.cropPos.x + this.cropSize.width, 
             this.cropPos.y + this.cropSize.height];
-          this.cropApi.setSelect(rect); 
+        } else {
+          let width = rotateFlag ? this.model.imgHeight : this.model.imgWidth; 
+          let height = rotateFlag ? this.model.imgWidth : this.model.imgHeight; 
+          const stepX = Math.round(width / 10);
+          const stepY = Math.round(height / 10);
+
+          rect = [stepX, stepY, width - stepX, height - stepY];
         }
+        this.cropApi.setSelect(rect);
       } else {
         this.cropApi = undefined;
       }
