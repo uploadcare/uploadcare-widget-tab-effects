@@ -9,20 +9,48 @@ function effectsTab(container, button, dialogApi, settings) {
 // getting first image for preview;
   let isFileTaken = false;
   const $ = uploadcare.jQuery;
+  let Circle = null;
+  uploadcare.plugin(uc => {
+    Circle = uc.ui.progress.Circle;
+  });
 
-  const fileResolver = function (fileInfo) {
+  setupProgress(Circle, $, button, dialogApi);
+  dialogApi.fileColl.onAdd.add((promise, i) => {
+    promise.then(fileAddResolver);
+  });
+
+  let filePromises = dialogApi.fileColl.get();
+  filePromises.forEach((promise, i) => {
+    promise.then(fileEditResolver);
+  });
+
+  function fileAddResolver(fileInfo) {
 
     if (isFileTaken) {
       return;
     }
-    
+
     if (fileInfo.isImage) {
       isFileTaken = true;
-    } else {
-      dialogApi.hideTab();
+    }
+
+    if (!fileInfo.isImage) {
+      return dialogApi.resolve();
+    }
+    fileResolver(fileInfo);
+  }
+
+  function fileEditResolver(fileInfo) {
+    
+    if (!fileInfo.isImage) {
+      setTimeout(() => dialogApi.hideTab('preview'), 0);
       return;
     }
-    
+    fileResolver(fileInfo);
+  }
+
+  function fileResolver(fileInfo) {
+
     uploadcare.plugin(function(uc) {
       const localeBuilder = new LocaleBuilder();
       localeBuilder.build(uc.locale.translations);
@@ -45,15 +73,30 @@ function effectsTab(container, button, dialogApi, settings) {
     });
   }
 
-  let addPromiseArr = [];
-  dialogApi.fileColl.onAdd.add((promise, i) => {
-    promise.then(fileResolver);
-  });
-  let filePromises = dialogApi.fileColl.get();
+}
 
-  filePromises.forEach((promise, i) => {
-    promise.then(fileResolver);
-  });
+function setupProgress(Circle, $, button, dialogApi) {
+
+  const circleEl = $('<div class="uploadcare--dialog__icon">').appendTo(button);
+  const circleDf = $.Deferred()
+
+  function update() {
+    const infos = dialogApi.fileColl.lastProgresses();
+    let progress = 0;
+    infos.forEach( progressInfo => {
+      progress += (progressInfo ? progressInfo.progress : 0) / infos.length;
+      circleDf.notify(progress);
+    });
+  }
+
+  dialogApi.fileColl.onAnyProgress(update);
+  dialogApi.fileColl.onAdd.add(update);
+  dialogApi.fileColl.onRemove.add(update);
+  update();
+
+  let circle = new Circle(circleEl).listen(circleDf.promise());
+  dialogApi.progress(circle.update);
+
 }
 
 export default function uploadcareTabEffects() {
@@ -63,4 +106,6 @@ export default function uploadcareTabEffects() {
 }
 
 global.uploadcareTabEffects = uploadcareTabEffects;
+
+
  
