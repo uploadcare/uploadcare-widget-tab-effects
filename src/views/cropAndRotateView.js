@@ -92,7 +92,7 @@ export default class CropAndRotateView {
           rotateFlag = true;
         }
 
-        this.cropApi = $.Jcrop(this.crop_img, {
+        this.cropApi = $.Jcrop(this.crop_img[0], {
           trueSize,
           onChange: ev => {
             const coords = ev;
