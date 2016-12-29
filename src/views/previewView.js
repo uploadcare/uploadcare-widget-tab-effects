@@ -108,6 +108,7 @@ export default class PreviewView {
     this.model.grayscale = undefined;
     this.model.rotate = undefined;
     this.model.crop = undefined;
+    this.cropAndRotateView.resetCropValues();
     this.render();
   }
 }

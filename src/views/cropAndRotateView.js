@@ -30,7 +30,7 @@ export default class CropAndRotateView {
     this.cropPos = this.model.getCropPos();
     this.cropSize = this.model.getCropSize();
     
-    this.freeCropFlag = this.cropPos.y !== null ? true : false;
+    this.freeCropFlag = false;
     
     this.cropConsts = {
       ORIG_RATIO: 'original',
@@ -49,10 +49,7 @@ export default class CropAndRotateView {
     }
 
     this.container = parentEl;
-
-    if(this.freeCropFlag) {
-      this.model.crop = undefined;
-    }
+    this.model.crop = undefined;
 
     const cropRatio = this.getCropConst();
     
@@ -81,9 +78,7 @@ export default class CropAndRotateView {
     this.crop_img = $(parentEl).find(".uploadcare--preview__image-container>img");
 
     this.crop_img.on('load', () => {
-   
-      if(this.freeCropFlag) {
-        
+
         let rotateFlag = false;
         let trueSize = [ this.model.imgWidth, this.model.imgHeight ];
         var curRotate = this.model.rotate;
@@ -128,41 +123,95 @@ export default class CropAndRotateView {
         } else {
           let width = rotateFlag ? this.model.imgHeight : this.model.imgWidth; 
           let height = rotateFlag ? this.model.imgWidth : this.model.imgHeight; 
-          const stepX = Math.round(width / 10);
-          const stepY = Math.round(height / 10);
+          const stepX = 0;
+          const stepY = 0;
 
-          rect = [stepX, stepY, width - stepX, height - stepY];
+          rect = [stepX, stepY, width, height];
         }
         this.cropApi.setSelect(rect);
-      } else {
-        this.cropApi = undefined;
-      }
+        switch(cropRatio) {
+          case this.cropConsts.FREE_CROP:
+            this.setCrop(null, null);            
+          break;
+          case this.cropConsts.ORIG_RATIO:
+            var curRotate = this.model.rotate;
+            if(curRotate === 90 || curRotate === 270) {
+              this.setCrop(this.model.imgHeight, this.model.imgWidth);            
+            } else {
+              this.setCrop(this.model.imgWidth, this.model.imgHeight);            
+            }
+          break;
+          case this.cropConsts.ONE_TO_ONE:
+            this.setCrop(1, 1);
+          break;
+          case this.cropConsts.THREE_TO_FOUR:
+            this.setCrop(3, 4);
+          break;
+          case this.cropConsts.FOUR_TO_THREE:
+            this.setCrop(4, 3);
+          break;
+          case this.cropConsts.SIXTEEN_TO_NINE:
+            this.setCrop(16, 9);
+          break;
+          case this.cropConsts.NINE_TO_SIXTEEN:
+            this.setCrop(9, 16);
+          break;
+        }
     });
     
     this.setupHandlers(parentEl);
     return this.viewDeferred.promise();
   }
 
+  setCrop(wRatio, hRatio) {
+    let crop = {
+      downscale: false, 
+      upscale: false, 
+      notLess: false, 
+      preferedSize: wRatio ? [
+        wRatio, hRatio
+      ] : undefined
+    }
+     return this.cropApi.setOptions({
+          aspectRatio: crop.preferedSize ? crop.preferedSize[0] / crop.preferedSize[1] : 0,
+          minSize: crop.notLess ? utils.fitSize(crop.preferedSize, this.originalSize) : [0, 0]
+        });
+  }
+
   setupHandlers(parentEl) {
 
     $(parentEl).find("." + this.CAR_CANCEL_BTN_ID).click(ev => { return this.carCancelClick(ev); });
-    $(parentEl).find("." + this.CAR_FREE_RATIO_BTN_ID).click(ev => { return this.carFreeRatio(); });
+    $(parentEl).find("." + this.CAR_FREE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(null, null, ev.currentTarget); });
     $(parentEl).find("." + this.CAR_APPLY_BTN_ID).click(ev => { return this.carApplyClick(ev); });
     $(parentEl).find("." + this.CAR_ROTATE_LEFT_BTN).click(ev => { return this.carRotateClick(1); /* rotate left */ });
     $(parentEl).find("." + this.CAR_ROTATE_RIGHT_BTN).click(ev => { return this.carRotateClick(0); /* rotate right */ });
-    $(parentEl).find("." + this.CAR_ORIG_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(null); });
-    $(parentEl).find("." + this.CAR_ONE_TO_ONE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(1); });
-    $(parentEl).find("." + this.CAR_THREE_TO_FOUR_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(3/4); });
-    $(parentEl).find("." + this.CAR_FOUR_TO_THREE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(4/3); });
-    $(parentEl).find("." + this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(16/9); });
-    $(parentEl).find("." + this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(9/16); });
+    $(parentEl).find("." + this.CAR_ORIG_RATIO_BTN_ID).click(ev => { 
+      var curRotate = this.model.rotate;
+      if(curRotate === 90 || curRotate === 270) {
+        return this.carSetCropRatio(this.model.imgHeight, this.model.imgWidth, ev.currentTarget); 
+      } else {
+        return this.carSetCropRatio(this.model.imgWidth, this.model.imgHeight, ev.currentTarget); 
+      }
+    });
+    $(parentEl).find("." + this.CAR_ONE_TO_ONE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(1, 1, ev.currentTarget); });
+    $(parentEl).find("." + this.CAR_THREE_TO_FOUR_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(3, 4, ev.currentTarget); });
+    $(parentEl).find("." + this.CAR_FOUR_TO_THREE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(4, 3, ev.currentTarget); });
+    $(parentEl).find("." + this.CAR_SIXTEEN_TO_NINE_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(16, 9, ev.currentTarget); });
+    $(parentEl).find("." + this.CAR_NINE_TO_SIXTEEN_RATIO_BTN_ID).click(ev => { return this.carSetCropRatio(9, 16, ev.currentTarget); });
+  }
+
+  resetCropValues() {
+    this.model.crop = undefined;
+    this.freeCropFlag = false;
+    this.cropPos.x = null;
+    this.cropPos.y = null;
+    this.cropSize.width = undefined;
+    this.cropSize.height = undefined;
   }
 
   carCancelClick(ev) {
     this.model.rotate = undefined;
-    this.model.crop = undefined;
-    this.freeCropFlag = false;
-
+    this.resetCropValues();
     this.viewDeferred.resolve({
       reason: "Cancel"
     });
@@ -170,10 +219,8 @@ export default class CropAndRotateView {
 
   carApplyClick(ev) {
 
-    if(this.freeCropFlag) {
-      this.model.setCropSize(this.cropSize.width, this.cropSize.height);
-      this.model.setCropPos(this.cropPos.x, this.cropPos.y);
-    }
+    this.model.setCropSize(this.cropSize.width, this.cropSize.height);
+    this.model.setCropPos(this.cropPos.x, this.cropPos.y);
 
     this.viewDeferred.resolve({
       reason: "Apply"
@@ -201,34 +248,14 @@ export default class CropAndRotateView {
     this.render();
   }
 
-  carSetCropRatio(ratio) {
+  carSetCropRatio(wRatio, hRatio, elem) {
 
-    this.freeCropFlag = false;
-    if(!ratio)
-    {
-      this.model.crop = undefined;
-    } else if (ratio === 1) {
-      const squareSize = Math.min(this.model.imgWidth, this.model.imgHeight);
-      this.model.setCropSize(squareSize, squareSize);
-    } else {
-      const squareSize = Math.min(this.model.imgWidth, this.model.imgHeight);
-      const curRatio = this.model.imgWidth / this.model.imgHeight;
-      if(curRatio > 1) {
-        if(ratio < curRatio) {
-          this.model.setCropSize(ratio*squareSize, squareSize);
-        } else {
-          this.model.setCropSize(squareSize, 1/ratio*squareSize);
-        }
-      } else {
-        if(ratio > curRatio) {
-          this.model.setCropSize(squareSize, 1/ratio*squareSize);
-        } else {
-          this.model.setCropSize(ratio*squareSize, squareSize);
-        }
-      }
-    }
-
-    this.render();
+    this.freeCropFlag = wRatio?false:true;
+    let curClass = 'uploadcare--crop-sizes__item_current';
+    this.setCrop(wRatio, hRatio);
+    this.container.find('.uploadcare--crop-sizes>*')
+      .removeClass(curClass);
+    $(elem).addClass(curClass);
   }
 
   carFreeRatio() {
@@ -239,7 +266,11 @@ export default class CropAndRotateView {
 
   getCropConst() {
     
-    const cropSize = this.model.getCropSize();
+    const cropSize = this.cropSize;
+    if (!cropSize.width) {
+      return this.cropConsts.FREE_CROP;
+    }
+    
     const cropRate = Math.round(cropSize.width / cropSize.height * 100) / 100;
     const threeToFourRate = Math.round( 3 / 4 * 100 ) / 100;
     const fourToThreeRate = Math.round( 4 / 3 * 100 ) / 100;
@@ -249,8 +280,6 @@ export default class CropAndRotateView {
 
     if(this.freeCropFlag) {
       return this.cropConsts.FREE_CROP;
-    } else if (!this.crop && !this.cropSize) {
-      return this.cropConsts.ORIG_RATIO;
     } else if ( cropRate === 1 ) {
       return this.cropConsts.ONE_TO_ONE;
     } else if ( cropRate <= fourToThreeRate + delta && cropRate >= fourToThreeRate - delta) {
