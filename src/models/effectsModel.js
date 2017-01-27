@@ -52,7 +52,7 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
         } else {
           if(propInd === -1) {
             priorityArr.push(propertyName);
-          } 
+          }
           else {
             priorityArr.splice(propInd, 1);
             priorityArr.push(propertyName);
@@ -93,45 +93,57 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
         this[formatArr[0]] = formatArr[1] ? formatArr[1] : null;
       }
     }
-    
+
     if(priorityArr.indexOf(formatArr[0]) === -1) {
       priorityArr.push(formatArr[0]);
     }
   }
 
-  this.getFinalUrl = function() {
-    var baseUrl =  this.protocol + '://' + this.cdn_url + this.imageId + '/';
+  this.getModifiers = function() {
+    var url =  '';
     uploadcare.jQuery.each(priorityArr, (key, val) => {
       if(effectsData[val] !== undefined) {
-        baseUrl += '-/' + val + '/';
+				url += '-/' + val + '/';
         if (effectsData[val]) {
-          baseUrl += effectsData[val] + '/';
+					url += effectsData[val] + '/';
         }
-      } 
+      }
 
       if (val === CROP_EFFECT && effectsData[val]) {
         if(cropPos) {
-          baseUrl += cropPos + '/';
+					url += cropPos + '/';
         } else {
-          baseUrl += 'center/';
+					url += 'center/';
         }
       }
     });
-    return baseUrl;
+    return url;
   }
 
-  this.getPreviewUrl = function(width, height) {
-    var res = this.getFinalUrl() + '-/preview/';
+  this.getBaseUrl = function() {
+    return  this.protocol + '://' + this.cdn_url + this.imageId + '/';
+  }
+
+  this.getFinalUrl = function() {
+    return this.getBaseUrl() + this.getModifiers();
+  }
+
+  this.getPreviewModifiers = function(width, height) {
+    var res = '-/preview/';
     if(width) {
-      res += width; 
+      res += width;
     }
     if(height) {
       res += "x" + height;
     }
     if(width || height) {
       res += "/";
-    } 
+    }
     return res;
+  }
+
+  this.getPreviewUrl = function(width, height) {
+    return this.getFinalUrl() + this.getPreviewModifiers(width, height);
   }
 
   this.setCropSize = function(width, height) {
@@ -142,8 +154,8 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
   this.getCropSize = function() {
     let sizeArr = this[CROP_EFFECT] ? this[CROP_EFFECT].split('x') : [];
     return {
-      width:  sizeArr[0] ? parseInt(sizeArr[0], 10) : null, 
-      height: sizeArr[1] ? parseInt(sizeArr[1], 10) : null 
+      width:  sizeArr[0] ? parseInt(sizeArr[0], 10) : null,
+      height: sizeArr[1] ? parseInt(sizeArr[1], 10) : null
     }
   }
 
@@ -159,7 +171,7 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
     const posArr = cropPos ? cropPos.split(',') : [];
     return {
       x: posArr[0] ? parseInt(posArr[0], 10) : null,
-      y: posArr[1] ? parseInt(posArr[1], 10) : null 
+      y: posArr[1] ? parseInt(posArr[1], 10) : null
     }
   }
 }

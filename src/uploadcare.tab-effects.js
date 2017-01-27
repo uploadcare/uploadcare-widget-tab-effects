@@ -56,8 +56,14 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
 						previewView
 							.render()
 							.then(type => {
-								data.info.cdnUrl = model.getPreviewUrl();
-								dialogApi.resolve();
+								const newFile = this.file.then((info) => {
+									info.cdnUrlModifiers = model.getModifiers() + model.getPreviewModifiers()
+									info.cdnUrl = model.getPreviewUrl()
+									// info.crop = coords
+									return info
+								})
+
+								dialogApi.fileColl.replace(this.file, newFile)
 							});
 					}
 				}
