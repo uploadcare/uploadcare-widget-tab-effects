@@ -4,7 +4,9 @@ var config  = require('./webpack.config');
 config.output = {
   filename: 'uploadcare.tab-effects.js',
   publicPath: '',
-  path: path.resolve(__dirname, 'dist')
+  path: path.resolve(__dirname, 'dist'),
+	library: 'uploadcareTabEffects',
+	libraryTarget: 'umd'
 };
 
 config.plugins = config.plugins.concat([
