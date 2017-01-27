@@ -2,110 +2,79 @@ import PreviewView from './views/previewView';
 import EffectsModel from './models/effectsModel';
 import LocaleBuilder from './tools/localeBuilder';
 
-const ucCdn = 'ucarecdn.com/';
+function uploadcareTabEffects(container, button, dialogApi, settings) {
+	if (typeof uploadcare === 'undefined') {
+		throw new ReferenceError('uploadcare is not defined');
+	}
 
-function effectsTab(container, button, dialogApi, settings) {
+	uploadcare.plugin(function(uc) {
+		if (settings.multiple) {
+			return new uc.widget.tabs.PreviewTabMultiple(container, button, dialogApi, settings, name)
+		}
 
-// getting first image for preview;
-  let isFileTaken = false;
-  const $ = uploadcare.jQuery;
-  let Circle = null;
-  uploadcare.plugin(uc => {
-    Circle = uc.ui.progress.Circle;
-  });
+		const PreviewTab = uc.widget.tabs.PreviewTab
 
-  setupProgress(Circle, $, button, dialogApi);
-  dialogApi.fileColl.onAdd.add((promise, i) => {
-    promise.then(fileAddResolver);
-  });
+		const __hasProp = Object.prototype.hasOwnProperty
+		const __extends = function(child, parent) {
+			for (let key in parent) {
+				if (__hasProp.call(parent, key)) {
+					child[key] = parent[key]
+				}
+			}
+			function ctor() {
+				this.constructor = child
+			}
 
-  let filePromises = dialogApi.fileColl.get();
-  filePromises.forEach((promise, i) => {
-    promise.then(fileEditResolver);
-  });
+			ctor.prototype = parent.prototype
+			child.prototype = new ctor()
+			child.__super__ = parent.prototype
+			return child
+		}
 
-  function fileAddResolver(fileInfo) {
+		const EffectsPreviewTab = (function() {
+			__extends(EffectsPreviewTab, PreviewTab)
 
-    if (isFileTaken) {
-      return;
-    }
+			function EffectsPreviewTab(container, button, dialogApi, settings, name) {
+				EffectsPreviewTab.__super__.constructor.call(this, container, button, dialogApi, settings, name)
+			}
 
-    if (fileInfo.isImage) {
-      isFileTaken = true;
-    }
+			EffectsPreviewTab.prototype.__setState = function(state, data) {
+				if (state === 'image') {
+					if(data.info) {
+						const localeBuilder = new LocaleBuilder();
+						localeBuilder.build(uc.locale.translations);
+						uc.locale.rebuild();
 
-    if (!fileInfo.isImage) {
-      return dialogApi.resolve();
-    }
-    fileResolver(fileInfo);
-  }
+						const model = new EffectsModel(
+							'ucarecdn.com/',
+							data.info.originalImageInfo.width,
+							data.info.originalImageInfo.height,
+							uc.locale);
+						model.parseUrl(data.info.cdnUrl);
 
-  function fileEditResolver(fileInfo) {
-    
-    if (!fileInfo.isImage) {
-      setTimeout(() => dialogApi.hideTab('preview'), 0);
-      return;
-    }
-    fileResolver(fileInfo);
-  }
+						let previewView = new PreviewView(container, model);
+						previewView
+							.render()
+							.then(type => {
+								data.info.cdnUrl = model.getPreviewUrl();
+								dialogApi.resolve();
+							});
+					}
+				}
+				else {
+					EffectsPreviewTab.__super__.__setState.call(this, state, data)
+				}
+			}
 
-  function fileResolver(fileInfo) {
+			EffectsPreviewTab.prototype.initImage = function(imgSize, cdnModifiers) {
+				console.log('this is image!')
+			}
 
-    uploadcare.plugin(function(uc) {
-      const localeBuilder = new LocaleBuilder();
-      localeBuilder.build(uc.locale.translations);
-      uc.locale.rebuild();
+			return EffectsPreviewTab
+		})()
 
-      const model = new EffectsModel(
-        ucCdn, 
-        fileInfo.originalImageInfo.width, 
-        fileInfo.originalImageInfo.height, 
-        uc.locale);
-      model.parseUrl(fileInfo.cdnUrl);
-      
-      let previewView = new PreviewView(container, model);
-      previewView
-        .render()
-        .then(type => {
-          fileInfo.cdnUrl = model.getPreviewUrl();
-          dialogApi.resolve();
-        });
-    });
-  }
-
+		return new EffectsPreviewTab(container, button, dialogApi, settings, name)
+	})
 }
 
-function setupProgress(Circle, $, button, dialogApi) {
-
-  const circleEl = $('<div class="uploadcare--dialog__icon">').appendTo(button);
-  const circleDf = $.Deferred()
-
-  function update() {
-    const infos = dialogApi.fileColl.lastProgresses();
-    let progress = 0;
-    infos.forEach( progressInfo => {
-      progress += (progressInfo ? progressInfo.progress : 0) / infos.length;
-      circleDf.notify(progress);
-    });
-  }
-
-  dialogApi.fileColl.onAnyProgress(update);
-  dialogApi.fileColl.onAdd.add(update);
-  dialogApi.fileColl.onRemove.add(update);
-  update();
-
-  let circle = new Circle(circleEl).listen(circleDf.promise());
-  dialogApi.progress(circle.update);
-
-}
-
-export default function uploadcareTabEffects() {
-  if(!uploadcare)
-    throw Error('uploadcare widget not loaded');
-  uploadcare.registerTab('preview', effectsTab);  
-}
-
-global.uploadcareTabEffects = uploadcareTabEffects;
-
-
- 
+module.exports = uploadcareTabEffects
