@@ -52,7 +52,30 @@ export default class PreviewView {
     };
     let markupStr = ejs.render(previewTemplate, renderData);
     parentEl.html(markupStr);
-    this.setupHandlers(parentEl);
+
+		parentEl.removeClass('uploadcare--preview_status_loaded')
+		$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', true);
+		$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', true);
+
+    const img = parentEl.find('.uploadcare--preview__image');
+    if(img[0].complete) {
+			parentEl.addClass('uploadcare--preview_status_loaded')
+			$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
+			$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
+		}
+    img[0].addEventListener('load', () => {
+			parentEl.addClass('uploadcare--preview_status_loaded')
+			$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
+			$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
+			this.setupHandlers(parentEl);
+		})
+    img[0].addEventListener('error', () => {
+			this.viewDeferred.reject('image load failed')
+		})
+    img[0].addEventListener('abort', () => {
+			this.viewDeferred.reject('image load aborted')
+		})
+
     return this.viewDeferred.promise();
   }
 

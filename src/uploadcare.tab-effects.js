@@ -55,7 +55,7 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
 						let previewView = new PreviewView(container, model);
 						previewView
 							.render()
-							.then(type => {
+							.done(type => {
 								const newFile = this.file.then((info) => {
 									info.cdnUrlModifiers = model.getModifiers() + model.getPreviewModifiers()
 									info.cdnUrl = model.getPreviewUrl()
@@ -64,6 +64,10 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
 								})
 
 								dialogApi.fileColl.replace(this.file, newFile)
+							})
+							.fail(e => {
+								this.file = null;
+								this.__setState('error', {error: 'loadImage'})
 							});
 					}
 				}
@@ -72,9 +76,7 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
 				}
 			}
 
-			EffectsPreviewTab.prototype.initImage = function(imgSize, cdnModifiers) {
-				console.log('this is image!')
-			}
+			EffectsPreviewTab.prototype.initImage = function(imgSize, cdnModifiers) {}
 
 			return EffectsPreviewTab
 		})()
