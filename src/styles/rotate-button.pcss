@@ -1,8 +1,5 @@
 .uploadcare-tab-effects--rotate-button {
-	display: flex;
-	align-items: center;
-
-	height: 60px;
+	flex-basis: 60px;
 
   svg {
 		g {
@@ -24,6 +21,11 @@
 				stroke: #000;
 			}
 		}
+	}
+
+	&[aria-disabled=true] {
+		cursor: not-allowed;
+		opacity: .65;
 	}
 }
 
@@ -48,7 +50,3 @@
 	}
 }
 
-.uploadcare-tab-effects--effect-button[aria-disabled=true] {
-	cursor: not-allowed;
-	opacity: .65;
-}
