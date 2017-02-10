@@ -52,7 +52,7 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
 							uc.locale);
 						model.parseUrl(data.info.cdnUrl);
 
-						let previewView = new PreviewView(container, model);
+						let previewView = new PreviewView(container, model, uc);
 						previewView
 							.render()
 							.done(type => {

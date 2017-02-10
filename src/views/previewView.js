@@ -10,12 +10,11 @@ import IdGenerator from '../tools/IdGenerator.js';
 import '../styles/effect-buttons.pcss';
 import '../styles/effect-button.pcss';
 
-const $ = uploadcare.jQuery;
-
 export default class PreviewView {
-  constructor(container, effectsModel) {
+  constructor(container, effectsModel, uc) {
     this.container = container;
     this.model = effectsModel;
+    this.$ = uc.jQuery;
 
     this.cropAndRotateView = new CropAndRotateView(container, effectsModel);
     this.enhanceView = new EnhanceView(container, effectsModel);
@@ -33,7 +32,7 @@ export default class PreviewView {
   render(parentEl = this.container) {
     this.container = parentEl;
     if(!this.viewDeferred || this.viewDeferred.state() === "resolved") {
-      this.viewDeferred = $.Deferred();
+      this.viewDeferred = this.$.Deferred();
     }
     let renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
@@ -54,19 +53,19 @@ export default class PreviewView {
     parentEl.html(markupStr);
 
 		parentEl.removeClass('uploadcare--preview_status_loaded')
-		$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', true);
-		$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', true);
+		this.$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', true);
+		this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', true);
 
     const img = parentEl.find('.uploadcare--preview__image');
     if(img[0].complete) {
 			parentEl.addClass('uploadcare--preview_status_loaded')
-			$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
-			$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
+			this.$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
+			this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
 		}
     img[0].addEventListener('load', () => {
 			parentEl.addClass('uploadcare--preview_status_loaded')
-			$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
-			$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
+			this.$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
+			this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
 			this.setupHandlers(parentEl);
 		})
     img[0].addEventListener('error', () => {
@@ -80,13 +79,13 @@ export default class PreviewView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find("." + this.CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });
-    $(parentEl).find("." + this.ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });
-    $(parentEl).find("." + this.SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });
-    $(parentEl).find("." + this.GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });
+    this.$(parentEl).find("." + this.CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev); });
+    this.$(parentEl).find("." + this.ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev); });
+    this.$(parentEl).find("." + this.SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev); });
+    this.$(parentEl).find("." + this.GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev); });
 
-    $(parentEl).find("." + this.REMOVE_BTN_ID).click(ev => { return this.removeClick(ev); });
-    $(parentEl).find("." + this.DONE_BTN_ID).click(ev => { return this.doneClick(ev); });
+    this.$(parentEl).find("." + this.REMOVE_BTN_ID).click(ev => { return this.removeClick(ev); });
+    this.$(parentEl).find("." + this.DONE_BTN_ID).click(ev => { return this.doneClick(ev); });
   }
 
   cropAndRotateClick(ev) {
