@@ -7,12 +7,11 @@ import IdGenerator from '../tools/IdGenerator.js';
 
 import '../styles/slider.pcss';
 
-let $ = uploadcare.jQuery;
-
 export default class SharpenView {
-  constructor(container, effectsModel) {
+  constructor(container, effectsModel, uc) {
     this.container = container;
     this.model = effectsModel;
+    this.$ = uc.jQuery;
     this.slider = new Slider(null, 20);
     this.slider.onChange(newVal => {
       return this.onChangeSlider(newVal);
@@ -27,7 +26,7 @@ export default class SharpenView {
   render(parentEl = this.container) {
 
     if(!this.viewDeferred || this.viewDeferred.state() === "resolved") {
-      this.viewDeferred = $.Deferred();
+      this.viewDeferred = this.$.Deferred();
     }
     this.container = parentEl;
 
@@ -43,7 +42,7 @@ export default class SharpenView {
     let markupStr = ejs.render(sharpenTemplate, renderData);
     parentEl.html(markupStr);
 
-    const sliderContainer = $(parentEl).find("." + this.SLIDER_ID);
+    const sliderContainer = this.$(parentEl).find("." + this.SLIDER_ID);
     this.slider.render(sliderContainer, this.model.sharp);
 
     this.setupHandlers(parentEl);
@@ -51,8 +50,8 @@ export default class SharpenView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find('.' + this.SHARPEN_CANCEL_BTN_ID).click(ev => { return this.sharpenCancelClick(ev); });
-    $(parentEl).find('.' + this.SHARPEN_APPLY_BTN_ID).click(ev => { return this.sharpenApplyClick(ev); });
+    this.$(parentEl).find('.' + this.SHARPEN_CANCEL_BTN_ID).click(ev => { return this.sharpenCancelClick(ev); });
+    this.$(parentEl).find('.' + this.SHARPEN_APPLY_BTN_ID).click(ev => { return this.sharpenApplyClick(ev); });
   }
 
   sharpenCancelClick(ev) {

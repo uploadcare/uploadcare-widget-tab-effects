@@ -18,7 +18,7 @@ export default class PreviewView {
 
     this.cropAndRotateView = new CropAndRotateView(container, effectsModel, uc);
     this.enhanceView = new EnhanceView(container, effectsModel, uc);
-    this.sharpenView = new SharpenView(container, effectsModel);
+    this.sharpenView = new SharpenView(container, effectsModel, uc);
 
     this.CROP_AND_ROTATE_BTN_ID = "cropAndRotateBtn_" + IdGenerator.Generate();
     this.ENHANCE_BTN_ID = "enhanceBtn_" + IdGenerator.Generate();
