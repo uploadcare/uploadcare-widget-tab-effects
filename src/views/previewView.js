@@ -17,7 +17,7 @@ export default class PreviewView {
     this.$ = uc.jQuery;
 
     this.cropAndRotateView = new CropAndRotateView(container, effectsModel, uc);
-    this.enhanceView = new EnhanceView(container, effectsModel);
+    this.enhanceView = new EnhanceView(container, effectsModel, uc);
     this.sharpenView = new SharpenView(container, effectsModel);
 
     this.CROP_AND_ROTATE_BTN_ID = "cropAndRotateBtn_" + IdGenerator.Generate();

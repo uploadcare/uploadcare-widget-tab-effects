@@ -7,12 +7,11 @@ import IdGenerator from '../tools/IdGenerator.js';
 
 import '../styles/slider.pcss';
 
-let $ = uploadcare.jQuery;
-
 export default class EnhanceView {
-  constructor(container, effectsModel) {
+  constructor(container, effectsModel, uc) {
     this.container = container;
     this.model = effectsModel;
+    this.$ = uc.jQuery;
 
     this.slider = new Slider();
 
@@ -31,7 +30,7 @@ export default class EnhanceView {
   render(parentEl = this.container) {
 
     if(!this.viewDeferred || this.viewDeferred.state() === "resolved") {
-      this.viewDeferred = $.Deferred();
+      this.viewDeferred = this.$.Deferred();
     }
     this.container = parentEl;
 
@@ -46,7 +45,7 @@ export default class EnhanceView {
     let markupStr = ejs.render(enhanceTemplate, renderData);
     parentEl.html(markupStr);
 
-    const sliderContainer = $(parentEl).find("." + this.SLIDER_ID);
+    const sliderContainer = this.$(parentEl).find("." + this.SLIDER_ID);
     this.slider.render(sliderContainer, this.model.enhance);
 
     this.setupHandlers(parentEl);
@@ -54,8 +53,8 @@ export default class EnhanceView {
   }
 
   setupHandlers(parentEl) {
-    $(parentEl).find('.' + this.ENHANCE_CANCEL_BTN_ID ).click( ev => { return this.enhanceCancelClick(ev); });
-    $(parentEl).find('.' + this.ENHANCE_APPLY_BTN_ID).click(ev => { return this.enhanceApplyClick(ev); });
+    this.$(parentEl).find('.' + this.ENHANCE_CANCEL_BTN_ID ).click( ev => { return this.enhanceCancelClick(ev); });
+    this.$(parentEl).find('.' + this.ENHANCE_APPLY_BTN_ID).click(ev => { return this.enhanceApplyClick(ev); });
 
   }
 
