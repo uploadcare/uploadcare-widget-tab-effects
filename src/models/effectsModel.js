@@ -102,9 +102,9 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
   this.getModifiers = function() {
     var url =  '';
     uploadcare.jQuery.each(priorityArr, (key, val) => {
-      if(effectsData[val] !== undefined) {
+      if(effectsData[val] !== undefined && effectsData[val] !== 0) {
 				url += '-/' + val + '/';
-        if (effectsData[val]) {
+        if (effectsData[val] !== '' && effectsData[val] !== null) {
 					url += effectsData[val] + '/';
         }
       }
