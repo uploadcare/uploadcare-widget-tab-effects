@@ -16,7 +16,7 @@ export default class PreviewView {
     this.model = effectsModel;
     this.$ = uc.jQuery;
 
-    this.cropAndRotateView = new CropAndRotateView(container, effectsModel);
+    this.cropAndRotateView = new CropAndRotateView(container, effectsModel, uc);
     this.enhanceView = new EnhanceView(container, effectsModel);
     this.sharpenView = new SharpenView(container, effectsModel);
 
