@@ -49,17 +49,18 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
 							'ucarecdn.com/',
 							data.info.originalImageInfo.width,
 							data.info.originalImageInfo.height,
+							data.info.crop,
 							uc.locale);
 						model.parseUrl(data.info.cdnUrl);
 
-						let previewView = new PreviewView(container, model, uc);
+						let previewView = new PreviewView(container, model, uc, settings);
 						previewView
 							.render()
 							.done(type => {
 								const newFile = this.file.then((info) => {
 									info.cdnUrlModifiers = model.getModifiers() + model.getPreviewModifiers()
 									info.cdnUrl = model.getPreviewUrl()
-									// info.crop = coords
+									info.crop = model.coords
 									return info
 								})
 

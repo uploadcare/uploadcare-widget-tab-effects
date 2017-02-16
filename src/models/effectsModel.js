@@ -14,7 +14,7 @@ const GRAYSCALE_EFFECT = 'grayscale';
 const INVERT_EFFECT = 'invert';
 const CROP_EFFECT = 'crop';
 
-export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
+export default function EffectsModel (cdn_url, imgWidth, imgHeight, crop, locale) {
   this.cdn_url = cdn_url;
   this.imgWidth = imgWidth;
   this.imgHeight = imgHeight;
@@ -99,21 +99,42 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
     }
   }
 
-  this.getModifiers = function() {
+  this.getCropModifiers = function() {
+  	if(!this.crop || !this.cropSize || !this.coords) {
+  		return '';
+		}
+  	const size = this.cropSize
+		const {width, height} = this.coords
+		const prefered = this.crop.preferedSize
+		let modifiers = ''
+
+		const wholeImage = width === size[0] && height === size[1]
+		if(!wholeImage) {
+			modifiers += `-/crop/${width}x${height}/${this.coords.left},${this.coords.top}/`
+		}
+
+		const downscale = this.crop.downscale && (width > prefered[0] || height > prefered[1])
+		const upscale = this.crop.upscale && (width < prefered[0] || height < prefered[1])
+		if(downscale || upscale) {
+			console.log(this.coords)
+			// modifiers += `-/resize/${prefered.join('x')}/`
+		}
+
+		return modifiers
+	}
+
+  this.getModifiers = function(withCrop = true) {
     var url =  '';
     uploadcare.jQuery.each(priorityArr, (key, val) => {
-      if(effectsData[val] !== undefined && effectsData[val] !== 0) {
+    	if(val === CROP_EFFECT) {
+    		if(withCrop) {
+					url += this.getCropModifiers();
+				}
+			}
+      else if(effectsData[val] !== undefined && effectsData[val] !== 0) {
 				url += '-/' + val + '/';
         if (effectsData[val] !== '' && effectsData[val] !== null) {
 					url += effectsData[val] + '/';
-        }
-      }
-
-      if (val === CROP_EFFECT && effectsData[val]) {
-        if(cropPos) {
-					url += cropPos + '/';
-        } else {
-					url += 'center/';
         }
       }
     });
@@ -124,8 +145,8 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
     return  this.protocol + '://' + this.cdn_url + this.imageId + '/';
   }
 
-  this.getFinalUrl = function() {
-    return this.getBaseUrl() + this.getModifiers();
+  this.getFinalUrl = function(withCrop = true) {
+    return this.getBaseUrl() + this.getModifiers(withCrop);
   }
 
   this.getPreviewModifiers = function(width, height) {
@@ -142,8 +163,8 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight, locale) {
     return res;
   }
 
-  this.getPreviewUrl = function(width, height) {
-    return this.getFinalUrl() + this.getPreviewModifiers(width, height);
+  this.getPreviewUrl = function(width, height, withCrop = true) {
+    return this.getFinalUrl(withCrop) + this.getPreviewModifiers(width, height);
   }
 
   this.setCropSize = function(width, height) {

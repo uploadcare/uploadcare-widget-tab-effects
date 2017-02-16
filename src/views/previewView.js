@@ -11,12 +11,12 @@ import '../styles/effect-buttons.pcss';
 import '../styles/effect-button.pcss';
 
 export default class PreviewView {
-  constructor(container, effectsModel, uc) {
+  constructor(container, effectsModel, uc, settings) {
     this.container = container;
     this.model = effectsModel;
     this.$ = uc.jQuery;
 
-    this.cropAndRotateView = new CropAndRotateView(container, effectsModel, uc);
+    this.cropAndRotateView = new CropAndRotateView(container, effectsModel, uc, settings);
     this.enhanceView = new EnhanceView(container, effectsModel, uc);
     this.sharpenView = new SharpenView(container, effectsModel, uc);
 
