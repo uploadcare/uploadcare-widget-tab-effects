@@ -3,11 +3,11 @@ export default {
     sharpen: 'Sharpen',
     enhance: 'Enhance',
     grayscale: 'Grayscale',
-    cropAndRotate: 'Crop & Rotate'
+    cropAndRotate: 'Crop & Rotate',
   },
   buttons: {
     remove: 'Очистить',
     done: 'Готово',
-    cancel: 'Отмена'
-  }
-};
+    cancel: 'Отмена',
+  },
+}

@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-const baseConfig = require('./webpack.config.base');
+const baseConfig = require('./webpack.config.base')
 
-let config = Object.create(baseConfig);
+let config = Object.create(baseConfig)
 
-config.devtool = 'sourcemap';
-config.output.filename = process.env.npm_package_config_name + '.js';
+config.devtool = 'sourcemap'
+config.output.filename = process.env.npm_package_config_name + '.js'
 
-module.exports = config;
+module.exports = config

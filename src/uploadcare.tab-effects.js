@@ -1,10 +1,10 @@
-import PreviewView from './views/previewView';
-import EffectsModel from './models/effectsModel';
-import LocaleBuilder from './tools/localeBuilder';
+import PreviewView from './views/previewView'
+import EffectsModel from './models/effectsModel'
+import LocaleBuilder from './tools/localeBuilder'
 
 function uploadcareTabEffects(container, button, dialogApi, settings) {
   if (typeof uploadcare === 'undefined') {
-    throw new ReferenceError('uploadcare is not defined');
+    throw new ReferenceError('uploadcare is not defined')
   }
 
   uploadcare.plugin(function(uc) {
@@ -40,20 +40,20 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
 
       EffectsPreviewTab.prototype.__setState = function(state, data) {
         if (state === 'image') {
-          if(data.info) {
-            const localeBuilder = new LocaleBuilder();
-            localeBuilder.build(uc.locale.translations);
-            uc.locale.rebuild();
+          if (data.info) {
+            const localeBuilder = new LocaleBuilder()
+            localeBuilder.build(uc.locale.translations)
+            uc.locale.rebuild()
 
             const model = new EffectsModel(
               'ucarecdn.com/',
               data.info.originalImageInfo.width,
               data.info.originalImageInfo.height,
               data.info.crop,
-              uc.locale);
-            model.parseUrl(data.info.cdnUrl);
+              uc.locale)
+            model.parseUrl(data.info.cdnUrl)
 
-            let previewView = new PreviewView(container, model, uc, settings);
+            let previewView = new PreviewView(container, model, uc, settings)
             previewView
               .render()
               .done(type => {
@@ -67,9 +67,9 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
                 dialogApi.fileColl.replace(this.file, newFile)
               })
               .fail(e => {
-                this.file = null;
+                this.file = null
                 this.__setState('error', {error: 'loadImage'})
-              });
+              })
           }
         }
         else {

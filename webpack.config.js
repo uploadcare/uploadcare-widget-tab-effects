@@ -1,20 +1,20 @@
-'use strict';
+'use strict'
 
-const webpack = require('webpack');
-const baseConfig = require('./webpack.config.base');
+const webpack = require('webpack')
+const baseConfig = require('./webpack.config.base')
 
-let config = Object.create(baseConfig);
+let config = Object.create(baseConfig)
 
 config.plugins = config.plugins.concat([
   new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.optimize.UglifyJsPlugin({
     compressor: {
       screw_ie8: true,
-      warnings: false
-    }
-  })
-]);
+      warnings: false,
+    },
+  }),
+])
 
-config.output.filename = process.env.npm_package_config_name + '.min.js';
+config.output.filename = process.env.npm_package_config_name + '.min.js'
 
-module.exports = config;
+module.exports = config
