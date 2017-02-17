@@ -1,8 +1,8 @@
 {
-  "name": "uploadcare_tab_effects",
+  "name": "uploadcare-widget-tab-effects",
   "version": "0.0.1",
-  "description": "Uploadcare tab effects",
-  "main": "index.js",
+  "description": "The Effects Tab for Uploadcare Widget",
+  "main": "dist/uploadcare.tab-effects.min.js",
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.3.6",
