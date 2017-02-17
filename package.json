@@ -8,6 +8,7 @@
   "description": "The Effects Tab for Uploadcare Widget",
   "main": "dist/uploadcare.tab-effects.min.js",
   "scripts": {
+    "clean": "rimraf dist",
     "build:dist": "webpack --config webpack.config.dev.js",
     "build:dist:min": "webpack --config webpack.config.js",
     "build": "npm run build:dist && npm run build:dist:min"
@@ -44,6 +45,7 @@
     "precss": "^1.4.0",
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^1.4.4",
+    "rimraf": "^2.5.4",
     "run-sequence": "^1.1.0",
     "sass-loader": "^3.2.1",
     "sass-resources-loader": "^1.0.2",
