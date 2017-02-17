@@ -30,4 +30,11 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({_: 'underscore'}),
   ],
+  postcss: () => [
+    require('stylelint'),
+    require('postcss-nested'),
+    require('postcss-prefixer')('uploadcare-tab-effects--', {ignore: [/^\.svg-/]}),
+    require('autoprefixer'),
+    require('postcss-reporter'),
+  ],
 }

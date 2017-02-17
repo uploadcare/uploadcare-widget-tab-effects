@@ -9,7 +9,7 @@
   "main": "dist/uploadcare.tab-effects.min.js",
   "scripts": {
     "clean": "rimraf dist",
-  "lint": "eslint .",
+    "lint": "eslint .",
     "build:dist": "webpack --config webpack.config.dev.js",
     "build:dist:min": "webpack --config webpack.config.js",
     "build": "npm run build:dist && npm run build:dist:min",
@@ -32,12 +32,20 @@
     "eslint": "^2.13.1",
     "eslint-config-uploadcare": "^1.1.0",
     "postcss-loader": "^0.9.1",
-    "precss": "^1.4.0",
+    "postcss-nested": "^1.0.0",
+    "postcss-prefixer": "^1.0.4",
+    "postcss-reporter": "^3.0.0",
     "rimraf": "^2.5.4",
     "style-loader": "^0.12.4",
+    "stylelint": "^7.6.0",
+    "stylelint-config-uploadcare": "^1.0.0",
     "underscore": "^1.8.3",
     "webpack": "^1.14.0"
   },
+  "browserslist": [
+    "> .4%",
+    "ie >= 10"
+  ],
   "keywords": [],
   "repository": {
     "type": "git",
