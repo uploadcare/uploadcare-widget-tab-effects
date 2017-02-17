@@ -100,41 +100,41 @@ export default function EffectsModel (cdn_url, imgWidth, imgHeight, crop, locale
   }
 
   this.getCropModifiers = function() {
-  	if(!this.crop || !this.cropSize || !this.coords) {
-  		return '';
-		}
-  	const size = this.cropSize
-		const {width, height} = this.coords
-		const prefered = this.crop.preferedSize
-		let modifiers = ''
+    if(!this.crop || !this.cropSize || !this.coords) {
+      return '';
+    }
+    const size = this.cropSize
+    const {width, height} = this.coords
+    const prefered = this.crop.preferedSize
+    let modifiers = ''
 
-		const wholeImage = width === size[0] && height === size[1]
-		if(!wholeImage) {
-			modifiers += `-/crop/${width}x${height}/${this.coords.left},${this.coords.top}/`
-		}
+    const wholeImage = width === size[0] && height === size[1]
+    if(!wholeImage) {
+      modifiers += `-/crop/${width}x${height}/${this.coords.left},${this.coords.top}/`
+    }
 
-		const downscale = this.crop.downscale && (width > prefered[0] || height > prefered[1])
-		const upscale = this.crop.upscale && (width < prefered[0] || height < prefered[1])
-		if(downscale || upscale) {
-			console.log(this.coords)
-			// modifiers += `-/resize/${prefered.join('x')}/`
-		}
+    const downscale = this.crop.downscale && (width > prefered[0] || height > prefered[1])
+    const upscale = this.crop.upscale && (width < prefered[0] || height < prefered[1])
+    if(downscale || upscale) {
+      console.log(this.coords)
+      // modifiers += `-/resize/${prefered.join('x')}/`
+    }
 
-		return modifiers
-	}
+    return modifiers
+  }
 
   this.getModifiers = function(withCrop = true) {
     var url =  '';
     uploadcare.jQuery.each(priorityArr, (key, val) => {
-    	if(val === CROP_EFFECT) {
-    		if(withCrop) {
-					url += this.getCropModifiers();
-				}
-			}
+      if(val === CROP_EFFECT) {
+        if(withCrop) {
+          url += this.getCropModifiers();
+        }
+      }
       else if(effectsData[val] !== undefined && effectsData[val] !== 0) {
-				url += '-/' + val + '/';
+        url += '-/' + val + '/';
         if (effectsData[val] !== '' && effectsData[val] !== null) {
-					url += effectsData[val] + '/';
+          url += effectsData[val] + '/';
         }
       }
     });

@@ -1,52 +1,52 @@
 .uploadcare-tab-effects--rotate-button {
-	flex-basis: 60px;
+  flex-basis: 60px;
 
   svg {
-		g {
-			stroke: #454545;
-		}
+    g {
+      stroke: #454545;
+    }
   }
 
-	&:hover, &:focus {
-		svg {
-			g {
-				stroke: #282828;
-			}
-		}
-	}
+  &:hover, &:focus {
+    svg {
+      g {
+        stroke: #282828;
+      }
+    }
+  }
 
-	&:active {
-		svg {
-			g {
-				stroke: #000;
-			}
-		}
-	}
+  &:active {
+    svg {
+      g {
+        stroke: #000;
+      }
+    }
+  }
 
-	&[aria-disabled=true] {
-		cursor: not-allowed;
-		opacity: .65;
-	}
+  &[aria-disabled=true] {
+    cursor: not-allowed;
+    opacity: .65;
+  }
 }
 
 .uploadcare-tab-effects--rotate-button_current {
-	position: relative;
+  position: relative;
 
-	&:before {
-		content: '';
-		display: block;
+  &:before {
+    content: '';
+    display: block;
 
-		position: absolute;
-		top: 100%;
-		left: 50%;
+    position: absolute;
+    top: 100%;
+    left: 50%;
 
-		width: 6px;
-		height: 6px;
+    width: 6px;
+    height: 6px;
 
-		background: #3787ec;
-		border-radius: 50%;
+    background: #3787ec;
+    border-radius: 50%;
 
-		transform: translateX(-50%);
-	}
+    transform: translateX(-50%);
+  }
 }
 

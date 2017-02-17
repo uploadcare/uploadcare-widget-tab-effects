@@ -52,28 +52,28 @@ export default class PreviewView {
     let markupStr = previewTemplate(renderData);
     parentEl.html(markupStr);
 
-		parentEl.removeClass('uploadcare--preview_status_loaded')
-		this.$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', true);
-		this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', true);
+    parentEl.removeClass('uploadcare--preview_status_loaded')
+    this.$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', true);
+    this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', true);
 
     const img = parentEl.find('.uploadcare--preview__image');
     if(img[0].complete) {
-			parentEl.addClass('uploadcare--preview_status_loaded')
-			this.$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
-			this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
-		}
+      parentEl.addClass('uploadcare--preview_status_loaded')
+      this.$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
+      this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
+    }
     img[0].addEventListener('load', () => {
-			parentEl.addClass('uploadcare--preview_status_loaded')
-			this.$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
-			this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
-			this.setupHandlers(parentEl);
-		})
+      parentEl.addClass('uploadcare--preview_status_loaded')
+      this.$(parentEl).find("." + this.DONE_BTN_ID).attr('aria-disabled', false);
+      this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false);
+      this.setupHandlers(parentEl);
+    })
     img[0].addEventListener('error', () => {
-			this.viewDeferred.reject('image load failed')
-		})
+      this.viewDeferred.reject('image load failed')
+    })
     img[0].addEventListener('abort', () => {
-			this.viewDeferred.reject('image load aborted')
-		})
+      this.viewDeferred.reject('image load aborted')
+    })
 
     return this.viewDeferred.promise();
   }

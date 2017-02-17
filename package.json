@@ -9,7 +9,7 @@
   "main": "dist/uploadcare.tab-effects.min.js",
   "scripts": {
     "clean": "rimraf dist",
-	"lint": "eslint .",
+  "lint": "eslint .",
     "build:dist": "webpack --config webpack.config.dev.js",
     "build:dist:min": "webpack --config webpack.config.js",
     "build": "npm run build:dist && npm run build:dist:min",
