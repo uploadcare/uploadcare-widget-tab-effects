@@ -1,6 +1,5 @@
 'use strict';
 
-import ejs from '../../node_modules/ejs/ejs';
 import sharpenTemplate from '../templates/sharpen.html';
 import Slider from "../components/slider.js";
 import IdGenerator from '../tools/IdGenerator.js';
@@ -39,7 +38,7 @@ export default class SharpenView {
       locale: this.model.locale
     };
 
-    let markupStr = ejs.render(sharpenTemplate, renderData);
+    let markupStr = sharpenTemplate(renderData);
     parentEl.html(markupStr);
 
     const sliderContainer = this.$(parentEl).find("." + this.SLIDER_ID);

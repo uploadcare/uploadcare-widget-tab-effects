@@ -1,5 +1,5 @@
 'use strict'
-import ejs from '../../node_modules/ejs/ejs';
+
 import sliderTemplate from '../templates/slider.html';
 import IdGenerator from '../tools/IdGenerator.js';
 
@@ -16,7 +16,7 @@ export default class Slider {
 
   render(parentEl = this.container, value = 0) {
     this.container = parentEl;
-    let markupStr = ejs.render(sliderTemplate, {
+    let markupStr = sliderTemplate({
       pointerId: this.RANGE_ID,
       min: 0,
       max: this.maxValue,
@@ -27,12 +27,12 @@ export default class Slider {
   }
 
   setupHandlers(parentEl) {
-    this.$range = 
+    this.$range =
     $(parentEl).find("." + this.RANGE_ID);
 
-    this.$range.on("change", ev => { 
+    this.$range.on("change", ev => {
       return this.change(ev);
-    });   
+    });
   }
 
   change(ev) {

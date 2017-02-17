@@ -1,6 +1,5 @@
 'use strict';
 
-import ejs from '../../node_modules/ejs/ejs';
 import cropAndRotateTemplate from '../templates/cropAndRotate.html';
 import cropSizesItemTemplate from '../templates/crop-sizes__item.html';
 import IdGenerator from '../tools/IdGenerator.js';
@@ -48,7 +47,7 @@ export default class CropAndRotateView {
 			locale: this.model.locale
 		};
 
-		let markupStr = ejs.render(cropAndRotateTemplate, renderData);
+		let markupStr = cropAndRotateTemplate(renderData);
 		parentEl.html(markupStr);
 		this.populateCropSizes();
 
@@ -165,7 +164,7 @@ export default class CropAndRotateView {
 
 	populateCropSizes() {
 		var control = this.container.find('.uploadcare--crop-sizes')
-		var template = ejs.render(cropSizesItemTemplate);
+		var template = cropSizesItemTemplate();
 		var currentClass = 'uploadcare--crop-sizes__item_current'
 
 		this.$.each(this.crop, (i, crop) => {

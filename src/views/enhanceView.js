@@ -1,6 +1,5 @@
 'use strict';
 
-import ejs from '../../node_modules/ejs/ejs';
 import enhanceTemplate from '../templates/enhance.html';
 import Slider from "../components/slider.js";
 import IdGenerator from '../tools/IdGenerator.js';
@@ -42,7 +41,7 @@ export default class EnhanceView {
       enhanceCancelBtn: this.ENHANCE_CANCEL_BTN_ID,
       locale: this.model.locale
     };
-    let markupStr = ejs.render(enhanceTemplate, renderData);
+    let markupStr = enhanceTemplate(renderData);
     parentEl.html(markupStr);
 
     const sliderContainer = this.$(parentEl).find("." + this.SLIDER_ID);

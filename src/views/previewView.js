@@ -1,5 +1,5 @@
 'use strict'
-import ejs from '../../node_modules/ejs/ejs';
+
 import previewTemplate from '../templates/preview.html';
 
 import CropAndRotateView from './cropAndRotateView.js';
@@ -49,7 +49,7 @@ export default class PreviewView {
       appliedCar: (this.model.rotate || this.model.crop) ? true : false,
       locale: this.model.locale
     };
-    let markupStr = ejs.render(previewTemplate, renderData);
+    let markupStr = previewTemplate(renderData);
     parentEl.html(markupStr);
 
 		parentEl.removeClass('uploadcare--preview_status_loaded')

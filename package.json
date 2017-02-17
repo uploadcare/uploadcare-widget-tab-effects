@@ -1,8 +1,17 @@
 {
   "name": "uploadcare-widget-tab-effects",
+  "config": {
+    "name": "uploadcare.tab-effects",
+    "library": "uploadcareTabEffects"
+  },
   "version": "0.0.1",
   "description": "The Effects Tab for Uploadcare Widget",
   "main": "dist/uploadcare.tab-effects.min.js",
+  "scripts": {
+    "build:dist": "webpack --config webpack.config.dev.js",
+	"build:dist:min": "webpack --config webpack.config.js",
+	"build": "npm run build:dist && npm run build:dist:min"
+  },
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.3.6",
@@ -20,6 +29,7 @@
     "css-loader": "^0.19.0",
     "del": "^2.2.0",
     "ejs": "^2.5.1",
+    "ejs-loader": "^0.3.0",
     "eslint": "^2.13.1",
     "eslint-config-defaults": "^9.0.0",
     "eslint-plugin-filenames": "^1.0.0",
@@ -50,7 +60,6 @@
     "webpack-hot-middleware": "^2.6.0",
     "yargs": "^3.9.0"
   },
-  "scripts": {},
   "keywords": [],
   "repository": {
     "type": "git",
