@@ -12,7 +12,7 @@
     "build:dist": "webpack --config webpack.config.dev.js",
     "build:dist:min": "webpack --config webpack.config.js",
     "build": "npm run build:dist && npm run build:dist:min",
-	"start:static": "npm run build && browser-sync start --ss dist --files dist --port 3126"
+    "start:static": "npm run build && browser-sync start --ss dist --files dist --port 3126"
   },
   "dependencies": {},
   "devDependencies": {
@@ -29,8 +29,7 @@
     "css-loader": "^0.19.0",
     "ejs-loader": "^0.3.0",
     "eslint": "^2.13.1",
-    "eslint-config-defaults": "^9.0.0",
-    "eslint-plugin-filenames": "^1.0.0",
+    "eslint-config-uploadcare": "^1.1.0",
     "postcss-loader": "^0.9.1",
     "precss": "^1.4.0",
     "rimraf": "^2.5.4",
