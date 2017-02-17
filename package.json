@@ -13,7 +13,8 @@
     "build:dist": "webpack --config webpack.config.dev.js",
     "build:dist:min": "webpack --config webpack.config.js",
     "build": "npm run build:dist && npm run build:dist:min",
-    "start:static": "npm run build && browser-sync start --ss dist --files dist --port 3126"
+    "start:static": "npm run build && browser-sync start --ss dist --files dist --port 3126",
+    "start": "npm run build && browser-sync start -s demo --ss dist --files demo dist --port 3127"
   },
   "dependencies": {},
   "devDependencies": {
