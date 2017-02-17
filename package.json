@@ -11,7 +11,8 @@
     "clean": "rimraf dist",
     "build:dist": "webpack --config webpack.config.dev.js",
     "build:dist:min": "webpack --config webpack.config.js",
-    "build": "npm run build:dist && npm run build:dist:min"
+    "build": "npm run build:dist && npm run build:dist:min",
+	"start:static": "npm run build && browser-sync start --ss dist --files dist --port 3126"
   },
   "dependencies": {},
   "devDependencies": {
