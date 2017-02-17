@@ -17,8 +17,14 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel',
       },
-      {test: /\.html$/, loader: 'ejs-loader'},
-      {test: /\.pcss$/, loader: 'style!css!postcss-loader'},
+      {
+        test: /\.html$/,
+        loader: 'ejs-loader',
+      },
+      {
+        test: /\.pcss$/,
+        loader: 'style!css!postcss-loader',
+      },
     ],
   },
   plugins: [

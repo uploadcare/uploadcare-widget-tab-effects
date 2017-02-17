@@ -15,23 +15,21 @@ export default class Slider {
 
   render(parentEl = this.container, value = 0) {
     this.container = parentEl
-    let markupStr = sliderTemplate({
+    const markupStr = sliderTemplate({
       pointerId: this.RANGE_ID,
       min: 0,
       max: this.maxValue,
       value: value,
     })
+
     parentEl.html(markupStr)
     this.setupHandlers(parentEl)
   }
 
   setupHandlers(parentEl) {
-    this.$range =
-    $(parentEl).find('.' + this.RANGE_ID)
+    this.$range = $(parentEl).find('.' + this.RANGE_ID)
 
-    this.$range.on('change', ev => {
-      return this.change(ev)
-    })
+    this.$range.on('change', ev => this.change(ev))
   }
 
   change(ev) {

@@ -14,13 +14,14 @@ const GRAYSCALE_EFFECT = 'grayscale'
 const INVERT_EFFECT = 'invert'
 const CROP_EFFECT = 'crop'
 
-export default function EffectsModel(cdn_url, imgWidth, imgHeight, crop, locale) {
-  this.cdn_url = cdn_url
+export default function EffectsModel(CDNBaseUrl, imgWidth, imgHeight, crop, locale) {
+  this.CDNBaseUrl = CDNBaseUrl
   this.imgWidth = imgWidth
   this.imgHeight = imgHeight
   let cropPos = undefined
   const priorityArr = []
-  let effectsData = {}
+  const effectsData = {}
+
   this.locale = locale
 
   Object.defineProperty(this, FORMAT_EFFECT, definePropOptions(FORMAT_EFFECT))
@@ -45,19 +46,20 @@ export default function EffectsModel(cdn_url, imgWidth, imgHeight, crop, locale)
         effectsData[propertyName] = value
 
         const propInd = priorityArr.indexOf(propertyName)
+
         if (value === undefined) {
           if (propInd !== -1) {
             priorityArr.splice(propInd, 1)
           }
-        } else {
-          if (propInd === -1) {
-            priorityArr.push(propertyName)
-          }
-          else {
-            priorityArr.splice(propInd, 1)
-            priorityArr.push(propertyName)
-          }
         }
+        else if (propInd === -1) {
+          priorityArr.push(propertyName)
+        }
+        else {
+          priorityArr.splice(propInd, 1)
+          priorityArr.push(propertyName)
+        }
+
         return value
       },
 
@@ -71,25 +73,29 @@ export default function EffectsModel(cdn_url, imgWidth, imgHeight, crop, locale)
     if ((typeof url) !== 'string') {
       throw new Error('`url` param can be only a string')
     }
-    var effectsArr = url.split('-/')
-    var urlWithId = effectsArr[0]
-    var protocolAndIdArr = urlWithId.split(this.cdn_url)
+    const effectsArr = url.split('-/')
+    const urlWithId = effectsArr[0]
+    const protocolAndIdArr = urlWithId.split(this.CDNBaseUrl)
+
     this.protocol = protocolAndIdArr[0].split('://')[0]
     this.imageId = protocolAndIdArr[1].split('/')[0]
-    for (var i = 1; i < effectsArr.length; i++) {
+    for (let i = 1; i < effectsArr.length; i++) {
       this.parseValue(effectsArr[i])
     }
   }
 
   this.parseValue = function(formatString) {
-    var formatArr = formatString.split('/')
+    const formatArr = formatString.split('/')
+
     if (formatArr[0] == CROP_EFFECT) {
       this[formatArr[0]] = formatArr[1] ? formatArr[1] : null
       cropPos = formatArr[2] ? formatArr[2] : undefined
-    } else {
+    }
+    else {
       try {
-        this[formatArr[0]] = formatArr[1] ? parseInt(formatArr[1], 10) : null
-      } catch (ex) {
+        this[formatArr[0]] = formatArr[1] ? parseInt(formatArr[1]) : null
+      }
+      catch (ex) {
         this[formatArr[0]] = formatArr[1] ? formatArr[1] : null
       }
     }
@@ -105,26 +111,28 @@ export default function EffectsModel(cdn_url, imgWidth, imgHeight, crop, locale)
     }
     const size = this.cropSize
     const {width, height} = this.coords
-    const prefered = this.crop.preferedSize
+    // const prefered = this.crop.preferedSize
     let modifiers = ''
 
     const wholeImage = width === size[0] && height === size[1]
+
     if (!wholeImage) {
       modifiers += `-/crop/${width}x${height}/${this.coords.left},${this.coords.top}/`
     }
 
-    const downscale = this.crop.downscale && (width > prefered[0] || height > prefered[1])
-    const upscale = this.crop.upscale && (width < prefered[0] || height < prefered[1])
-    if (downscale || upscale) {
-      console.log(this.coords)
-      // modifiers += `-/resize/${prefered.join('x')}/`
-    }
+    // const downscale = this.crop.downscale && (width > prefered[0] || height > prefered[1])
+    // const upscale = this.crop.upscale && (width < prefered[0] || height < prefered[1])
+    //
+    // if (downscale || upscale) {
+    //   // modifiers += `-/resize/${prefered.join('x')}/`
+    // }
 
     return modifiers
   }
 
   this.getModifiers = function(withCrop = true) {
-    var url =  ''
+    let url = ''
+
     uploadcare.jQuery.each(priorityArr, (key, val) => {
       if (val === CROP_EFFECT) {
         if (withCrop) {
@@ -138,11 +146,12 @@ export default function EffectsModel(cdn_url, imgWidth, imgHeight, crop, locale)
         }
       }
     })
+
     return url
   }
 
   this.getBaseUrl = function() {
-    return  this.protocol + '://' + this.cdn_url + this.imageId + '/'
+    return this.protocol + '://' + this.CDNBaseUrl + this.imageId + '/'
   }
 
   this.getFinalUrl = function(withCrop = true) {
@@ -150,7 +159,8 @@ export default function EffectsModel(cdn_url, imgWidth, imgHeight, crop, locale)
   }
 
   this.getPreviewModifiers = function(width, height) {
-    var res = '-/preview/'
+    let res = '-/preview/'
+
     if (width) {
       res += width
     }
@@ -160,6 +170,7 @@ export default function EffectsModel(cdn_url, imgWidth, imgHeight, crop, locale)
     if (width || height) {
       res += '/'
     }
+
     return res
   }
 
@@ -173,10 +184,11 @@ export default function EffectsModel(cdn_url, imgWidth, imgHeight, crop, locale)
   }
 
   this.getCropSize = function() {
-    let sizeArr = this[CROP_EFFECT] ? this[CROP_EFFECT].split('x') : []
+    const sizeArr = this[CROP_EFFECT] ? this[CROP_EFFECT].split('x') : []
+
     return {
-      width: sizeArr[0] ? parseInt(sizeArr[0], 10) : null,
-      height: sizeArr[1] ? parseInt(sizeArr[1], 10) : null,
+      width: sizeArr[0] ? parseInt(sizeArr[0]) : null,
+      height: sizeArr[1] ? parseInt(sizeArr[1]) : null,
     }
   }
 
@@ -190,9 +202,10 @@ export default function EffectsModel(cdn_url, imgWidth, imgHeight, crop, locale)
 
   this.getCropPos = function() {
     const posArr = cropPos ? cropPos.split(',') : []
+
     return {
-      x: posArr[0] ? parseInt(posArr[0], 10) : null,
-      y: posArr[1] ? parseInt(posArr[1], 10) : null,
+      x: posArr[0] ? parseInt(posArr[0]) : null,
+      y: posArr[1] ? parseInt(posArr[1]) : null,
     }
   }
 }

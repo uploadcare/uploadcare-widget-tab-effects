@@ -3,7 +3,7 @@
 const webpack = require('webpack')
 const baseConfig = require('./webpack.config.base')
 
-let config = Object.create(baseConfig)
+const config = Object.create(baseConfig)
 
 config.plugins = config.plugins.concat([
   new webpack.optimize.OccurenceOrderPlugin(),

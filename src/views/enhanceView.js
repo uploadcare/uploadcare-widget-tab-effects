@@ -14,9 +14,7 @@ export default class EnhanceView {
 
     this.slider = new Slider()
 
-    this.slider.onChange(newVal => {
-      return this.onChangeSlider(newVal)
-    })
+    this.slider.onChange(newVal => this.onChangeSlider(newVal))
 
     this.SLIDER_ID = 'slider_' + IdGenerator.Generate()
     this.PREVIEW_IMG_ID = 'preview_mage_' + IdGenerator.Generate()
@@ -31,7 +29,7 @@ export default class EnhanceView {
     }
     this.container = parentEl
 
-    let renderData = {
+    const renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
       sliderId: this.SLIDER_ID,
       previewImageId: this.PREVIEW_IMG_ID,
@@ -39,27 +37,33 @@ export default class EnhanceView {
       enhanceCancelBtn: this.ENHANCE_CANCEL_BTN_ID,
       locale: this.model.locale,
     }
-    let markupStr = enhanceTemplate(renderData)
+
+    const markupStr = enhanceTemplate(renderData)
+
     parentEl.html(markupStr)
 
     const sliderContainer = this.$(parentEl).find('.' + this.SLIDER_ID)
+
     this.slider.render(sliderContainer, this.model.enhance)
 
     this.setupHandlers(parentEl)
+
     return this.viewDeferred.promise()
   }
 
   setupHandlers(parentEl) {
-    this.$(parentEl).find('.' + this.ENHANCE_CANCEL_BTN_ID).click(ev => { return this.enhanceCancelClick(ev) })
-    this.$(parentEl).find('.' + this.ENHANCE_APPLY_BTN_ID).click(ev => { return this.enhanceApplyClick(ev) })
+    this.$(parentEl).find('.' + this.ENHANCE_CANCEL_BTN_ID)
+      .click(ev => this.enhanceCancelClick(ev))
+    this.$(parentEl).find('.' + this.ENHANCE_APPLY_BTN_ID)
+      .click(ev => this.enhanceApplyClick(ev))
   }
 
-  enhanceCancelClick(ev) {
+  enhanceCancelClick() {
     this.model.enhance = undefined
     this.viewDeferred.resolve({reason: 'Cancel'})
   }
 
-  enhanceApplyClick(ev) {
+  enhanceApplyClick() {
     this.viewDeferred.resolve({reason: 'Apply'})
   }
 
@@ -67,7 +71,7 @@ export default class EnhanceView {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId)
     }
-    this.timeoutId = setTimeout(()=> {
+    this.timeoutId = setTimeout(() => {
       this.model.enhance = newVal
       this.container.find('.' + this.PREVIEW_IMG_ID).attr('src', this.model.getPreviewUrl(800, 382))
     }, 300)

@@ -34,7 +34,7 @@ export default class PreviewView {
     if (!this.viewDeferred || this.viewDeferred.state() === 'resolved') {
       this.viewDeferred = this.$.Deferred()
     }
-    let renderData = {
+    const renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
       cropAndRotateBtnId: this.CROP_AND_ROTATE_BTN_ID,
       enhanceBtnId: this.ENHANCE_BTN_ID,
@@ -44,28 +44,37 @@ export default class PreviewView {
       removeBtn: this.REMOVE_BTN_ID,
 
       appliedGrayscale: this.model.grayscale === null,
-      appliedSharpen: this.model.sharp ? true : false,
-      appliedEnhance: this.model.enhance ? true : false,
-      appliedCar: (this.model.rotate || this.model.crop) ? true : false,
+      appliedSharpen: !!this.model.sharp,
+      appliedEnhance: !!this.model.enhance,
+      appliedCar: !!(this.model.rotate || this.model.crop),
       locale: this.model.locale,
     }
-    let markupStr = previewTemplate(renderData)
+
+    const markupStr = previewTemplate(renderData)
+
     parentEl.html(markupStr)
 
     parentEl.removeClass('uploadcare--preview_status_loaded')
-    this.$(parentEl).find('.' + this.DONE_BTN_ID).attr('aria-disabled', true)
-    this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', true)
+    this.$(parentEl).find('.' + this.DONE_BTN_ID)
+      .attr('aria-disabled', true)
+    this.$(parentEl).find('.uploadcare-tab-effects--effect-button')
+      .attr('aria-disabled', true)
 
     const img = parentEl.find('.uploadcare--preview__image')
+
     if (img[0].complete) {
       parentEl.addClass('uploadcare--preview_status_loaded')
-      this.$(parentEl).find('.' + this.DONE_BTN_ID).attr('aria-disabled', false)
-      this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false)
+      this.$(parentEl).find('.' + this.DONE_BTN_ID)
+        .attr('aria-disabled', false)
+      this.$(parentEl).find('.uploadcare-tab-effects--effect-button')
+        .attr('aria-disabled', false)
     }
     img[0].addEventListener('load', () => {
       parentEl.addClass('uploadcare--preview_status_loaded')
-      this.$(parentEl).find('.' + this.DONE_BTN_ID).attr('aria-disabled', false)
-      this.$(parentEl).find('.uploadcare-tab-effects--effect-button').attr('aria-disabled', false)
+      this.$(parentEl).find('.' + this.DONE_BTN_ID)
+        .attr('aria-disabled', false)
+      this.$(parentEl).find('.uploadcare-tab-effects--effect-button')
+        .attr('aria-disabled', false)
       this.setupHandlers(parentEl)
     })
     img[0].addEventListener('error', () => {
@@ -79,50 +88,57 @@ export default class PreviewView {
   }
 
   setupHandlers(parentEl) {
-    this.$(parentEl).find('.' + this.CROP_AND_ROTATE_BTN_ID).click(ev => { return this.cropAndRotateClick(ev) })
-    this.$(parentEl).find('.' + this.ENHANCE_BTN_ID).click(ev => { return this.enhanceClick(ev) })
-    this.$(parentEl).find('.' + this.SHARPEN_BTN_ID).click(ev => { return this.sharpenClick(ev) })
-    this.$(parentEl).find('.' + this.GRAYSCALE_BTN_ID).click(ev => { return this.grayScaleClick(ev) })
+    this.$(parentEl).find('.' + this.CROP_AND_ROTATE_BTN_ID)
+      .click(ev => this.cropAndRotateClick(ev))
+    this.$(parentEl).find('.' + this.ENHANCE_BTN_ID)
+      .click(ev => this.enhanceClick(ev))
+    this.$(parentEl).find('.' + this.SHARPEN_BTN_ID)
+      .click(ev => this.sharpenClick(ev))
+    this.$(parentEl).find('.' + this.GRAYSCALE_BTN_ID)
+      .click(ev => this.grayScaleClick(ev))
 
-    this.$(parentEl).find('.' + this.REMOVE_BTN_ID).click(ev => { return this.removeClick(ev) })
-    this.$(parentEl).find('.' + this.DONE_BTN_ID).click(ev => { return this.doneClick(ev) })
+    this.$(parentEl).find('.' + this.REMOVE_BTN_ID)
+      .click(ev => this.removeClick(ev))
+    this.$(parentEl).find('.' + this.DONE_BTN_ID)
+      .click(ev => this.doneClick(ev))
   }
 
-  cropAndRotateClick(ev) {
+  cropAndRotateClick() {
     this.cropAndRotateView.render()
-      .then(type => {
+      .then(() => {
         this.render()
       })
   }
 
-  enhanceClick(ev) {
+  enhanceClick() {
     this.enhanceView.render()
-      .then(type => {
+      .then(() => {
         this.render()
       })
   }
 
-  sharpenClick(ev) {
+  sharpenClick() {
     this.sharpenView.render()
-      .then(type => {
+      .then(() => {
         this.render()
       })
   }
 
-  grayScaleClick(ev) {
+  grayScaleClick() {
     if (this.model.grayscale === null) {
       this.model.grayscale = undefined
-    } else {
+    }
+    else {
       this.model.grayscale = null
     }
     this.render()
   }
 
-  doneClick(ev) {
+  doneClick() {
     this.viewDeferred.resolve({reason: 'Done'})
   }
 
-  removeClick(ev) {
+  removeClick() {
     this.model.enhance = undefined
     this.model.sharp = undefined
     this.model.grayscale = undefined

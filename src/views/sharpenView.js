@@ -12,9 +12,7 @@ export default class SharpenView {
     this.model = effectsModel
     this.$ = uc.jQuery
     this.slider = new Slider(null, 20)
-    this.slider.onChange(newVal => {
-      return this.onChangeSlider(newVal)
-    })
+    this.slider.onChange(newVal => this.onChangeSlider(newVal))
 
     this.SLIDER_ID = 'slider_' + IdGenerator.Generate()
     this.PREVIEW_IMG_ID = 'preview_mage_' + IdGenerator.Generate()
@@ -28,7 +26,7 @@ export default class SharpenView {
     }
     this.container = parentEl
 
-    let renderData = {
+    const renderData = {
       previewUrl: this.model.getPreviewUrl(800, 382),
       sliderId: this.SLIDER_ID,
       previewImageId: this.PREVIEW_IMG_ID,
@@ -37,27 +35,32 @@ export default class SharpenView {
       locale: this.model.locale,
     }
 
-    let markupStr = sharpenTemplate(renderData)
+    const markupStr = sharpenTemplate(renderData)
+
     parentEl.html(markupStr)
 
     const sliderContainer = this.$(parentEl).find('.' + this.SLIDER_ID)
+
     this.slider.render(sliderContainer, this.model.sharp)
 
     this.setupHandlers(parentEl)
+
     return this.viewDeferred.promise()
   }
 
   setupHandlers(parentEl) {
-    this.$(parentEl).find('.' + this.SHARPEN_CANCEL_BTN_ID).click(ev => { return this.sharpenCancelClick(ev) })
-    this.$(parentEl).find('.' + this.SHARPEN_APPLY_BTN_ID).click(ev => { return this.sharpenApplyClick(ev) })
+    this.$(parentEl).find('.' + this.SHARPEN_CANCEL_BTN_ID)
+      .click(ev => this.sharpenCancelClick(ev))
+    this.$(parentEl).find('.' + this.SHARPEN_APPLY_BTN_ID)
+      .click(ev => this.sharpenApplyClick(ev))
   }
 
-  sharpenCancelClick(ev) {
+  sharpenCancelClick() {
     this.model.sharp = undefined
     this.viewDeferred.resolve({reason: 'Cancel'})
   }
 
-  sharpenApplyClick(ev) {
+  sharpenApplyClick() {
     this.viewDeferred.resolve({reason: 'Apply'})
   }
 
@@ -65,7 +68,7 @@ export default class SharpenView {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId)
     }
-    this.timeoutId = setTimeout(()=> {
+    this.timeoutId = setTimeout(() => {
       this.model.sharp = newVal
       this.container.find('.' + this.PREVIEW_IMG_ID).attr('src', this.model.getPreviewUrl(800, 382))
     }, 300)

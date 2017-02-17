@@ -14,25 +14,26 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
 
     const PreviewTab = uc.widget.tabs.PreviewTab
 
-    const __hasProp = Object.prototype.hasOwnProperty
-    const __extends = function(child, parent) {
-      for (let key in parent) {
-        if (__hasProp.call(parent, key)) {
+    const customExtends = (child, parent) => {
+      for (const key in parent) {
+        if (Object.prototype.hasOwnProperty.call(parent, key)) {
           child[key] = parent[key]
         }
       }
-      function ctor() {
+
+      function Ctor() {
         this.constructor = child
       }
 
-      ctor.prototype = parent.prototype
-      child.prototype = new ctor()
+      Ctor.prototype = parent.prototype
+      child.prototype = new Ctor()
       child.__super__ = parent.prototype
+
       return child
     }
 
     const EffectsPreviewTab = (function() {
-      __extends(EffectsPreviewTab, PreviewTab)
+      customExtends(EffectsPreviewTab, PreviewTab)
 
       function EffectsPreviewTab(container, button, dialogApi, settings, name) {
         EffectsPreviewTab.__super__.constructor.call(this, container, button, dialogApi, settings, name)
@@ -42,6 +43,7 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
         if (state === 'image') {
           if (data.info) {
             const localeBuilder = new LocaleBuilder()
+
             localeBuilder.build(uc.locale.translations)
             uc.locale.rebuild()
 
@@ -51,22 +53,25 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
               data.info.originalImageInfo.height,
               data.info.crop,
               uc.locale)
+
             model.parseUrl(data.info.cdnUrl)
 
-            let previewView = new PreviewView(container, model, uc, settings)
+            const previewView = new PreviewView(container, model, uc, settings)
+
             previewView
               .render()
-              .done(type => {
+              .done(() => {
                 const newFile = this.file.then((info) => {
                   info.cdnUrlModifiers = model.getModifiers() + model.getPreviewModifiers()
                   info.cdnUrl = model.getPreviewUrl()
                   info.crop = model.coords
+
                   return info
                 })
 
                 dialogApi.fileColl.replace(this.file, newFile)
               })
-              .fail(e => {
+              .fail(() => {
                 this.file = null
                 this.__setState('error', {error: 'loadImage'})
               })
@@ -77,7 +82,7 @@ function uploadcareTabEffects(container, button, dialogApi, settings) {
         }
       }
 
-      EffectsPreviewTab.prototype.initImage = function(imgSize, cdnModifiers) {}
+      EffectsPreviewTab.prototype.initImage = function() {}
 
       return EffectsPreviewTab
     })()
