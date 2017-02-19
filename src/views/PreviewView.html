@@ -1,0 +1,19 @@
+<div class="uploadcare--panel__header">
+  <div class="uploadcare--text uploadcare--text_large uploadcare--panel__title uploadcare--preview__title">
+    ${data.t('dialog.tabs.names.preview')}
+  </div>
+</div>
+
+<div class="uploadcare--panel__content">
+  <div class="uploadcare--preview__image-container">
+    <img src="${data.state.image.cdnUrl}" alt="" class="uploadcare--preview__image ${data.cn.image}"/>
+  </div>
+</div>
+
+<div class="uploadcare--footer uploadcare--panel__footer">
+  <div class="uploadcare--button uploadcare--button_outline-secondary uploadcare--preview__back ${data.cn.cancel}"
+       tabindex="0" role="button">${data.t('dialog.tabs.preview.image.change')}</div>
+
+  <div class="uploadcare--button uploadcare--button_primary uploadcare--preview__done ${data.cn.done}"
+       tabindex="0" role="button">${data.t('dialog.tabs.preview.done')}</div>
+</div>

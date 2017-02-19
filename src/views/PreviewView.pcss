@@ -1,0 +1,86 @@
+.effect-buttons {
+  flex: 1;
+
+  display: flex;
+  justify-content: space-around;
+}
+
+.effect-button {
+  flex: 0 1 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  height: 45px;
+
+  color: #454545;
+
+  .svg-stroke {
+    stroke: #454545;
+  }
+
+  .svg-fill {
+    fill: #454545;
+  }
+
+  &:hover, &:focus {
+    color: #282828;
+
+    .svg-stroke {
+      stroke: #282828;
+    }
+
+    .svg-fill {
+      fill: #282828;
+    }
+  }
+
+  &:active {
+    color: #000;
+
+    .svg-stroke {
+      stroke: #000;
+    }
+
+    .svg-fill {
+      fill: #000;
+    }
+  }
+
+  &[aria-disabled=true] {
+    cursor: not-allowed;
+    opacity: .65;
+  }
+}
+
+.effect-button_applied {
+  position: relative;
+
+  &:before {
+    content: '';
+    display: block;
+
+    position: absolute;
+    top: calc(100% + 3px);
+    left: 50%;
+
+    width: 6px;
+    height: 6px;
+
+    background: #3787ec;
+    border-radius: 50%;
+
+    transform: translateX(-50%);
+  }
+}
+
+.effect-button__caption {
+  font-size: 13px;
+  line-height: 15px;
+
+  text-transform: uppercase;
+
+  margin-top: 5px;
+}
