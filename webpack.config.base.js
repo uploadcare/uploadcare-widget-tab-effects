@@ -2,6 +2,8 @@
 
 const webpack = require('webpack')
 
+const classPrefix = 'uploadcare-tab-effects'
+
 module.exports = {
   entry: [
     './src/uploadcare.tab-effects.js',
@@ -14,16 +16,16 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
-        loader: 'babel',
+        test: /\.pcss$/,
+        loader: `style!css-loader?modules&localIdentName=${classPrefix}--[local]!postcss-loader`,
       },
       {
         test: /\.html$/,
-        loader: 'ejs-loader',
+        loader: 'babel!es6-template-string?context=data',
       },
       {
-        test: /\.pcss$/,
-        loader: 'style!css!postcss-loader',
+        test: /\.js$/,
+        loader: 'babel',
       },
     ],
   },
@@ -33,7 +35,6 @@ module.exports = {
   postcss: () => [
     require('stylelint'),
     require('postcss-nested'),
-    require('postcss-prefixer')('uploadcare-tab-effects--', {ignore: [/^\.svg-/]}),
     require('autoprefixer'),
     require('postcss-reporter'),
   ],

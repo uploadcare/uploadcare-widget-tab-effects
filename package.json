@@ -30,6 +30,7 @@
     "browser-sync": "^2.11.1",
     "css-loader": "^0.19.0",
     "ejs-loader": "^0.3.0",
+    "es6-template-string-loader": "^1.0.1",
     "eslint": "^2.13.1",
     "eslint-config-uploadcare": "^1.1.0",
     "postcss-loader": "^0.9.1",
