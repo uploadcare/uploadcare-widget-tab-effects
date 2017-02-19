@@ -13,7 +13,7 @@ const startPreviewTabEffects = ({
     const {appliedEffects} = store.getState()
 
     if (typeof appliedEffects[effect] === 'boolean') {
-      console.log('switch')
+      store.setEffect(effect, !appliedEffects[effect])
     }
   }
   const preview = new PreviewView({

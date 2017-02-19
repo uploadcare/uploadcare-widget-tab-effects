@@ -39,9 +39,17 @@ class BaseView {
       image.addEventListener('error', () => this.imageDidFail())
       image.addEventListener('abort', () => this.imageDidFail())
     }
+
+    store.subscribeToImage(() => {
+      const state = store.getState()
+
+      this.imageWillLoad()
+      image.src = state.image.cdnUrl
+    })
   }
 
-  templateDidMount() {}
+  templateDidMount() {
+  }
 
   imageWillLoad() {
     const {cn} = this
