@@ -1,5 +1,6 @@
 import PreviewView from './views/PreviewView'
 import RangeView from './views/RangeView'
+import CropView from './views/CropView'
 import getNextRotateValue from './tools/get-next-rotate-value'
 
 const startPreviewTabEffects = ({
@@ -39,6 +40,22 @@ const startPreviewTabEffects = ({
       })
 
       rangeView.render()
+
+      return
+    }
+
+    if (effect === 'crop') {
+      const cropView = new CropView({
+        title: uc.locale.t('dialog.tabs.effects.captions.crop'),
+        uc,
+        container,
+        store,
+        onFail,
+        onDone: () => preview.render(),
+        onCancel: () => preview.render(),
+      })
+
+      cropView.render()
     }
   }
   const preview = new PreviewView({
