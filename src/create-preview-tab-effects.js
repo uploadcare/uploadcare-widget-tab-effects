@@ -25,7 +25,13 @@ function createPreviewTabEffects(PreviewTab, uc) {
           store,
           onDone: () => {
             const newFile = this.file.then((info) => {
-              return info
+              const state = store.getState()
+              const {cdnUrl, cdnUrlModifiers} = state.image
+
+              return Object.assign({}, info, {
+                cdnUrl,
+                cdnUrlModifiers,
+              })
             })
 
             this.dialogApi.fileColl.replace(this.file, newFile)

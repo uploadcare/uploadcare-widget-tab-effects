@@ -27,6 +27,7 @@ const startPreviewTabEffects = ({
     uc,
     container,
     store,
+    onDone,
     onFail,
     onEffectClick,
   })

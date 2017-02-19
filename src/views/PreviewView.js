@@ -11,11 +11,14 @@ class PreviewView extends BaseView {
 
   templateDidMount() {
     const {cn} = this
-    const {store, container, onEffectClick} = this.props
+    const {store, container, onDone, onEffectClick} = this.props
     const state = store.getState()
     const effects = state.settings.effects
+    const done = container.querySelector(`.${cn.done}`)
     const additions = container.querySelector(`.${cn.additions}`)
     const effectButtons = document.createElement('div')
+
+    done.addEventListener('click', () => onDone())
 
     effectButtons.className = cn['effect-buttons']
 
