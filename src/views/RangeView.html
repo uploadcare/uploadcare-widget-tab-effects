@@ -1,0 +1,26 @@
+<div class="uploadcare--panel__header">
+  <div class="uploadcare--text uploadcare--text_large uploadcare--panel__title uploadcare--preview__title">
+    ${this.title}
+  </div>
+</div>
+
+<div class="uploadcare--panel__content">
+  <div class="uploadcare--preview__image-container">
+    <img src="${this.state.image.cdnUrl}" alt="" class="uploadcare--preview__image ${this.cn.image}"/>
+  </div>
+</div>
+
+<div class="uploadcare--footer uploadcare--panel__footer">
+  <div class="uploadcare--button uploadcare--button_outline-secondary ${this.cn.cancel}"
+       tabindex="0" role="button">${this.t('dialog.tabs.effects.cancel')}</div>
+
+  <div class="uploadcare--footer__additions ${this.cn.additions}">
+    <div class="${this.cn.range}">
+      <input type="range" class="${this.cn['range__input']}"
+             min="${this.data.min}" max="${this.data.max}" value="${this.data.value}"/>
+    </div>
+  </div>
+
+  <div class="uploadcare--button uploadcare--button_primary ${this.cn.done}"
+       tabindex="0" role="button">${this.t('dialog.tabs.effects.apply')}</div>
+</div>

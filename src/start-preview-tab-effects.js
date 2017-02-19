@@ -29,10 +29,12 @@ const startPreviewTabEffects = ({
     if (typeof appliedEffects[effect] === 'number') {
       const rangeView = new RangeView({
         title: uc.locale.t(`dialog.tabs.effects.captions.${effect}`),
+        effect: effect,
         uc,
         container,
         store,
         onFail,
+        onDone: () => preview.render(),
         onCancel: () => preview.render(),
       })
 

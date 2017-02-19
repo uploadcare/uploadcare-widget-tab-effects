@@ -7,6 +7,7 @@ class BaseView {
     this.title = props.title || this.props.uc.locale.t('dialog.tabs.names.preview')
     this.cn = classnames
     this.template = template
+    this.data = {}
   }
 
   render() {
@@ -14,7 +15,7 @@ class BaseView {
       return
     }
 
-    const {title, template, cn} = this
+    const {title, template, cn, data} = this
     const {uc, container, store} = this.props
     const state = store.getState()
 
@@ -23,6 +24,7 @@ class BaseView {
       cn,
       t: uc.locale.t,
       state,
+      data,
     })
 
     this.templateDidMount()
