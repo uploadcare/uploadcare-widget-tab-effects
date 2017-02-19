@@ -1,4 +1,5 @@
 import PreviewView from './views/PreviewView'
+import getNextRotateValue from './tools/get-next-rotate-value'
 
 const startPreviewTabEffects = ({
   uc,
@@ -7,13 +8,19 @@ const startPreviewTabEffects = ({
   onDone,
   onFail,
 }) => {
-  console.log('The Effects Tab', store.getState())
-
   const onEffectClick = (effect) => {
     const {appliedEffects} = store.getState()
 
     if (typeof appliedEffects[effect] === 'boolean') {
       store.setEffect(effect, !appliedEffects[effect])
+
+      return
+    }
+
+    if (effect === 'rotate') {
+      const currentRotateValue = appliedEffects.rotate
+
+      store.setEffect('rotate', getNextRotateValue(currentRotateValue))
     }
   }
   const preview = new PreviewView({

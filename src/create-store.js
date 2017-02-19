@@ -34,8 +34,13 @@ function createStore(settings, image) {
 
     for (const effect in appliedEffects) {
       if (appliedEffects[effect]) {
-        if (typeof appliedEffects[effect] === 'boolean') {
+        switch (typeof appliedEffects[effect]) {
+        case 'boolean':
           cdnUrlModifiers += `-/${effect}/`
+          break
+        case 'number':
+          cdnUrlModifiers += `-/${effect}/${appliedEffects[effect]}/`
+          break
         }
       }
     }
