@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: 'babel!es6-template-string?context=data',
+        loader: 'babel!es6-template-string',
       },
       {
         test: /\.js$/,
