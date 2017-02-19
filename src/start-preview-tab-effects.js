@@ -5,7 +5,7 @@ const startPreviewTabEffects = ({
   container,
   store,
   onDone,
-  onFail
+  onFail,
 }) => {
   console.log('The Effects Tab', store.getState())
 
@@ -13,6 +13,7 @@ const startPreviewTabEffects = ({
     uc,
     container,
     store,
+    onFail,
   })
 
   preview.render()

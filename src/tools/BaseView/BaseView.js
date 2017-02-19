@@ -24,6 +24,44 @@ class BaseView {
       t: uc.locale.t,
       state,
     })
+
+    this.imageWillLoad()
+
+    const image = container.querySelector(`.${cn.image}`)
+
+    if (image) {
+      if (image.complete) {
+        this.imageDidLoad()
+      }
+
+      image.addEventListener('load', () => this.imageDidLoad())
+      image.addEventListener('error', () => this.imageDidFail())
+      image.addEventListener('abort', () => this.imageDidFail())
+    }
+  }
+
+  imageWillLoad() {
+    const {cn} = this
+    const {container} = this.props
+    const done = container.querySelector(`.${cn.done}`)
+
+    container.classList.remove('uploadcare--preview_status_loaded')
+    done.setAttribute('aria-disabled', true)
+  }
+
+  imageDidLoad() {
+    const {cn} = this
+    const {container} = this.props
+    const done = container.querySelector(`.${cn.done}`)
+
+    container.classList.add('uploadcare--preview_status_loaded')
+    done.setAttribute('aria-disabled', false)
+  }
+
+  imageDidFail() {
+    if (this.props.onFail) {
+      this.props.onFail()
+    }
   }
 }
 
