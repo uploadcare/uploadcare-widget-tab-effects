@@ -10,7 +10,7 @@ class EffectButton {
 
   render() {
     const {template, cn} = this
-    const {title} = this.props
+    const {title, onClick} = this.props
     const element = document.createElement('div')
 
     element.className = cn['effect-button']
@@ -19,6 +19,7 @@ class EffectButton {
       title,
       cn,
     })
+    element.addEventListener('click', () => onClick())
 
     return element
   }

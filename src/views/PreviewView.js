@@ -11,7 +11,7 @@ class PreviewView extends BaseView {
 
   templateDidMount() {
     const {cn} = this
-    const {store, container} = this.props
+    const {store, container, onEffectClick} = this.props
     const state = store.getState()
     const effects = state.settings.effects
     const additions = container.querySelector(`.${cn.additions}`)
@@ -20,7 +20,10 @@ class PreviewView extends BaseView {
     effectButtons.className = cn['effect-buttons']
 
     effects.forEach(effect => {
-      const effectButton = new EffectButton({title: effect})
+      const effectButton = new EffectButton({
+        title: effect,
+        onClick: () => onEffectClick(effect),
+      })
 
       effectButtons.appendChild(effectButton.render())
     })
