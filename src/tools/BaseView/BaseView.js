@@ -25,6 +25,7 @@ class BaseView {
       state,
     })
 
+    this.templateDidMount()
     this.imageWillLoad()
 
     const image = container.querySelector(`.${cn.image}`)
@@ -39,6 +40,8 @@ class BaseView {
       image.addEventListener('abort', () => this.imageDidFail())
     }
   }
+
+  templateDidMount() {}
 
   imageWillLoad() {
     const {cn} = this
