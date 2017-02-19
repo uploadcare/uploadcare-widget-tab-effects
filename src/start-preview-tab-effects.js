@@ -1,4 +1,5 @@
 import PreviewView from './views/PreviewView'
+import RangeView from './views/RangeView'
 import getNextRotateValue from './tools/get-next-rotate-value'
 
 const startPreviewTabEffects = ({
@@ -21,6 +22,21 @@ const startPreviewTabEffects = ({
       const currentRotateValue = appliedEffects.rotate
 
       store.setEffect('rotate', getNextRotateValue(currentRotateValue))
+
+      return
+    }
+
+    if (typeof appliedEffects[effect] === 'number') {
+      const rangeView = new RangeView({
+        title: uc.locale.t(`dialog.tabs.effects.captions.${effect}`),
+        uc,
+        container,
+        store,
+        onFail,
+        onCancel: () => preview.render(),
+      })
+
+      rangeView.render()
     }
   }
   const preview = new PreviewView({

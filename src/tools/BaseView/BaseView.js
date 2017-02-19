@@ -4,7 +4,7 @@ import template from './BaseView.html'
 class BaseView {
   constructor(props) {
     this.props = props
-    this.title = this.props.uc.locale.t('dialog.tabs.names.preview')
+    this.title = props.title || this.props.uc.locale.t('dialog.tabs.names.preview')
     this.cn = classnames
     this.template = template
   }
