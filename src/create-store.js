@@ -1,5 +1,6 @@
 import initialState from './initial-state'
 import effectsFromModifiers from './tools/effects-from-modifiers'
+import getModifiersByCrop from './tools/get-modifiers-by-crop'
 
 function createStore(settings, image) {
   let state = {
@@ -35,17 +36,27 @@ function createStore(settings, image) {
     for (const effect in appliedEffects) {
       if (appliedEffects[effect]) {
         switch (typeof appliedEffects[effect]) {
-        case 'boolean':
-          cdnUrlModifiers += `-/${effect}/`
-          break
-        case 'number':
-          cdnUrlModifiers += `-/${effect}/${appliedEffects[effect]}/`
-          break
+          case 'boolean':
+            cdnUrlModifiers += `-/${effect}/`
+            break
+          case 'number':
+            cdnUrlModifiers += `-/${effect}/${appliedEffects[effect]}/`
+            break
+          case 'object':
+            if (effect === 'crop') {
+              cdnUrlModifiers += getModifiersByCrop(appliedEffects[effect])
+            }
+            break
         }
       }
     }
 
-    cdnUrlModifiers = cdnUrlModifiers ? `-/preview/${cdnUrlModifiers}` : null
+    if (cdnUrlModifiers) {
+      cdnUrlModifiers = appliedEffects['crop'] ? cdnUrlModifiers : `-/preview/${cdnUrlModifiers}`
+    }
+    else {
+      cdnUrlModifiers = null
+    }
 
     state.image = Object.assign({}, image,
       {

@@ -31,7 +31,15 @@ class CropView extends BaseView {
       cropButtons.appendChild(cropButton.render())
     })
 
-    done.addEventListener('click', () => onDone())
+    done.addEventListener('click', () => {
+      const {crop, originalSize} = this.cropWidget
+
+      store.setEffect('crop', Object.assign({}, crop, {
+        originalSize,
+        coords: this.cropWidget.getSelection(),
+      }))
+      onDone()
+    })
     cancel.addEventListener('click', () => {
       store.setEffect('crop', {})
       onCancel()

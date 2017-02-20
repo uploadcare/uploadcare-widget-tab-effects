@@ -23,6 +23,7 @@
         ]
       }
     ],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "max-nested-callbacks": ["error", 3],
     "max-params": ["error", 5],
     "max-statements": ["error", 40],
