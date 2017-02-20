@@ -1,5 +1,5 @@
 export default {
-  settings: {effects: ['crop', 'rotate', 'enhance', 'sharp', 'grayscale']},
+  settings: {effects: ['crop', 'rotate', 'enhance', 'sharp', 'grayscale', 'invert', 'mirror']},
   image: {},
   appliedEffects: {
     rotate: 0,
