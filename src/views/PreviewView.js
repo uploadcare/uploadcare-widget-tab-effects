@@ -35,7 +35,7 @@ class PreviewView extends BaseView {
         effectButton.setApplied(newState.appliedEffects[effect])
       })
 
-      effectButtons.appendChild(effectButton.render())
+      effectButtons.appendChild(effectButton.getElement())
     })
 
     additions.appendChild(effectButtons)

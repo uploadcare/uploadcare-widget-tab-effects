@@ -40,7 +40,7 @@ class CropView extends BaseView {
         },
       })
 
-      cropButtons.appendChild(cropButton.render())
+      cropButtons.appendChild(cropButton.getElement())
     })
 
     done.addEventListener('click', () => {
