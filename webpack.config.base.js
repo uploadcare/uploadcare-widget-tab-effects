@@ -24,6 +24,10 @@ module.exports = {
         loader: 'babel!es6-template-string',
       },
       {
+        test: /\.svg$/,
+        loader: 'svg-inline',
+      },
+      {
         test: /\.js$/,
         loader: 'babel',
       },

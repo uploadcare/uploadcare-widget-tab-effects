@@ -1,14 +1,17 @@
 import cn from './EffectButton.pcss'
 import template from './EffectButton.html'
+import getIcon from '../../tools/get-icon'
 
 const EffectButton = (props) => {
-  const {title, applied, onClick} = props
+  const {effect, title, applied, onClick} = props
+  const icon = getIcon(effect)
 
   const elementContainer = document.createElement('div')
 
   elementContainer.innerHTML = template({
     title,
     cn,
+    icon,
   })
 
   const element = elementContainer.querySelector(`.${cn['effect-button']}`)

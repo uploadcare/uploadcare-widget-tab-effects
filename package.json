@@ -41,6 +41,7 @@
     "style-loader": "^0.12.4",
     "stylelint": "^7.6.0",
     "stylelint-config-uploadcare": "^1.0.0",
+    "svg-inline-loader": "^0.7.1",
     "underscore": "^1.8.3",
     "webpack": "^1.14.0"
   },
