@@ -9,6 +9,7 @@ class BaseView {
     this.template = template
     this.data = {}
     this.image = null
+    this.imageUrl = props.store.getState().image.cdnUrl
   }
 
   render() {
@@ -16,7 +17,7 @@ class BaseView {
       return
     }
 
-    const {title, template, cn, data} = this
+    const {title, template, cn, data, imageUrl} = this
     const {uc, container, store} = this.props
     const state = store.getState()
 
@@ -26,6 +27,7 @@ class BaseView {
       t: uc.locale.t,
       state,
       data,
+      imageUrl,
     })
 
     this.templateDidMount()
@@ -34,12 +36,7 @@ class BaseView {
     this.image = container.querySelector(`.${cn.image}`)
 
     if (this.image) {
-      store.subscribeToImage(() => {
-        const state = store.getState()
-
-        this.imageWillLoad()
-        this.image.src = state.image.cdnUrl
-      })
+      store.subscribeToImage(() => this.updateImageUrl())
 
       if (this.image.complete) {
         this.imageDidLoad()
@@ -55,6 +52,14 @@ class BaseView {
   }
 
   templateDidMount() {
+  }
+
+  updateImageUrl() {
+    const state = this.props.store.getState()
+
+    this.imageWillLoad()
+    this.imageUrl = state.image.cdnUrl
+    this.image.src = this.imageUrl
   }
 
   imageWillLoad() {
