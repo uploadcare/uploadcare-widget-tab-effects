@@ -6,22 +6,42 @@ class EffectButton {
     this.props = props
     this.cn = classnames
     this.template = template
+    this.element = null
   }
 
   render() {
     const {template, cn} = this
-    const {title, onClick} = this.props
-    const element = document.createElement('div')
+    const {title, applied, onClick} = this.props
 
-    element.className = cn['effect-button']
-    element.setAttribute('role', 'button')
-    element.innerHTML = template({
+    this.element = document.createElement('div')
+
+    this.element.className = cn['effect-button']
+    if (applied) {
+      this.element.classList.add(cn['effect-button_applied'])
+    }
+    this.element.setAttribute('role', 'button')
+    this.element.innerHTML = template({
       title,
       cn,
     })
-    element.addEventListener('click', () => onClick())
+    this.element.addEventListener('click', () => onClick())
 
-    return element
+    return this.element
+  }
+
+  setApplied(applied) {
+    const {cn} = this
+
+    this.props.applied = applied
+
+    if (this.element) {
+      if (applied) {
+        this.element.classList.add(cn['effect-button_applied'])
+      }
+      else {
+        this.element.classList.remove(cn['effect-button_applied'])
+      }
+    }
   }
 }
 

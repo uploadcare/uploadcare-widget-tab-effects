@@ -9,10 +9,19 @@ function createStore(settings, image) {
     appliedEffects: Object.assign({}, initialState.appliedEffects, effectsFromModifiers(image.cdnUrlModifiers)),
   }
   let effectsListeners = []
+  let effectListeners = {}
   let imageListeners = []
 
   function subcribeToEffects(listener) {
     effectsListeners.push(listener)
+  }
+
+  function subcribeToEffect(effect, listener) {
+    if (!effectListeners[effect]) {
+      effectListeners[effect] = []
+    }
+
+    effectListeners[effect].push(listener)
   }
 
   function subscribeToImage(listener) {
@@ -27,6 +36,10 @@ function createStore(settings, image) {
     state.appliedEffects = Object.assign({}, state.appliedEffects, {[effect]: value})
     rebuildImage()
     effectsListeners.forEach(listener => listener())
+
+    if (effectListeners[effect]) {
+      effectListeners[effect].forEach(listener => listener())
+    }
   }
 
   function rebuildImage() {
@@ -45,6 +58,7 @@ function createStore(settings, image) {
 
   return {
     subcribeToEffects,
+    subcribeToEffect,
     subscribeToImage,
     getState,
     setEffect,

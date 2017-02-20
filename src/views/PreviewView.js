@@ -25,7 +25,14 @@ class PreviewView extends BaseView {
     effects.forEach(effect => {
       const effectButton = new EffectButton({
         title: effect,
+        applied: !!state.appliedEffects[effect],
         onClick: () => onEffectClick(effect),
+      })
+
+      store.subcribeToEffect(effect, () => {
+        const newState = store.getState()
+
+        effectButton.setApplied(newState.appliedEffects[effect])
       })
 
       effectButtons.appendChild(effectButton.render())
