@@ -59,7 +59,7 @@ class BaseView {
 
     this.imageWillLoad()
     this.imageUrl = state.image.cdnUrl
-    this.image.src = this.imageUrl
+    this.image.src = this.imageUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
   }
 
   imageWillLoad() {
