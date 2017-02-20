@@ -15,7 +15,7 @@ class CropView extends BaseView {
     this.template = template
     this.cropWidget = null
     this.currentCrop = state.settings.crop[0]
-    this.imageUrl = state.image.originalUrl + getModifiersByEffects(state.appliedEffects, false)
+    this.imageUrl = state.image.originalUrl + (getModifiersByEffects(state.appliedEffects, false) || '')
   }
 
   templateDidMount() {
@@ -46,7 +46,7 @@ class CropView extends BaseView {
       onDone()
     })
     cancel.addEventListener('click', () => {
-      store.setEffect('crop', {})
+      store.setEffect('crop', null)
       onCancel()
     })
   }

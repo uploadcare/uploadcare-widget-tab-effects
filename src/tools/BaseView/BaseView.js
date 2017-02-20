@@ -27,7 +27,7 @@ class BaseView {
       t: uc.locale.t,
       state,
       data,
-      imageUrl,
+      imageUrl: imageUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/',
     })
 
     this.templateDidMount()

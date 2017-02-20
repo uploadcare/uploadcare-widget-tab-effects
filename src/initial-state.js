@@ -3,7 +3,7 @@ export default {
   image: {},
   appliedEffects: {
     rotate: 0,
-    crop: {},
+    crop: null,
     enhance: 0,
     sharp: 0,
     blur: 0,
