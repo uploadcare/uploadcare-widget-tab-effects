@@ -8,6 +8,7 @@ class BaseView {
     this.cn = classnames
     this.template = template
     this.data = {}
+    this.image = null
   }
 
   render() {
@@ -30,24 +31,27 @@ class BaseView {
     this.templateDidMount()
     this.imageWillLoad()
 
-    const image = container.querySelector(`.${cn.image}`)
+    this.image = container.querySelector(`.${cn.image}`)
 
-    if (image) {
-      if (image.complete) {
+    if (this.image) {
+      store.subscribeToImage(() => {
+        const state = store.getState()
+
+        this.imageWillLoad()
+        this.image.src = state.image.cdnUrl
+      })
+
+      if (this.image.complete) {
         this.imageDidLoad()
       }
 
-      image.addEventListener('load', () => this.imageDidLoad())
-      image.addEventListener('error', () => this.imageDidFail())
-      image.addEventListener('abort', () => this.imageDidFail())
+      this.image.addEventListener('load', () => this.imageDidLoad())
+      this.image.addEventListener('error', () => this.imageDidFail())
+      this.image.addEventListener('abort', () => this.imageDidFail())
     }
-
-    store.subscribeToImage(() => {
-      const state = store.getState()
-
-      this.imageWillLoad()
-      image.src = state.image.cdnUrl
-    })
+    else {
+      this.imageDidLoad()
+    }
   }
 
   templateDidMount() {
