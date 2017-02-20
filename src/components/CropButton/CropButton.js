@@ -43,7 +43,7 @@ class CropButton {
       icon.classList.add('uploadcare--crop-sizes__icon_free')
     }
 
-    element.addEventListener('click', () => onClick())
+    element.addEventListener('click', () => onClick(element))
 
     return element
   }

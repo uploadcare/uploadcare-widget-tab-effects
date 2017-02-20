@@ -30,7 +30,14 @@ class CropView extends BaseView {
       const cropButton = new CropButton({
         uc,
         crop,
-        onClick: () => this.cropWidget.setCrop(crop),
+        onClick: (element) => {
+          [].slice.call(cropButtons.children)
+            .forEach(child => child.classList.remove('uploadcare--crop-sizes__item_current'))
+
+          this.cropWidget.setCrop(crop)
+
+          element.classList.add('uploadcare--crop-sizes__item_current')
+        },
       })
 
       cropButtons.appendChild(cropButton.render())
@@ -55,8 +62,8 @@ class CropView extends BaseView {
     super.imageDidLoad()
 
     if (!this.cropWidget) {
-      const {image, currentCrop} = this
-      const {store, uc} = this.props
+      const {image, currentCrop, cn} = this
+      const {store, uc, container} = this.props
       const state = store.getState()
       const {rotate} = state.appliedEffects
       const {width, height} = state.image.originalImageInfo
@@ -66,6 +73,10 @@ class CropView extends BaseView {
         : [width, height]
 
       this.cropWidget = new uc.crop.CropWidget(uc.jQuery(image), size, currentCrop)
+
+      const cropButtons = container.querySelector(`.${cn['crop-buttons']}`)
+
+      cropButtons.children[0].classList.add('uploadcare--crop-sizes__item_current')
     }
   }
 }
