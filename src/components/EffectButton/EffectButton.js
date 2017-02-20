@@ -19,7 +19,11 @@ const EffectButton = (props) => {
   if (applied) {
     element.classList.add(cn['effect-button_applied'])
   }
-  element.addEventListener('click', () => onClick())
+  element.addEventListener('click', () => {
+    if (element.getAttribute('aria-disabled') === 'true') return
+
+    onClick()
+  })
 
   const getElement = () => element
 

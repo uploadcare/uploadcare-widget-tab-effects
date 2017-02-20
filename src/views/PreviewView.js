@@ -41,6 +41,34 @@ class PreviewView extends BaseView {
 
     additions.appendChild(effectButtons)
   }
+
+  imageWillLoad() {
+    super.imageWillLoad()
+
+    const {cn} = this
+    const {container} = this.props
+
+    const effectButtons = container.querySelector(`.${cn['effect-buttons']}`)
+
+    if (effectButtons) {
+      Array.prototype.slice.call(effectButtons.children)
+        .forEach(child => child.setAttribute('aria-disabled', true))
+    }
+  }
+
+  imageDidLoad() {
+    super.imageDidLoad()
+
+    const {cn} = this
+    const {container} = this.props
+
+    const effectButtons = container.querySelector(`.${cn['effect-buttons']}`)
+
+    if (effectButtons) {
+      Array.prototype.slice.call(effectButtons.children)
+        .forEach(child => child.setAttribute('aria-disabled', false))
+    }
+  }
 }
 
 export default PreviewView
