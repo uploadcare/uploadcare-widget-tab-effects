@@ -2,15 +2,20 @@ import BaseView from '../tools/BaseView/BaseView'
 import CropButton from '../components/CropButton/CropButton'
 import classnames from './CropView.pcss'
 import template from './CropView.html'
+import getModifiersByEffects from '../tools/get-modifiers-by-effects'
 
 class CropView extends BaseView {
   constructor(props) {
     super(props)
 
+    const {store} = props
+    const state = store.getState()
+
     this.cn = Object.assign({}, this.cn, classnames)
     this.template = template
     this.cropWidget = null
-    this.currentCrop = (props.store.getState()).settings.crop[0]
+    this.currentCrop = state.settings.crop[0]
+    this.imageUrl = state.image.originalUrl + getModifiersByEffects(state.appliedEffects, false)
   }
 
   templateDidMount() {
