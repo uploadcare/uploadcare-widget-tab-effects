@@ -2,7 +2,7 @@
 
 const webpack = require('webpack')
 
-const classPrefix = 'uploadcare-tab-effects'
+const classPrefix = 'uploadcare-tab-effects--'
 
 module.exports = {
   entry: [
@@ -17,7 +17,7 @@ module.exports = {
     loaders: [
       {
         test: /\.pcss$/,
-        loader: `style!css-loader?modules&localIdentName=${classPrefix}--[local]!postcss-loader`,
+        loader: `style!css-loader?modules&localIdentName=${classPrefix}[local]!postcss-loader`,
       },
       {
         test: /\.html$/,
@@ -25,7 +25,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        loader: 'svg-inline',
+        loader: `svg-inline?classPrefix=${classPrefix}`,
       },
       {
         test: /\.js$/,
