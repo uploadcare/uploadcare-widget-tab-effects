@@ -2,20 +2,20 @@ import cn from './EffectButton.pcss'
 import template from './EffectButton.html'
 
 const EffectButton = (props) => {
-  let element = null
   const {title, applied, onClick} = props
 
-  element = document.createElement('div')
+  const elementContainer = document.createElement('div')
 
-  element.className = cn['effect-button']
-  if (applied) {
-    element.classList.add(cn['effect-button_applied'])
-  }
-  element.setAttribute('role', 'button')
-  element.innerHTML = template({
+  elementContainer.innerHTML = template({
     title,
     cn,
   })
+
+  const element = elementContainer.querySelector(`.${cn['effect-button']}`)
+
+  if (applied) {
+    element.classList.add(cn['effect-button_applied'])
+  }
   element.addEventListener('click', () => onClick())
 
   const getElement = () => element
