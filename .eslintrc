@@ -3,6 +3,7 @@
     "browser": true,
     "es6": true
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -32,7 +33,6 @@
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "no-var": "error",
     "no-underscore-dangle": ["error", { "allow": ["__super__", "__setState"] }],
-    "prefer-const": "error",
     "require-jsdoc": "off"
   }
 }
