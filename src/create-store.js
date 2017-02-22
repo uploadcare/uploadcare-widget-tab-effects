@@ -1,12 +1,22 @@
 import initialState from './initial-state'
+import getEffectsSettings from './tools/get-effects-settings'
 import effectsFromModifiers from './tools/effects-from-modifiers'
 import getModifiersByEffects from './tools/get-modifiers-by-effects'
 
 const createStore = (settings, image) => {
   let state = {
-    settings: Object.assign({}, initialState.settings, settings),
-    image: Object.assign({}, initialState.image, image),
-    appliedEffects: Object.assign({}, initialState.appliedEffects, effectsFromModifiers(image.cdnUrlModifiers)),
+    settings: {
+      ...settings,
+      ...{effects: getEffectsSettings(settings.effects, initialState.settings.effects)},
+    },
+    image: {
+      ...initialState.image,
+      ...image,
+    },
+    appliedEffects: {
+      ...initialState.appliedEffects,
+      ...effectsFromModifiers(image.cdnUrlModifiers),
+    },
   }
   let effectsListeners = []
   let effectListeners = {}
