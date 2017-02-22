@@ -2,7 +2,7 @@ import initialState from './initial-state'
 import effectsFromModifiers from './tools/effects-from-modifiers'
 import getModifiersByEffects from './tools/get-modifiers-by-effects'
 
-function createStore(settings, image) {
+const createStore = (settings, image) => {
   let state = {
     settings: Object.assign({}, initialState.settings, settings),
     image: Object.assign({}, initialState.image, image),
@@ -12,11 +12,11 @@ function createStore(settings, image) {
   let effectListeners = {}
   let imageListeners = []
 
-  function subcribeToEffects(listener) {
+  const subcribeToEffects = (listener) => {
     effectsListeners.push(listener)
   }
 
-  function subcribeToEffect(effect, listener) {
+  const subcribeToEffect = (effect, listener) => {
     if (!effectListeners[effect]) {
       effectListeners[effect] = []
     }
@@ -24,15 +24,15 @@ function createStore(settings, image) {
     effectListeners[effect].push(listener)
   }
 
-  function subscribeToImage(listener) {
+  const subscribeToImage = (listener) => {
     imageListeners.push(listener)
   }
 
-  function getState() {
+  const getState = () => {
     return state
   }
 
-  function setEffect(effect, value) {
+  const setEffect = (effect, value) => {
     state.appliedEffects = Object.assign({}, state.appliedEffects, {[effect]: value})
     rebuildImage()
     effectsListeners.forEach(listener => listener())
@@ -42,7 +42,7 @@ function createStore(settings, image) {
     }
   }
 
-  function rebuildImage() {
+  const rebuildImage = () => {
     const {appliedEffects, image} = state
     const cdnUrlModifiers = getModifiersByEffects(appliedEffects)
 
