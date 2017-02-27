@@ -20,7 +20,10 @@ class RangeView extends BaseView {
       min: ranges[effect][0] || 0,
       max: ranges[effect][1] || 100,
     }
-    this.cn = Object.assign({}, this.cn, classnames)
+    this.cn = {
+      ...this.cn,
+      ...classnames,
+    }
     this.template = template
   }
 

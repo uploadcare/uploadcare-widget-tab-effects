@@ -11,7 +11,10 @@ class CropView extends BaseView {
     const {store} = props
     const state = store.getState()
 
-    this.cn = Object.assign({}, this.cn, classnames)
+    this.cn = {
+      ...this.cn,
+      ...classnames,
+    }
     this.template = template
     this.cropWidget = null
     this.currentCrop = state.settings.crop[0]
@@ -46,10 +49,13 @@ class CropView extends BaseView {
     done.addEventListener('click', () => {
       const {crop, originalSize} = this.cropWidget
 
-      store.setEffect('crop', Object.assign({}, crop, {
-        originalSize,
-        coords: this.cropWidget.getSelection(),
-      }))
+      store.setEffect('crop', {
+        ...crop,
+        ...{
+          originalSize,
+          coords: this.cropWidget.getSelection(),
+        },
+      })
       onDone()
     })
     cancel.addEventListener('click', () => {

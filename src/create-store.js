@@ -48,8 +48,13 @@ const createStore = (settings, image) => {
   }
 
   const setEffect = (effect, value) => {
-    state.appliedEffects = Object.assign({}, state.appliedEffects, {[effect]: value})
+    state.appliedEffects = {
+      ...state.appliedEffects,
+      ...{[effect]: value},
+    }
+
     rebuildImage()
+
     effectsListeners.forEach(listener => listener())
 
     if (effectListeners[effect]) {
@@ -61,12 +66,13 @@ const createStore = (settings, image) => {
     const {appliedEffects, image} = state
     const cdnUrlModifiers = getModifiersByEffects(appliedEffects)
 
-    state.image = Object.assign({}, image,
-      {
+    state.image = {
+      ...image,
+      ...{
         cdnUrl: image.originalUrl + (cdnUrlModifiers || ''),
         cdnUrlModifiers,
-      }
-    )
+      },
+    }
 
     imageListeners.forEach(listener => listener())
   }

@@ -6,7 +6,10 @@ class PreviewView extends BaseView {
   constructor(props) {
     super(props)
 
-    this.cn = Object.assign({}, this.cn, classnames)
+    this.cn = {
+      ...this.cn,
+      ...classnames,
+    }
   }
 
   templateDidMount() {
