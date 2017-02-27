@@ -1,15 +1,26 @@
 import initialState from '../initial-state'
 
 const getSettingsEffects = (value) => {
+  let settingsEffects = []
+
   if (typeof value === 'string') {
-    return value.replace(/\s/g, '').split(',')
+    settingsEffects = value.replace(/\s/g, '').split(',')
+  }
+  else if (Array.isArray(value)) {
+    settingsEffects = value
+  }
+  else {
+    settingsEffects = initialState.settings.effects
   }
 
-  if (Array.isArray(value)) {
-    return value
+  const crop = settingsEffects.indexOf('crop')
+
+  if (!!~crop && (crop !== (settingsEffects.length - 1))) {
+    settingsEffects.splice(crop, 1)
+    settingsEffects.push('crop')
   }
 
-  return initialState.settings.effects
+  return settingsEffects
 }
 
 export default getSettingsEffects
