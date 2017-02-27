@@ -2,14 +2,14 @@ export default {
   settings: {effects: ['crop', 'rotate', 'enhance', 'sharp', 'grayscale']},
   image: {},
   appliedEffects: {
-    rotate: 0,
+    blur: 0,
     crop: null,
     enhance: 0,
-    sharp: 0,
-    blur: 0,
+    flip: false,
     grayscale: false,
     invert: false,
-    flip: false,
     mirror: false,
+    rotate: 0,
+    sharp: 0,
   },
 }
