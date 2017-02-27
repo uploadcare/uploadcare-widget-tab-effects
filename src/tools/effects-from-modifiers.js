@@ -17,7 +17,7 @@ const modifierRegExp = {
   grayscale: /-\/grayscale\//i,
   invert: /-\/invert\//i,
   mirror: /-\/mirror\//i,
-  rotate: /-\/rotate\/([0-9]+)\//i,
+  rotate: /-\/rotate\/(([0-9]+)\/)/i,
   sharp: /-\/sharp\/(([0-9]+)\/|)/i,
 }
 
