@@ -1,13 +1,25 @@
 const getModifiersByCrop = (crop) => {
   const size = crop.originalSize
-  const {width, height, left, top} = crop.coords
+  const {width, height, center, left, top} = crop.coords
   // const prefered = this.crop.preferedSize
   let modifiers = ''
 
-  const wholeImage = width === size[0] && height === size[1]
+  if (size) {
+    const wholeImage = width === size[0] && height === size[1]
 
-  if (!wholeImage) {
-    modifiers += `-/crop/${width}x${height}/${left},${top}/`
+    if (!wholeImage) {
+      modifiers += `-/crop/${width}x${height}/${left},${top}/`
+    }
+  }
+  else {
+    modifiers += `-/crop/${width}x${height}/`
+
+    if (center) {
+      modifiers += 'center/'
+    }
+    else if ((left !== undefined) && (top !== undefined)) {
+      modifiers += `${left},${top}/`
+    }
   }
 
   // const downscale = this.crop.downscale && (width > prefered[0] || height > prefered[1])

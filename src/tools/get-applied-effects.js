@@ -1,6 +1,6 @@
 import initialState from '../initial-state'
 
-const getAppliedEffects = (cdnUrlModifiers, settingsEffects) => {
+const getAppliedEffects = (settingsEffects) => {
   const {appliedEffects: initialAppliedEffects} = initialState
   let appliedEffects = {}
 
