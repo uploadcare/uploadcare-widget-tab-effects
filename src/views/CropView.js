@@ -65,7 +65,7 @@ class CropView extends BaseView {
       const {image, currentCrop, cn} = this
       const {store, uc, container} = this.props
       const state = store.getState()
-      const {rotate} = state.appliedEffects
+      const {rotate, crop} = state.appliedEffects
       const {width, height} = state.image.originalImageInfo
 
       const size = rotate && !!~[90, 270].indexOf(rotate)
@@ -73,6 +73,10 @@ class CropView extends BaseView {
         : [width, height]
 
       this.cropWidget = new uc.crop.CropWidget(uc.jQuery(image), size, currentCrop)
+
+      if (crop && crop.coords) {
+        this.cropWidget.setSelection(crop.coords)
+      }
 
       const cropButtons = container.querySelector(`.${cn['crop-buttons']}`)
 
