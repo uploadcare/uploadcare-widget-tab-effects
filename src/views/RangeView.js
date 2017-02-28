@@ -5,7 +5,7 @@ import template from './RangeView.html'
 const ranges = {
   enhance: [0, 100],
   sharp: [0, 20],
-  blur: [0, 5000],
+  blur: [0, 100, 5],
 }
 
 class RangeView extends BaseView {
@@ -19,6 +19,7 @@ class RangeView extends BaseView {
       value: state.appliedEffects[effect],
       min: ranges[effect][0] || 0,
       max: ranges[effect][1] || 100,
+      step: ranges[effect][2] || 1,
     }
     this.cn = {
       ...this.cn,
