@@ -14,7 +14,7 @@ class PreviewView extends BaseView {
 
   templateDidMount() {
     const {cn} = this
-    const {store, container, onDone, onEffectClick} = this.props
+    const {uc, store, container, onDone, onEffectClick} = this.props
     const state = store.getState()
     const effects = state.settings.effects
     const done = container.querySelector(`.${cn.done}`)
@@ -28,7 +28,7 @@ class PreviewView extends BaseView {
     effects.forEach(effect => {
       const effectButton = new EffectButton({
         effect,
-        title: effect,
+        title: uc.locale.t(`dialog.tabs.effects.captions.${effect}`),
         applied: !!state.appliedEffects[effect],
         onClick: () => onEffectClick(effect),
       })
