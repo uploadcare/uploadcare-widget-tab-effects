@@ -1,9 +1,14 @@
 export default {
   captions: {
-    sharp: 'Sharpen',
+    blur: 'Blur',
+    crop: 'Crop',
     enhance: 'Enhance',
+    flip: 'Flip',
     grayscale: 'Grayscale',
-    cropAndRotate: 'Crop & Rotate',
+    invert: 'Invert',
+    mirror: 'Mirror',
+    rotate: 'Rotate',
+    sharp: 'Sharp',
   },
   buttons: {
     remove: 'Remove',
