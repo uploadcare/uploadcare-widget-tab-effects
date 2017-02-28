@@ -23,10 +23,14 @@ const modifierRegExp = {
 
 function effectsFromModifiers(cdnUrlModifiers, settingsEffects) {
   if (!cdnUrlModifiers) {
-    return {}
+    return {
+      effects: {},
+      otherModifiers: '',
+    }
   }
 
   let effects = {}
+  let otherModifiers = cdnUrlModifiers
 
   settingsEffects.forEach(settingsEffect => {
     if (modifierRegExp[settingsEffect]) {
@@ -58,11 +62,15 @@ function effectsFromModifiers(cdnUrlModifiers, settingsEffects) {
         }
 
         effects[settingsEffect] = effectValue
+        otherModifiers = otherModifiers.replace(foundModifier[0], '')
       }
     }
   })
 
-  return effects
+  return {
+    effects,
+    otherModifiers,
+  }
 }
 
 export default effectsFromModifiers

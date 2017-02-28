@@ -12,4 +12,5 @@ export default {
     rotate: 0,
     sharp: 0,
   },
+  otherModifiers: '',
 }

@@ -20,8 +20,9 @@ const createStore = (settings, image) => {
     },
     appliedEffects: {
       ...appliedEffects,
-      ...appliedEffectsFromModifiers,
+      ...appliedEffectsFromModifiers.effects,
     },
+    otherModifiers: appliedEffectsFromModifiers.otherModifiers,
   }
   let effectsListeners = []
   let effectListeners = {}
@@ -64,7 +65,7 @@ const createStore = (settings, image) => {
 
   const rebuildImage = () => {
     const {appliedEffects, image} = state
-    const cdnUrlModifiers = getModifiersByEffects(appliedEffects)
+    const cdnUrlModifiers = getModifiersByEffects(appliedEffects) + state.otherModifiers
 
     state.image = {
       ...image,
