@@ -4,7 +4,7 @@
     "name": "uploadcare.tab-effects",
     "library": "uploadcareTabEffects"
   },
-  "version": "0.0.1",
+  "version": "1.0.0-alpha",
   "description": "The Effects Tab for Uploadcare Widget",
   "main": "dist/uploadcare.tab-effects.min.js",
   "scripts": {
