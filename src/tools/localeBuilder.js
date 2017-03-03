@@ -1,21 +1,21 @@
-'use strict';
-import en from '../locale/en.js';
-import ru from '../locale/ru.js';
+'use strict'
+import en from '../locale/en.js'
+import ru from '../locale/ru.js'
 
 export default class LocaleBuilder {
-    constructor() {
-        this.localeStruct = {
-            en: en,
-            ru: ru
-        };
+  constructor() {
+    this.localeStruct = {
+      en: en,
+      ru: ru,
     }
-    
-//build to uc.locale.translations.en.dialog.tabs.effects
-    build(ucStruct) {
-        for (var key in this.localeStruct) {
-            if (ucStruct.hasOwnProperty(key)) {
-                ucStruct[key].dialog.tabs.effects = this.localeStruct[key];
-            }
-        }
+  }
+
+// build to uc.locale.translations.en.dialog.tabs.effects
+  build(ucStruct) {
+    for (const key in this.localeStruct) {
+      if (ucStruct.hasOwnProperty(key)) {
+        ucStruct[key].dialog.tabs.effects = this.localeStruct[key]
+      }
     }
+  }
 }

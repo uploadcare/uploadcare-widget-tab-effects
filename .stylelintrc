@@ -1,0 +1,6 @@
+{
+  "extends": "stylelint-config-uploadcare",
+  "rules": {
+    "block-no-empty": null
+  }
+}

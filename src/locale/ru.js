@@ -1,13 +1,21 @@
 export default {
   captions: {
-    sharpen: 'Sharpen',
-    enhance: 'Enhance',
-    grayscale: 'Grayscale',
-    cropAndRotate: 'Crop & Rotate'
+    blur: 'Размытие',
+    crop: 'Обрезать',
+    enhance: 'Улучшить',
+    flip: 'Отразить по вертикали',
+    grayscale: 'Оттенки серого',
+    invert: 'Инвертировать',
+    mirror: 'Отразить по горизонтали',
+    rotate: 'Повернуть',
+    sharp: 'Резкость',
   },
   buttons: {
-    remove: 'Очистить',
+    remove: 'Удалить',
     done: 'Готово',
-    cancel: 'Отмена'
-  }
-};
+    cancel: 'Отмена',
+    apply: 'Применить',
+  },
+  cancel: 'Отмена',
+  apply: 'Применить',
+}

@@ -1,13 +1,21 @@
 export default {
   captions: {
-    sharpen: 'Sharpen',
+    blur: 'Blur',
+    crop: 'Crop',
     enhance: 'Enhance',
+    flip: 'Flip',
     grayscale: 'Grayscale',
-    cropAndRotate: 'Crop & Rotate'
+    invert: 'Invert',
+    mirror: 'Mirror',
+    rotate: 'Rotate',
+    sharp: 'Sharp',
   },
   buttons: {
     remove: 'Remove',
     done: 'Done',
-    cancel: 'Cancel'
-  }
-};
+    cancel: 'Cancel',
+    apply: 'Apply',
+  },
+  cancel: 'Cancel',
+  apply: 'Apply',
+}

@@ -1,32 +1,38 @@
 {
-  "parser": "babel-eslint",
-  "extends": "eslint-config-defaults",
   "env": {
-    "es6": true,
     "browser": true,
-    "node": true,
-    "mocha": true,
-    "jasmine": true
+    "es6": true
   },
-  "globals": {
-    "angular": false
-  },
-  "ecmaFeatures": {
-    "modules": true,
-    "spread" : true,
-    "restParams" : true
-  },
-  "rules" : {
-    "no-unused-vars" : 2,
-    "no-undef" : 2
-  },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "module",
-      "ecmaFeatures": {
-      "modules": true,
-      "spread" : true,
-      "restParams" : true
-    }
+    "sourceType": "module"
+  },
+  "extends": "uploadcare",
+  "rules": {
+    "id-length": [
+      "error",
+      {
+        "exceptions": [
+          "_",
+          "$",
+          "i",
+          "e",
+          "x",
+          "y",
+          "t"
+        ]
+      }
+    ],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "max-nested-callbacks": ["error", 3],
+    "max-params": ["error", 5],
+    "max-statements": ["error", 40],
+    "new-cap": ["error", { "capIsNewExceptions": ["Generate", "Deferred"] }],
+    "no-bitwise": ["error", { "allow": ["~"] }],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-var": "error",
+    "no-underscore-dangle": ["error", { "allow": ["__super__", "__setState"] }],
+    "require-jsdoc": "off"
   }
 }
