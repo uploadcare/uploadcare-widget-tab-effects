@@ -1,17 +1,20 @@
 import initialState from './initial-state'
 import getSettingsEffects from './tools/get-settings-effects'
+import getSettingsCrop from './tools/get-settings-crop'
 import getAppliedEffects from './tools/get-applied-effects'
 import getModifiersByEffects from './tools/get-modifiers-by-effects'
 import effectsFromModifiers from './tools/effects-from-modifiers'
 
 const createStore = (settings, image) => {
   const settingsEffects = getSettingsEffects(settings.effects)
+  const settingsCrop = getSettingsCrop(settings.crop, settingsEffects)
   const appliedEffects = getAppliedEffects(settingsEffects)
   const appliedEffectsFromModifiers = effectsFromModifiers(image.cdnUrlModifiers, settingsEffects)
 
   let state = {
     settings: {
       ...settings,
+      ...{crop: settingsCrop},
       ...{effects: settingsEffects},
     },
     image: {
