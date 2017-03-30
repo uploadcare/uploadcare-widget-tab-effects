@@ -28,7 +28,7 @@ function effectsFromModifiers(cdnUrlModifiers, settingsEffects) {
   }
 
   let effects = {}
-  let otherModifiers = cdnUrlModifiers
+  let otherModifiers = cdnUrlModifiers.replace(/-\/preview\//g, '')
 
   settingsEffects.forEach(settingsEffect => {
     if (modifierRegExp[settingsEffect]) {
