@@ -8,7 +8,7 @@ export default {
     invert: 'Invert',
     mirror: 'Mirror',
     rotate: 'Rotate',
-    sharp: 'Sharp',
+    sharp: 'Sharpen',
   },
   buttons: {
     remove: 'Remove',
