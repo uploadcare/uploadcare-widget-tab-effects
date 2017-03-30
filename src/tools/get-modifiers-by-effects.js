@@ -22,7 +22,7 @@ const getModifiersByEffects = (effects, withCrop = true) => {
   }
 
   if (cdnUrlModifiers) {
-    cdnUrlModifiers = (effects['crop'] && withCrop) ? cdnUrlModifiers : `-/preview/${cdnUrlModifiers}`
+    cdnUrlModifiers = `-/preview/${cdnUrlModifiers}`
   }
   else {
     cdnUrlModifiers = ''
