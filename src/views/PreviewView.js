@@ -36,7 +36,7 @@ class PreviewView extends BaseView {
       store.subcribeToEffect(effect, () => {
         const newState = store.getState()
 
-        effectButton.setApplied(newState.appliedEffects[effect])
+        effectButton.toggleApplied(newState.appliedEffects[effect])
       })
 
       effectButtons.appendChild(effectButton.getElement())
