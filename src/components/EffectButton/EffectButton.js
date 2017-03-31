@@ -1,33 +1,46 @@
+import createNode from '../../tools/create-node'
 import cn from './EffectButton.pcss'
 import template from './EffectButton.html'
-import getIcon from '../../tools/get-icon'
+import Icon from '../Icon/Icon'
 
 const EffectButton = (props) => {
-  const {effect, title, applied, onClick} = props
-  const icon = getIcon(effect)
+  let element
 
-  const elementContainer = document.createElement('div')
+  const getElement = () => {
+    if (!element) {
+      render()
+    }
 
-  elementContainer.innerHTML = template({
-    title,
-    cn,
-    icon,
-  })
-
-  const element = elementContainer.querySelector(`.${cn['effect-button']}`)
-
-  if (applied) {
-    element.classList.add(cn['effect-button_applied'])
+    return element
   }
-  element.addEventListener('click', () => {
-    if (element.getAttribute('aria-disabled') === 'true') return
 
-    onClick()
-  })
+  const render = () => {
+    const {effect, title, applied} = props
+    const icon = new Icon(effect)
 
-  const getElement = () => element
+    element = createNode(template({
+      title,
+      cn,
+    }))
 
-  const setApplied = (newApplied) => {
+    element.appendChild(icon.getElement())
+
+    if (applied) {
+      element.classList.add(cn['effect-button_applied'])
+    }
+
+    element.addEventListener('click', handleClick)
+  }
+
+  const handleClick = (e) => {
+    if (e.target.getAttribute('aria-disabled') === 'true') return
+
+    const {onClick} = props
+
+    if (onClick) onClick()
+  }
+
+  const toggleApplied = (newApplied) => {
     if (element) {
       if (newApplied) {
         element.classList.add(cn['effect-button_applied'])
@@ -40,7 +53,7 @@ const EffectButton = (props) => {
 
   return {
     getElement,
-    setApplied,
+    toggleApplied,
   }
 }
 
