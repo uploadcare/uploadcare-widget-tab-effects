@@ -14,37 +14,51 @@ const CropButton = (props) => {
   }
 
   const render = () => {
-    const {uc, crop, onClick} = props
-    const prefered = crop.preferedSize
-    let title
-
-    if (prefered) {
-      const gcd = uc.utils.gcd(prefered[0], prefered[1])
-
-      title = `${prefered[0] / gcd}:${prefered[1] / gcd}`
-    }
-    else {
-      title = uc.locale.t('dialog.tabs.preview.crop.free')
-    }
+    const {uc, onClick} = props
+    const size = getSizeInfo()
 
     element = createNode(template({
-      title,
+      title: size ? size.description : uc.locale.t('dialog.tabs.preview.crop.free'),
       cn,
     }))
 
     const icon = element.querySelector(`.${cn['crop-button__icon']}`)
 
-    if (prefered) {
-      const size = uc.utils.fitSize(prefered, [30, 30], true)
-
-      icon.style.width = `${Math.max(20, size[0])}px`
-      icon.style.height = `${Math.max(12, size[1])}px`
+    if (size) {
+      icon.style.width = size.width
+      icon.style.height = size.height
     }
     else {
       icon.classList.add('uploadcare--crop-sizes__icon_free')
     }
 
     element.addEventListener('click', () => onClick(element))
+  }
+
+  const getSizeInfo = () => {
+    const {uc, crop} = props
+    const {preferedSize} = crop
+
+    let description
+    let width
+    let height
+
+    if (preferedSize) {
+      const gcd = uc.utils.gcd(preferedSize[0], preferedSize[1])
+      const size = uc.utils.fitSize(preferedSize, [30, 30], true)
+
+      description = `${preferedSize[0] / gcd}:${preferedSize[1] / gcd}`
+      width = `${Math.max(20, size[0])}px`
+      height = `${Math.max(12, size[1])}px`
+
+      return {
+        description,
+        width,
+        height,
+      }
+    }
+
+    return null
   }
 
   return {getElement}
