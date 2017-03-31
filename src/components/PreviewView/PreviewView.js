@@ -1,6 +1,6 @@
-import BaseView from '../tools/BaseView/BaseView'
+import BaseView from '../../tools/BaseView/BaseView'
 import classnames from './PreviewView.pcss'
-import EffectButton from '../components/EffectButton/EffectButton'
+import EffectButton from '../EffectButton/EffectButton'
 
 class PreviewView extends BaseView {
   constructor(props) {
