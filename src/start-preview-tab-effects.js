@@ -1,7 +1,7 @@
-import PreviewView from './views/PreviewView'
-import RangeView from './views/RangeView'
-import CropView from './views/CropView'
-import getNextRotateValue from './tools/get-next-rotate-value'
+import Header from './components/Header/Header'
+import Image from './components/Image/Image'
+import Content from './components/Content/Content'
+import Footer from './components/Footer/Footer'
 
 const startPreviewTabEffects = ({
   uc,
@@ -10,64 +10,29 @@ const startPreviewTabEffects = ({
   onDone,
   onFail,
 }) => {
-  const onEffectClick = (effect) => {
-    const {appliedEffects} = store.getState()
+  const state = store.getState()
 
-    if (typeof appliedEffects[effect] === 'boolean') {
-      store.setEffect(effect, !appliedEffects[effect])
+  container.innerHTML = ''
 
-      return
-    }
-
-    if (effect === 'rotate') {
-      const currentRotateValue = appliedEffects.rotate
-
-      store.setEffect('rotate', getNextRotateValue(currentRotateValue))
-
-      return
-    }
-
-    if (typeof appliedEffects[effect] === 'number') {
-      const rangeView = new RangeView({
-        title: uc.locale.t(`dialog.tabs.effects.captions.${effect}`),
-        effect: effect,
-        uc,
-        container,
-        store,
-        onFail,
-        onDone: () => preview.render(),
-        onCancel: () => preview.render(),
-      })
-
-      rangeView.render()
-
-      return
-    }
-
-    if (effect === 'crop') {
-      const cropView = new CropView({
-        title: uc.locale.t('dialog.tabs.effects.captions.crop'),
-        uc,
-        container,
-        store,
-        onFail,
-        onDone: () => preview.render(),
-        onCancel: () => preview.render(),
-      })
-
-      cropView.render()
-    }
-  }
-  const preview = new PreviewView({
-    uc,
-    container,
-    store,
-    onDone,
-    onFail,
-    onEffectClick,
+  const header = new Header({title: uc.locale.t('dialog.tabs.names.preview')})
+  const image = new Image({
+    imageUrl: state.image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/',
+    onLoad: () => console.log('load'),
+    onFail: () => console.log('fail'),
+  })
+  const content = new Content({children: image.getElement()})
+  const footer = new Footer({
+    locale: {
+      done: uc.locale.t('dialog.tabs.preview.done'),
+      cancel: uc.locale.t('dialog.tabs.preview.image.change'),
+    },
+    onDone: () => onDone,
+    onCancel: () => console.log('cancel'),
   })
 
-  preview.render()
+  container.appendChild(header.getElement())
+  container.appendChild(content.getElement())
+  container.appendChild(footer.getElement())
 }
 
 export default startPreviewTabEffects
