@@ -36,7 +36,23 @@ const Footer = (props) => {
     cancelElement.addEventListener('click', () => onCancel(cancelElement))
   }
 
-  return {getElement}
+  const appendChild = (child) => {
+    if (!element) return
+
+    additionsElement.appendChild(child)
+  }
+
+  const toggleDisabled = (isDisabled) => {
+    if (!doneElement) return
+
+    doneElement.setAttribute('aria-disabled', isDisabled)
+  }
+
+  return {
+    getElement,
+    appendChild,
+    toggleDisabled,
+  }
 }
 
 export default Footer
