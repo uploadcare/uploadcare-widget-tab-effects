@@ -25,20 +25,20 @@ const Icon = (name) => {
     throw new Error(`Icon with name "${name}" doesn't exist.`)
   }
 
-  let element
+  let $element
 
   const getElement = () => {
-    if (!element) {
+    if (!$element) {
       render()
     }
 
-    return element
+    return $element
   }
 
   const render = () => {
-    element = createNode(icons[name])
+    $element = createNode(icons[name])
 
-    element.classList.add(cn['icon'])
+    $element.classList.add(cn['icon'])
   }
 
   return {getElement}

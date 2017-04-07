@@ -1,26 +1,31 @@
 import createNode from '../../tools/create-node'
 import template from './Content.html'
 
-const Content = (props) => {
-  let element
+const Content = () => {
+  let $element
 
   const getElement = () => {
-    if (!element) {
+    if (!$element) {
       render()
     }
 
-    return element
+    return $element
   }
 
   const render = () => {
-    const {children} = props
-
-    element = createNode(template())
-
-    element.appendChild(children)
+    $element = createNode(template())
   }
 
-  return {getElement}
+  const appendChild = ($child) => {
+    if (!$element) return
+
+    $element.appendChild($child)
+  }
+
+  return {
+    getElement,
+    appendChild,
+  }
 }
 
 export default Content

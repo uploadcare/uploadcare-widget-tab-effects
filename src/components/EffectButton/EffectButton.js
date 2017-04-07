@@ -4,32 +4,32 @@ import template from './EffectButton.html'
 import Icon from '../Icon/Icon'
 
 const EffectButton = (props) => {
-  let element
+  let $element
 
   const getElement = () => {
-    if (!element) {
+    if (!$element) {
       render()
     }
 
-    return element
+    return $element
   }
 
   const render = () => {
     const {effect, title, applied} = props
     const icon = new Icon(effect)
 
-    element = createNode(template({
+    $element = createNode(template({
       title,
       cn,
     }))
 
-    element.appendChild(icon.getElement())
+    $element.appendChild(icon.getElement())
 
     if (applied) {
-      element.classList.add(cn['effect-button_applied'])
+      $element.classList.add(cn['effect-button_applied'])
     }
 
-    element.addEventListener('click', handleClick)
+    $element.addEventListener('click', handleClick)
   }
 
   const handleClick = (e) => {
@@ -41,12 +41,12 @@ const EffectButton = (props) => {
   }
 
   const toggleApplied = (newApplied) => {
-    if (element) {
+    if ($element) {
       if (newApplied) {
-        element.classList.add(cn['effect-button_applied'])
+        $element.classList.add(cn['effect-button_applied'])
       }
       else {
-        element.classList.remove(cn['effect-button_applied'])
+        $element.classList.remove(cn['effect-button_applied'])
       }
     }
   }

@@ -3,49 +3,49 @@ import cn from './Footer.pcss'
 import template from './Footer.html'
 
 const Footer = (props) => {
-  let element
-  let additionsElement
-  let doneElement
-  let cancelElement
+  let $element
+  let $additionsElement
+  let $doneElement
+  let $cancelElement
 
   const getElement = () => {
-    if (!element) {
+    if (!$element) {
       render()
     }
 
-    return element
+    return $element
   }
 
   const render = () => {
     const {locale, children, onDone, onCancel} = props
 
-    element = createNode(template({
+    $element = createNode(template({
       cn,
       locale,
     }))
 
-    additionsElement = element.querySelector(`.${cn.additions}`)
-    doneElement = element.querySelector(`.${cn.done}`)
-    cancelElement = element.querySelector(`.${cn.cancel}`)
+    $additionsElement = $element.querySelector(`.${cn.additions}`)
+    $doneElement = $element.querySelector(`.${cn.done}`)
+    $cancelElement = $element.querySelector(`.${cn.cancel}`)
 
     if (children) {
-      additionsElement.appendChild(children)
+      $additionsElement.appendChild(children)
     }
 
-    doneElement.addEventListener('click', () => onDone(doneElement))
-    cancelElement.addEventListener('click', () => onCancel(cancelElement))
+    $doneElement.addEventListener('click', () => onDone($doneElement))
+    $cancelElement.addEventListener('click', () => onCancel($cancelElement))
   }
 
   const appendChild = (child) => {
-    if (!element) return
+    if (!$element) return
 
-    additionsElement.appendChild(child)
+    $additionsElement.appendChild(child)
   }
 
   const toggleDisabled = (isDisabled) => {
-    if (!doneElement) return
+    if (!$doneElement) return
 
-    doneElement.setAttribute('aria-disabled', isDisabled)
+    $doneElement.setAttribute('aria-disabled', isDisabled)
   }
 
   return {

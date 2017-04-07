@@ -3,30 +3,30 @@ import cn from './Image.pcss'
 import template from './Image.html'
 
 const Image = (props) => {
-  let element
-  let img
+  let $element
+  let $img
 
   const getElement = () => {
-    if (!element) {
+    if (!$element) {
       render()
     }
 
-    return element
+    return $element
   }
 
   const render = () => {
     const {imageUrl, onLoad, onFail} = props
 
-    element = createNode(template({
+    $element = createNode(template({
       cn,
       imageUrl,
     }))
 
-    img = element.querySelector(`.${cn.image}`)
+    $img = $element.querySelector(`.${cn.image}`)
 
-    img.addEventListener('load', () => onLoad())
-    img.addEventListener('error', () => onFail())
-    img.addEventListener('abort', () => onFail())
+    $img.addEventListener('load', () => onLoad())
+    $img.addEventListener('error', () => onFail())
+    $img.addEventListener('abort', () => onFail())
   }
 
   return {getElement}

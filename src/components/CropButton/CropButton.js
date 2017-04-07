@@ -3,36 +3,36 @@ import cn from './CropButton.pcss'
 import template from './CropButton.html'
 
 const CropButton = (props) => {
-  let element
+  let $element
 
   const getElement = () => {
-    if (!element) {
+    if (!$element) {
       render()
     }
 
-    return element
+    return $element
   }
 
   const render = () => {
     const {uc, onClick} = props
     const size = getSizeInfo()
 
-    element = createNode(template({
+    $element = createNode(template({
       title: size ? size.description : uc.locale.t('dialog.tabs.preview.crop.free'),
       cn,
     }))
 
-    const icon = element.querySelector(`.${cn['crop-button__icon']}`)
+    const $icon = $element.querySelector(`.${cn['crop-button__icon']}`)
 
     if (size) {
-      icon.style.width = size.width
-      icon.style.height = size.height
+      $icon.style.width = size.width
+      $icon.style.height = size.height
     }
     else {
-      icon.classList.add('uploadcare--crop-sizes__icon_free')
+      $icon.classList.add('uploadcare--crop-sizes__icon_free')
     }
 
-    element.addEventListener('click', () => onClick(element))
+    $element.addEventListener('click', () => onClick($element))
   }
 
   const getSizeInfo = () => {

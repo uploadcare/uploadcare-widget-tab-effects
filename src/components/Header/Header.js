@@ -3,32 +3,32 @@ import cn from './Header.pcss'
 import template from './Header.html'
 
 const Header = (props) => {
-  let element
-  let titleElement
+  let $element
+  let $titleElement
 
   const getElement = () => {
-    if (!element) {
+    if (!$element) {
       render()
     }
 
-    return element
+    return $element
   }
 
   const render = () => {
     const {title} = props
 
-    element = createNode(template({
+    $element = createNode(template({
       title,
       cn,
     }))
 
-    titleElement = element.querySelector(`.${cn.title}`)
+    $titleElement = $element.querySelector(`.${cn.title}`)
   }
 
   const updateTitle = (newTitle) => {
-    if (!titleElement) return
+    if (!$titleElement) return
 
-    titleElement.innerText = newTitle
+    $titleElement.innerText = newTitle
   }
 
   return {
