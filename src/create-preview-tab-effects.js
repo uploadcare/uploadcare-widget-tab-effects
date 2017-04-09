@@ -1,7 +1,12 @@
 import customExtends from './tools/custom-extends'
 import LocaleBuilder from './tools/localeBuilder'
-import createStore from './create-store'
-import startPreviewTabEffects from './start-preview-tab-effects'
+import configureStore from './configure-store'
+import configureSettings from './configure-settings'
+import initialState from './initial-state'
+import initialSettings from './initial-settings'
+import getAppliedEffects from './tools/get-applied-effects'
+import effectsFromModifiers from './tools/effects-from-modifiers'
+import Tab from './components/Tab/Tab'
 
 function createPreviewTabEffects(PreviewTab, uc) {
   customExtends(PreviewTabEffects, PreviewTab)
@@ -10,19 +15,33 @@ function createPreviewTabEffects(PreviewTab, uc) {
     PreviewTabEffects.__super__.constructor.call(this, container, button, dialogApi, settings, name)
   }
 
-  PreviewTabEffects.prototype.__setState = function(state, data) {
+  PreviewTabEffects.prototype.__setState = function (state, data) {
     if (state === 'image') {
       if (data.info) {
+        const image = data.info
         const localeBuilder = new LocaleBuilder()
-        const store = createStore(this.settings, data.info)
+        const settings = configureSettings(initialSettings, this.settings)
+        const appliedEffects = getAppliedEffects(settings.effects)
+        const appliedEffectsFromModifiers = effectsFromModifiers(image.cdnUrlModifiers, settings.effects)
+        const store = configureStore({
+          ...initialState,
+          ...{image},
+          ...{
+            appliedEffects: {
+              ...appliedEffects,
+              ...appliedEffectsFromModifiers.effects,
+            },
+          },
+          ...{otherModifiers: appliedEffectsFromModifiers.otherModifiers},
+        })
 
         localeBuilder.build(uc.locale.translations)
         uc.locale.rebuild()
 
-        startPreviewTabEffects({
+        const tab = new Tab({
           uc,
-          container: this.container[0],
           store,
+          settings,
           onDone: () => {
             const newFile = this.file.then((info) => {
               const state = store.getState()
@@ -44,6 +63,14 @@ function createPreviewTabEffects(PreviewTab, uc) {
             this.__setState('error', {error: 'loadImage'})
           },
         })
+
+        const container = this.container[0]
+
+        container.innerHTML = ''
+        Array.prototype.slice.call((tab.getElement()).children)
+          .forEach(child => container.appendChild(child))
+
+        store.setImageLoad('start')
       }
     }
     else {
@@ -51,7 +78,7 @@ function createPreviewTabEffects(PreviewTab, uc) {
     }
   }
 
-  PreviewTabEffects.prototype.initImage = function() {
+  PreviewTabEffects.prototype.initImage = function () {
   }
 
   return PreviewTabEffects

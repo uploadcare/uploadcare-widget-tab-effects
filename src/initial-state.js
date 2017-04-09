@@ -1,5 +1,5 @@
 export default {
-  settings: {effects: ['crop', 'rotate', 'enhance', 'sharp', 'grayscale']},
+  view: 'preview',
   image: {},
   appliedEffects: {
     blur: 0,
