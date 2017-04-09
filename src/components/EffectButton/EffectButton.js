@@ -5,6 +5,13 @@ import Icon from '../Icon/Icon'
 
 const EffectButton = (props) => {
   let $element
+  let {
+    effect,
+    title,
+    applied = false,
+    disabled = false,
+    onClick,
+  } = props
 
   const getElement = () => {
     if (!$element) {
@@ -14,8 +21,9 @@ const EffectButton = (props) => {
     return $element
   }
 
+  const getEffect = () => effect
+
   const render = () => {
-    const {effect, title, applied} = props
     const icon = new Icon(effect)
 
     $element = createNode(template({
@@ -32,28 +40,38 @@ const EffectButton = (props) => {
     $element.addEventListener('click', handleClick)
   }
 
-  const handleClick = (e) => {
-    if (e.target.getAttribute('aria-disabled') === 'true') return
+  const handleClick = () => {
+    if (disabled || !onClick) return
 
-    const {onClick} = props
-
-    if (onClick) onClick()
+    onClick()
   }
 
   const toggleApplied = (newApplied) => {
-    if ($element) {
-      if (newApplied) {
-        $element.classList.add(cn['effect-button_applied'])
-      }
-      else {
-        $element.classList.remove(cn['effect-button_applied'])
-      }
+    if (!$element || (applied === newApplied)) return
+
+    applied = newApplied
+
+    if (applied) {
+      $element.classList.add(cn['effect-button_applied'])
     }
+    else {
+      $element.classList.remove(cn['effect-button_applied'])
+    }
+  }
+
+  const toggleDisabled = (newDisabled) => {
+    if (!$element || (disabled === newDisabled)) return
+
+    disabled = newDisabled
+
+    $element.setAttribute('aria-disabled', disabled)
   }
 
   return {
     getElement,
+    getEffect,
     toggleApplied,
+    toggleDisabled,
   }
 }
 
