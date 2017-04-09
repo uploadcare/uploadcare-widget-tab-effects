@@ -6,10 +6,12 @@ import Icon from '../Icon/Icon'
 const EffectButton = (props) => {
   let $element
   let {
-    effect,
-    title,
     applied = false,
     disabled = false,
+  } = props
+  const {
+    effect,
+    title,
     onClick,
   } = props
 

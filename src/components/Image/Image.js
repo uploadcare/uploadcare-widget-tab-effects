@@ -5,6 +5,11 @@ import template from './Image.html'
 const Image = (props) => {
   let $element
   let $img
+  let {imageUrl} = props
+  const {
+    onLoad,
+    onFail,
+  } = props
 
   const getElement = () => {
     if (!$element) {
@@ -15,8 +20,6 @@ const Image = (props) => {
   }
 
   const render = () => {
-    const {imageUrl, onLoad, onFail} = props
-
     $element = createNode(template({
       cn,
       imageUrl,
@@ -29,7 +32,16 @@ const Image = (props) => {
     $img.addEventListener('abort', () => onFail())
   }
 
-  return {getElement}
+  const updateImageUrl = (newImageUrl) => {
+    imageUrl = newImageUrl
+
+    $img.src = imageUrl
+  }
+
+  return {
+    getElement,
+    updateImageUrl,
+  }
 }
 
 export default Image

@@ -4,6 +4,13 @@ import template from './Range.html'
 
 const Range = (props) => {
   let $element
+  const {
+    min = 0,
+    max = 100,
+    step = 1,
+    value = 50,
+    onChange,
+  } = props
 
   const getElement = () => {
     if (!$element) {
@@ -14,14 +21,12 @@ const Range = (props) => {
   }
 
   const render = () => {
-    const {onChange, min, max, step, value} = props
-
     $element = createNode(template({
       cn,
-      min: min || 0,
-      max: max || 100,
-      step: step || 1,
-      value: value || 0,
+      min,
+      max,
+      step,
+      value,
     }))
 
     $element.addEventListener('change', (e) => onChange(e.target.value))

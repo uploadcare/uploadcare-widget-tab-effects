@@ -7,6 +7,11 @@ const Footer = (props) => {
   let $additionsElement
   let $doneElement
   let $cancelElement
+  const {
+    locale,
+    onDone,
+    onCancel,
+  } = props
 
   const getElement = () => {
     if (!$element) {
@@ -17,8 +22,6 @@ const Footer = (props) => {
   }
 
   const render = () => {
-    const {locale, children, onDone, onCancel} = props
-
     $element = createNode(template({
       cn,
       locale,
@@ -28,12 +31,8 @@ const Footer = (props) => {
     $doneElement = $element.querySelector(`.${cn.done}`)
     $cancelElement = $element.querySelector(`.${cn.cancel}`)
 
-    if (children) {
-      $additionsElement.appendChild(children)
-    }
-
-    $doneElement.addEventListener('click', () => onDone($doneElement))
-    $cancelElement.addEventListener('click', () => onCancel($cancelElement))
+    $doneElement.addEventListener('click', onDone)
+    $cancelElement.addEventListener('click', onCancel)
   }
 
   const appendChild = (child) => {

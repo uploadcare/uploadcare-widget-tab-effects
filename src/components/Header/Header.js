@@ -5,6 +5,7 @@ import template from './Header.html'
 const Header = (props) => {
   let $element
   let $titleElement
+  const {title} = props
 
   const getElement = () => {
     if (!$element) {
@@ -15,8 +16,6 @@ const Header = (props) => {
   }
 
   const render = () => {
-    const {title} = props
-
     $element = createNode(template({
       title,
       cn,

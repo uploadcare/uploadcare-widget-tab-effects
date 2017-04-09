@@ -6,6 +6,12 @@ import EffectButton from '../EffectButton/EffectButton'
 const Effects = (props) => {
   let $element
   let buttons = []
+  const {
+    effects,
+    titles,
+    appliedEffects,
+    onEffectClick,
+  } = props
 
   const getElement = () => {
     if (!$element) {
@@ -16,14 +22,14 @@ const Effects = (props) => {
   }
 
   const render = () => {
-    const {effects, titles, appliedEffects, onEffectClick} = props
-
     $element = createNode(template({cn}))
 
     effects.forEach(effect => {
+      const title = titles[effect]
+
       buttons.push(new EffectButton({
         effect,
-        title: titles[effect],
+        title,
         applied: !!appliedEffects[effect],
         onClick: () => onEffectClick(effect),
       }))
