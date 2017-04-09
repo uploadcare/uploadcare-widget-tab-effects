@@ -35,6 +35,12 @@ const Footer = (props) => {
     $cancelElement.addEventListener('click', onCancel)
   }
 
+  const empty = () => {
+    if (!$element) return
+
+    $additionsElement.innerHTML = ''
+  }
+
   const appendChild = (child) => {
     if (!$element) return
 
@@ -49,6 +55,7 @@ const Footer = (props) => {
 
   return {
     getElement,
+    empty,
     appendChild,
     toggleDisabled,
   }
