@@ -69,10 +69,15 @@ const Tab = (props) => {
     _content.appendChild(_image.getElement())
 
     const {effects} = settings
+    const titles = effects.reduce((titles, effect) => {
+      titles[effect] = effectTitle(effect)
+
+      return titles
+    }, {})
 
     _effects = new Effects({
       effects,
-      titles: effects.map(effect => effectTitle(effect)),
+      titles,
       appliedEffects,
       onEffectClick: handleEffectClick,
     })
@@ -87,7 +92,7 @@ const Tab = (props) => {
 
   const headerTitle = (view) => (view === 'preview') ? t('dialog.tabs.names.preview') : effectTitle(view)
 
-  const effectTitle = (effect) => t(`dialog.tabs.effects.captions.${effect}`)
+  const effectTitle = (effect) => t(`effects.captions.${effect}`)
 
   const handleDone = (e) => {
     const {view} = store.getState()
