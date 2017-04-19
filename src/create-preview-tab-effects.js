@@ -1,9 +1,8 @@
 import customExtends from './tools/custom-extends'
 import LocaleBuilder from './tools/localeBuilder'
-import configureStore from './configure-store'
+import createStore from './create-store'
 import configureSettings from './configure-settings'
 import initialState from './initial-state'
-import initialSettings from './initial-settings'
 import getAppliedEffects from './tools/get-applied-effects'
 import effectsFromModifiers from './tools/effects-from-modifiers'
 import Tab from './components/Tab/Tab'
@@ -15,15 +14,15 @@ function createPreviewTabEffects(PreviewTab, uc) {
     PreviewTabEffects.__super__.constructor.call(this, container, button, dialogApi, settings, name)
   }
 
-  PreviewTabEffects.prototype.__setState = function (state, data) {
+  PreviewTabEffects.prototype.__setState = function(state, data) {
     if (state === 'image') {
       if (data.info) {
         const image = data.info
         const localeBuilder = new LocaleBuilder()
-        const settings = configureSettings(initialSettings, this.settings)
+        const settings = configureSettings(this.settings)
         const appliedEffects = getAppliedEffects(settings.effects)
         const appliedEffectsFromModifiers = effectsFromModifiers(image.cdnUrlModifiers, settings.effects)
-        const store = configureStore({
+        const store = createStore({
           ...initialState,
           ...{image},
           ...{
@@ -78,8 +77,7 @@ function createPreviewTabEffects(PreviewTab, uc) {
     }
   }
 
-  PreviewTabEffects.prototype.initImage = function () {
-  }
+  PreviewTabEffects.prototype.initImage = function() {}
 
   return PreviewTabEffects
 }

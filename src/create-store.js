@@ -1,6 +1,6 @@
 import getModifiersByEffects from './tools/get-modifiers-by-effects'
 
-const configureStore = (initialState) => {
+const createStore = (initialState) => {
   let state = initialState
   let listeners = {
     'view': [],
@@ -81,4 +81,4 @@ const configureStore = (initialState) => {
   }
 }
 
-export default configureStore
+export default createStore
