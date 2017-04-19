@@ -9,9 +9,9 @@ const Effects = (props) => {
   const {
     effects,
     titles,
-    appliedEffects,
     onEffectClick,
   } = props
+  let state = {appliedEffects: props.appliedEffects}
 
   const getElement = () => {
     if (!$element) {
@@ -30,7 +30,7 @@ const Effects = (props) => {
       buttons.push(new EffectButton({
         effect,
         title,
-        applied: !!appliedEffects[effect],
+        applied: !!state.appliedEffects[effect],
         onClick: () => onEffectClick(effect),
       }))
     })
@@ -46,6 +46,8 @@ const Effects = (props) => {
 
   const updateApplied = (appliedEffects) => {
     if (!buttons) return
+
+    state.appliedEffects = appliedEffects
 
     buttons.forEach(button => button.toggleApplied(!!appliedEffects[button.getEffect()]))
   }

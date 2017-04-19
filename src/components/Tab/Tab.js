@@ -5,9 +5,10 @@ import Image from '../Image/Image'
 import Content from '../Content/Content'
 import Footer from '../Footer/Footer'
 import Effects from '../Effects/Effects'
-import getLocaleTitle from '../../tools/get-locale-title'
-import getNextRotateValue from '../../tools/get-next-rotate-value'
+import Crops from '../Crops/Crops'
 import Range from '../Range/Range'
+import getNextRotateValue from '../../tools/get-next-rotate-value'
+import getModifiersByEffects from '../../tools/get-modifiers-by-effects'
 
 const ranges = {
   enhance: [0, 100],
@@ -17,11 +18,11 @@ const ranges = {
 
 const Tab = (props) => {
   let $element
-  let header
-  let content
-  let footer
-  let image
-  let effects
+  let _header
+  let _content
+  let _footer
+  let _image
+  let _effects
   const {
     uc,
     store,
@@ -29,7 +30,12 @@ const Tab = (props) => {
     onDone,
     onFail,
   } = props
+  let state = {
+    cropWidget: null,
+    currentCrop: 0,
+  }
   const t = uc.locale.t
+  const CropWidget = uc.crop.CropWidget
 
   const getElement = () => {
     if (!$element) {
@@ -40,166 +46,274 @@ const Tab = (props) => {
   }
 
   const render = () => {
-    const state = store.getState()
+    const {view, appliedEffects, image} = store.getState()
 
     $element = createNode(template())
 
-    header = new Header({title: getLocaleTitle(t, state.view)})
+    _header = new Header({title: headerTitle(view)})
 
-    footer = new Footer({
+    _footer = new Footer({
       locale: {
         done: t('dialog.tabs.preview.done'),
         cancel: t('dialog.tabs.preview.image.change'),
       },
-      onDone: (e) => {
-        const state = store.getState()
-        const {view} = state
-
-        if (view === 'preview') {
-          onDone()
-        }
-        else {
-          e.stopPropagation()
-
-          store.setView('preview')
-        }
-      },
-      onCancel: (e) => {
-        const state = store.getState()
-        const {view} = state
-
-        if (view !== 'preview') {
-          e.stopPropagation()
-
-          store.setAppliedEffect({[view]: 0})
-          store.setView('preview')
-        }
-      },
+      onDone: handleDone,
+      onCancel: handleCancel,
     })
 
-    content = new Content()
+    _content = new Content()
 
-    image = new Image({
-      imageUrl: state.image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/',
+    _image = new Image({
+      imageUrl: image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/',
+      onUpdate: () => store.setImageLoad('start'),
       onLoad: () => store.setImageLoad('load'),
       onFail: () => store.setImageLoad('fail'),
     })
 
-    $element.appendChild(header.getElement())
-    $element.appendChild(content.getElement())
-    $element.appendChild(footer.getElement())
+    $element.appendChild(_header.getElement())
+    $element.appendChild(_content.getElement())
+    $element.appendChild(_footer.getElement())
 
-    content.appendChild(image.getElement())
+    _content.appendChild(_image.getElement())
 
-    let effectsTitles = {}
+    const {effects} = settings
 
-    settings.effects.forEach(effect => {
-      effectsTitles[effect] = getLocaleTitle(t, effect)
+    _effects = new Effects({
+      effects,
+      titles: effects.map(effect => effectTitle(effect)),
+      appliedEffects,
+      onEffectClick: handleEffectClick,
     })
 
-    effects = new Effects({
-      effects: settings.effects,
-      titles: effectsTitles,
-      appliedEffects: state.appliedEffects,
-      onEffectClick: (effect) => {
-        const state = store.getState()
-        const {appliedEffects} = state
+    _footer.appendChild(_effects.getElement())
 
-        if (effect === 'rotate') {
-          store.setAppliedEffect({'rotate': getNextRotateValue(appliedEffects.rotate)})
+    store.subscribeToAppliedEffects(handleAppliedEffectsChange)
+    store.subscribeToView(handleViewChange)
+    store.subscribeToImage(handleImageChange)
+    store.subscribeToImageLoad(handleImageLoadChange)
+  }
 
-          return
+  const headerTitle = (view) => (view === 'preview') ? t('dialog.tabs.names.preview') : effectTitle(view)
+
+  const effectTitle = (effect) => t(`dialog.tabs.effects.captions.${effect}`)
+
+  const handleDone = (e) => {
+    const {view} = store.getState()
+
+    if (view === 'preview') {
+      onDone()
+    }
+    else {
+      e.stopPropagation()
+
+      if (view === 'crop') {
+        finishCrop()
+      }
+
+      store.setView('preview')
+    }
+  }
+
+  const handleCancel = (e) => {
+    const {view} = store.getState()
+
+    if (view !== 'preview') {
+      e.stopPropagation()
+
+      store.setAppliedEffect({[view]: 0})
+      store.setView('preview')
+    }
+  }
+
+  const handleEffectClick = (effect) => {
+    const {appliedEffects} = store.getState()
+
+    if (effect === 'rotate') {
+      store.setAppliedEffect({'rotate': getNextRotateValue(appliedEffects.rotate)})
+
+      return
+    }
+
+    if (typeof appliedEffects[effect] === 'boolean') {
+      store.setAppliedEffect({[effect]: !appliedEffects[effect]})
+
+      return
+    }
+
+    if (effect === 'crop' || typeof appliedEffects[effect] === 'number') {
+      store.setView(effect)
+    }
+  }
+
+  const handleRangeChange = (value) => {
+    const {view} = store.getState()
+
+    store.setAppliedEffect({[view]: parseInt(value)})
+  }
+
+  const handleAppliedEffectsChange = () => {
+    store.rebuildImage()
+
+    const {appliedEffects} = store.getState()
+
+    _effects.updateApplied(appliedEffects)
+  }
+
+  const handleViewChange = () => {
+    const {view, appliedEffects, image} = store.getState()
+
+    _header.updateTitle(headerTitle(view))
+
+    _footer.empty()
+
+    if (view === 'preview') {
+      _footer.appendChild(_effects.getElement())
+
+      return
+    }
+
+    if (view === 'crop') {
+      const imageUrl = image.originalUrl + (getModifiersByEffects(appliedEffects, false) || '')
+
+      _image.updateImageUrl(imageUrl)
+
+      return
+    }
+
+    if (ranges[view]) {
+      let value = appliedEffects[view]
+
+      if (value === 0) {
+        value = ranges[view][1] / 2
+
+        store.setAppliedEffect({[view]: value})
+      }
+
+      const _range = new Range({
+        min: ranges[view][0],
+        max: ranges[view][1],
+        step: ranges[view][2],
+        value,
+        onChange: handleRangeChange,
+      })
+
+      _footer.appendChild(_range.getElement())
+    }
+  }
+
+  const handleImageChange = () => {
+    const {image} = store.getState()
+    const imageUrl = image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
+
+    _image.updateImageUrl(imageUrl)
+  }
+
+  const handleImageLoadChange = () => {
+    const {view, imageLoad} = store.getState()
+
+    switch (imageLoad) {
+      case 'start':
+        _footer.toggleDisabled(true)
+
+        if (view === 'preview') {
+          _effects.toggleDisabled(true)
         }
+        break
+      case 'load':
+        _footer.toggleDisabled(false)
 
-        if (typeof appliedEffects[effect] === 'boolean') {
-          store.setAppliedEffect({[effect]: !appliedEffects[effect]})
-
-          return
+        if (view === 'preview') {
+          _effects.toggleDisabled(false)
         }
-
-        if (typeof appliedEffects[effect] === 'number') {
-          store.setView(effect)
+        else if (view === 'crop') {
+          startCrop()
         }
+        break
+      case 'fail':
+        onFail()
+        break
+    }
+  }
+
+  const startCrop = () => {
+    const {crop: cropSettings} = settings
+    const {appliedEffects, image} = store.getState()
+    const {rotate, crop} = appliedEffects
+    const {width, height} = image.originalImageInfo
+    const size = rotate && !!~[90, 270].indexOf(rotate)
+      ? [height, width]
+      : [width, height]
+
+    state.currentCrop = (appliedEffects.crop) ? appliedEffects.crop.index : 0
+    state.cropWidget = new CropWidget(uc.jQuery(_image.getImg()), size, cropSettings[state.currentCrop])
+
+    if (crop && crop.coords) {
+      state.cropWidget.setSelection(crop.coords)
+    }
+
+    const _crops = new Crops({
+      crops: cropSettings.map((c, i) => {
+        const {description, width, height} = getCropSizeInfo(c)
+
+        return {
+          index: i,
+          settings: c,
+          title: description,
+          size: {
+            width,
+            height,
+          },
+        }
+      }),
+      currentCrop: state.currentCrop,
+      onCropClick: (crop) => {
+        state.currentCrop = crop.index
+        state.cropWidget.setCrop(crop.settings)
       },
     })
 
-    const $effects = effects.getElement()
+    _footer.appendChild(_crops.getElement())
+  }
 
-    footer.appendChild($effects)
+  const finishCrop = () => {
+    const {crop, originalSize} = state.cropWidget
+    const coords = state.cropWidget.getSelection()
 
-    store.subscribeToAppliedEffects(() => {
-      store.rebuildImage()
+    state.cropWidget.__api.release()
+    state.cropWidget.__api.destroy()
+    _image.getImg().removeAttribute('style')
 
-      const state = store.getState()
-
-      effects.updateApplied(state.appliedEffects)
+    store.setAppliedEffect({
+      crop: {
+        originalSize,
+        coords,
+        settings: crop,
+        index: state.currentCrop,
+      },
     })
+  }
 
-    store.subscribeToView(() => {
-      const state = store.getState()
-      const {view, appliedEffects} = state
+  const getCropSizeInfo = (crop) => {
+    const {preferedSize} = crop
 
-      header.updateTitle(getLocaleTitle(t, view))
+    let description = t('dialog.tabs.preview.crop.free')
+    let width
+    let height
 
-      footer.empty()
+    if (preferedSize) {
+      const gcd = uc.utils.gcd(preferedSize[0], preferedSize[1])
+      const size = uc.utils.fitSize(preferedSize, [30, 30], true)
 
-      if (view === 'preview') {
-        footer.appendChild($effects)
-      }
-      else {
-        let value = appliedEffects[view]
+      description = `${preferedSize[0] / gcd}:${preferedSize[1] / gcd}`
+      width = `${Math.max(20, size[0])}px`
+      height = `${Math.max(12, size[1])}px`
+    }
 
-        if (value === 0) {
-          value = ranges[view][1] / 2
-
-          store.setAppliedEffect({[view]: value})
-        }
-
-        const range = new Range({
-          min: ranges[view][0],
-          max: ranges[view][1],
-          step: ranges[view][2],
-          value,
-          onChange: (value) => store.setAppliedEffect({[view]: parseInt(value)}),
-        })
-
-        footer.appendChild(range.getElement())
-      }
-    })
-
-    store.subscribeToImage(() => {
-      const state = store.getState()
-      const imageUrl = state.image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
-
-      image.updateImageUrl(imageUrl)
-
-      store.setImageLoad('start')
-    })
-
-    store.subscribeToImageLoad(() => {
-      const state = store.getState()
-      const {view, imageLoad} = state
-
-      switch (imageLoad) {
-        case 'start':
-          footer.toggleDisabled(true)
-
-          if (view === 'preview') {
-            effects.toggleDisabled(true)
-          }
-          break
-        case 'load':
-          footer.toggleDisabled(false)
-
-          if (view === 'preview') {
-            effects.toggleDisabled(false)
-          }
-          break
-        case 'fail':
-          onFail()
-          break
-      }
-    })
+    return {
+      description,
+      width,
+      height,
+    }
   }
 
   return {getElement}

@@ -24,10 +24,10 @@ const Header = (props) => {
     $titleElement = $element.querySelector(`.${cn.title}`)
   }
 
-  const updateTitle = (newTitle) => {
+  const updateTitle = (title) => {
     if (!$titleElement) return
 
-    $titleElement.innerText = newTitle
+    $titleElement.innerText = title
   }
 
   return {
