@@ -26,10 +26,10 @@ module.exports = {
   },
   resolve: {
     alias: {
-      components: path.join(__dirname, 'src', 'components'),
-      images: path.join(__dirname, 'src', 'images'),
-      locale: path.join(__dirname, 'src', 'locale'),
-      tools: path.join(__dirname, 'src', 'tools'),
+      components: path.join(__dirname, '..', 'src', 'components'),
+      images: path.join(__dirname, '..', 'src', 'images'),
+      locale: path.join(__dirname, '..', 'src', 'locale'),
+      tools: path.join(__dirname, '..', 'src', 'tools'),
     },
   },
   module: {
