@@ -5,15 +5,15 @@ import Icon from '../Icon/Icon'
 
 const EffectButton = (props) => {
   let $element
-  let {
-    applied = false,
-    disabled = false,
-  } = props
   const {
     effect,
     title,
     onClick,
   } = props
+  let state = {
+    applied: props.applied || false,
+    disabled: props.disabled || false,
+  }
 
   const getElement = () => {
     if (!$element) {
@@ -26,16 +26,16 @@ const EffectButton = (props) => {
   const getEffect = () => effect
 
   const render = () => {
-    const icon = new Icon(effect)
+    const _icon = new Icon(effect)
 
     $element = createNode(template({
       title,
       cn,
     }))
 
-    $element.appendChild(icon.getElement())
+    $element.appendChild(_icon.getElement())
 
-    if (applied) {
+    if (state.applied) {
       $element.classList.add(cn['effect-button_applied'])
     }
 
@@ -43,28 +43,23 @@ const EffectButton = (props) => {
   }
 
   const handleClick = () => {
-    if (disabled || !onClick) return
+    if (state.disabled || !onClick) return
 
     onClick()
   }
 
-  const toggleApplied = (newApplied) => {
-    if (!$element || (applied === newApplied)) return
+  const toggleApplied = (applied) => {
+    if (!$element || (state.applied === applied)) return
 
-    applied = newApplied
+    state.applied = applied
 
-    if (applied) {
-      $element.classList.add(cn['effect-button_applied'])
-    }
-    else {
-      $element.classList.remove(cn['effect-button_applied'])
-    }
+    $element.classList[(applied) ? 'add' : 'remove'](cn['effect-button_applied'])
   }
 
-  const toggleDisabled = (newDisabled) => {
-    if (!$element || (disabled === newDisabled)) return
+  const toggleDisabled = (disabled) => {
+    if (!$element || (state.disabled === disabled)) return
 
-    disabled = newDisabled
+    state.disabled = disabled
 
     $element.setAttribute('aria-disabled', disabled)
   }
