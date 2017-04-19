@@ -1,7 +1,5 @@
-import createNode from '../../tools/create-node'
+import {createNode, getModifiersByEffects, getNextRotateValue} from 'tools'
 import template from './Tab.html'
-import getNextRotateValue from '../../tools/get-next-rotate-value'
-import getModifiersByEffects from '../../tools/get-modifiers-by-effects'
 import {Content, Crops, Effects, Footer, Header, Image, Range} from 'components'
 
 const ranges = {

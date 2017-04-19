@@ -1,4 +1,4 @@
-import createNode from '../../tools/create-node'
+import {createNode} from 'tools'
 import cn from './Footer.pcss'
 import template from './Footer.html'
 

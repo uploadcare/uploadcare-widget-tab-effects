@@ -1,5 +1,4 @@
-import getSettingsEffects from './tools/get-settings-effects'
-import getSettingsCrop from './tools/get-settings-crop'
+import {getSettingsCrop, getSettingsEffects} from 'tools'
 
 const configureSettings = (settings) => {
   const effects = getSettingsEffects(settings.effects)

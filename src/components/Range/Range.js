@@ -1,4 +1,4 @@
-import createNode from '../../tools/create-node'
+import {createNode} from 'tools'
 import cn from './Range.pcss'
 import template from './Range.html'
 

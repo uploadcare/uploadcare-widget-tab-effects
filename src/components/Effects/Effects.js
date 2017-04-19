@@ -1,4 +1,4 @@
-import createNode from '../../tools/create-node'
+import {createNode} from 'tools'
 import cn from './Effects.pcss'
 import template from './Effects.html'
 import {EffectButton} from 'components'

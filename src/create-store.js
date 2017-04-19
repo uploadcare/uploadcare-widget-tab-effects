@@ -1,4 +1,4 @@
-import getModifiersByEffects from './tools/get-modifiers-by-effects'
+import {getModifiersByEffects} from 'tools'
 
 const createStore = (initialState) => {
   let state = initialState

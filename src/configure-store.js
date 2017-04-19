@@ -1,7 +1,6 @@
 import createStore from './create-store'
 import initialState from './initial-state'
-import getAppliedEffects from './tools/get-applied-effects'
-import effectsFromModifiers from './tools/effects-from-modifiers'
+import {effectsFromModifiers, getAppliedEffects} from 'tools'
 
 const configureStore = (image, settings) => {
   const {effects} = settings

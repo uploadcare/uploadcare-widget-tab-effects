@@ -1,4 +1,4 @@
-import createNode from '../../tools/create-node'
+import {createNode} from 'tools'
 import cn from './Crops.pcss'
 import template from './Crops.html'
 import {CropButton} from 'components'

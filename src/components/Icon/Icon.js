@@ -1,4 +1,4 @@
-import createNode from '../../tools/create-node'
+import {createNode} from 'tools'
 import cn from './Icon.pcss'
 import blur from '../../images/blur.svg'
 import crop from '../../images/crop.svg'

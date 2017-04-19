@@ -1,5 +1,4 @@
-import customExtends from './tools/custom-extends'
-import LocaleBuilder from './tools/localeBuilder'
+import {customExtends, configureTranslations} from 'tools'
 import configureSettings from './configure-settings'
 import configureStore from './configure-store'
 import {Tab} from 'components'
@@ -14,7 +13,6 @@ function createPreviewTabEffects(PreviewTab, uc) {
   PreviewTabEffects.prototype.__setState = function(state, data) {
     if (state === 'image') {
       if (data.info) {
-        const localeBuilder = new LocaleBuilder()
         const settings = configureSettings(this.settings)
         const store = configureStore(data.info, settings)
         const onDone = () => {
@@ -37,7 +35,7 @@ function createPreviewTabEffects(PreviewTab, uc) {
           this.__setState('error', {error: 'loadImage'})
         }
 
-        localeBuilder.build(uc.locale.translations)
+        uc.locale.translations = configureTranslations(uc.locale.translations)
         uc.locale.rebuild()
 
         const tab = new Tab({
