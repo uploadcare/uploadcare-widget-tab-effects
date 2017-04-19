@@ -1,10 +1,4 @@
-import en from '../locale/en.js'
-import ru from '../locale/ru.js'
-
-const locale = {
-  en,
-  ru,
-}
+import * as locale from 'locale'
 
 const configureTranslations = (translations) => {
   let newTranslations = {...translations}

@@ -27,6 +27,7 @@ module.exports = {
   resolve: {
     alias: {
       components: path.join(__dirname, 'src', 'components'),
+      locale: path.join(__dirname, 'src', 'locale'),
       tools: path.join(__dirname, 'src', 'tools'),
     },
   },
