@@ -2,7 +2,7 @@ import customExtends from './tools/custom-extends'
 import LocaleBuilder from './tools/localeBuilder'
 import configureSettings from './configure-settings'
 import configureStore from './configure-store'
-import Tab from './components/Tab/Tab'
+import {Tab} from 'components'
 
 function createPreviewTabEffects(PreviewTab, uc) {
   customExtends(PreviewTabEffects, PreviewTab)

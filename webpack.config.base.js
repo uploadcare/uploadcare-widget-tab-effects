@@ -1,6 +1,7 @@
 'use strict'
 
 const webpack = require('webpack')
+const path = require('path')
 const moment = require('moment')
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const gitRevisionPlugin = new GitRevisionPlugin()
@@ -22,6 +23,11 @@ module.exports = {
     path: './dist',
     library: process.env.npm_package_config_library,
     libraryTarget: 'umd',
+  },
+  resolve: {
+    alias: {
+      components: path.join(__dirname, 'src', 'components'),
+    },
   },
   module: {
     loaders: [

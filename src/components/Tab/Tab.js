@@ -1,14 +1,8 @@
 import createNode from '../../tools/create-node'
 import template from './Tab.html'
-import Header from '../Header/Header'
-import Image from '../Image/Image'
-import Content from '../Content/Content'
-import Footer from '../Footer/Footer'
-import Effects from '../Effects/Effects'
-import Crops from '../Crops/Crops'
-import Range from '../Range/Range'
 import getNextRotateValue from '../../tools/get-next-rotate-value'
 import getModifiersByEffects from '../../tools/get-modifiers-by-effects'
+import {Content, Crops, Effects, Footer, Header, Image, Range} from 'components'
 
 const ranges = {
   enhance: [0, 100],

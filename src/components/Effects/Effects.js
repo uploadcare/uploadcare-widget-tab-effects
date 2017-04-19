@@ -1,7 +1,7 @@
 import createNode from '../../tools/create-node'
 import cn from './Effects.pcss'
 import template from './Effects.html'
-import EffectButton from '../EffectButton/EffectButton'
+import {EffectButton} from 'components'
 
 const Effects = (props) => {
   let $element

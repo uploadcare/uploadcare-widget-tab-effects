@@ -1,7 +1,7 @@
 import createNode from '../../tools/create-node'
 import cn from './Crops.pcss'
 import template from './Crops.html'
-import CropButton from '../CropButton/CropButton'
+import {CropButton} from 'components'
 
 const Crops = (props) => {
   let $element
