@@ -1,4 +1,3 @@
-import {createNode} from 'tools'
 import cn from './Icon.pcss'
 import * as icons from 'images'
 
@@ -18,7 +17,7 @@ const Icon = (name) => {
   }
 
   const render = () => {
-    $element = createNode(icons[name])
+    $element = icons[name]
 
     $element.classList.add(cn['icon'])
   }
