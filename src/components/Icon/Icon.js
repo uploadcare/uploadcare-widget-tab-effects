@@ -1,7 +1,10 @@
+import {createNode} from 'tools'
 import cn from './Icon.pcss'
 import * as icons from 'images'
 
-const Icon = (name) => {
+const Icon = (props) => {
+  const {name} = props
+
   if (!icons[name]) {
     throw new Error(`Icon with name "${name}" doesn't exist.`)
   }
@@ -17,7 +20,7 @@ const Icon = (name) => {
   }
 
   const render = () => {
-    $element = icons[name]
+    $element = createNode(icons[name]())
 
     $element.classList.add(cn['icon'])
   }

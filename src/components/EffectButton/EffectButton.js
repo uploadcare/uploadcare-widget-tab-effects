@@ -26,7 +26,7 @@ const EffectButton = (props) => {
   const getEffect = () => effect
 
   const render = () => {
-    const _icon = new Icon(effect)
+    const _icon = new Icon({name: effect})
 
     $element = createNode(template({
       title,

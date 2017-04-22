@@ -3,7 +3,6 @@ import babel from 'rollup-plugin-babel'
 import includePaths from 'rollup-plugin-includepaths'
 import postcss from 'rollup-plugin-postcss'
 import posthtml from 'rollup-plugin-posthtml-template'
-import image from 'rollup-plugin-image'
 import filesize from 'rollup-plugin-filesize'
 import uglify from 'rollup-plugin-uglify'
 import license from 'rollup-plugin-license'
@@ -53,8 +52,10 @@ let config = {
       getExport: (id) => cssExportMap[id],
       combineStyleTags: true,
     }),
-    posthtml({template: true}),
-    image(),
+    posthtml({
+      include: '**/*.{html,svg}',
+      template: true,
+    }),
     babel({externalHelpers: false}),
     filesize(),
   ],
