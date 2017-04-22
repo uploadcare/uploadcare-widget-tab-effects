@@ -19,10 +19,31 @@
 
 <body>
 <input type="text" role="uploadcare-uploader" name="my_file"
-  data-effects="crop,invert,grayscale,blur"/>
+       data-effects="blur,crop,enhance,grayscale,rotate,sharp,flip,mirror"/>
 
+<fieldset>
+  <legend>Result</legend>
+  <div id="result"></div>
+</fieldset>
 <script>
   uploadcare.registerTab('preview', uploadcareTabEffects)
+
+  var widget = uploadcare.Widget('[role=uploadcare-uploader]')
+  widget.onUploadComplete(function (info) {
+    var resultEl = document.getElementById('result')
+    var linkEl = document.createElement('a')
+    var image = new Image()
+
+    resultEl.innerHTML = ''
+
+    linkEl.href = info.cdnUrl
+    linkEl.innerText = info.cdnUrl
+
+    image.src = info.cdnUrl
+
+    resultEl.appendChild(linkEl)
+    resultEl.appendChild(image)
+  })
 </script>
 </body>
 </html>
