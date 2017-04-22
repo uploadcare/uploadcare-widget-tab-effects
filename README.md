@@ -29,11 +29,16 @@ Or bundle without minification,
 uploadcare.registerTab('preview', uploadcareTabEffects)
 ```
 
-## Options
+### Options
 
-`effects` — a string holding one or more comma-separated effects.
+#### `effects`
 
-Default value: `crop,rotate,enhance,sharp,grayscale`.
+Default: `crop,rotate,enhance,sharp,grayscale`
+Type: `String|Array`
+
+Allow you to choose effects and adjust the order of effects on the tab.
+Must be a string holding one or more comma-separated effects 
+or array (in javascript only) of strings.
 
 Available effects:
 
@@ -46,9 +51,9 @@ Available effects:
 * `rotate`
 * `sharp`
 
-## Configuration
+### Configuration
 
-### Global settings
+#### Global settings
 
 ```html
 <script>
@@ -56,7 +61,15 @@ Available effects:
 </script>
 ```
 
-### Local attributes
+or
+
+```html
+<script>
+  UPLOADCARE_EFFECTS = ['blur', 'sharp', 'grayscale'];
+</script>
+```
+
+#### Local attributes
 
 ```html
 <input type="hidden" role="uploadcare-uploader"
@@ -64,11 +77,19 @@ Available effects:
 />
 ```
 
-### Settings object
+#### Settings object
 
 ```javascript
 uploadcare.start({
   effects: 'blur,sharp,grayscale',
+});
+```
+
+or
+
+```javascript
+uploadcare.start({
+  effects: ['blur', 'sharp', 'grayscale'],
 });
 ```
 
