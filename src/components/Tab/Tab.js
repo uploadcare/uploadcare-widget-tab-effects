@@ -94,6 +94,14 @@ const Tab = (props) => {
 
   const effectTitle = (effect) => t(`effects.captions.${effect}`)
 
+  const deleteCropWidget = () => {
+    if (!state.cropWidget || !state.cropWidget.__api) return
+
+    state.cropWidget.__api.release()
+    state.cropWidget.__api.destroy()
+    _image.getImg().removeAttribute('style')
+  }
+
   const handleDone = (e) => {
     const {view} = store.getState()
 
@@ -117,7 +125,13 @@ const Tab = (props) => {
     if (view !== 'preview') {
       e.stopPropagation()
 
-      store.setAppliedEffect({[view]: 0})
+      let value = 0
+
+      if (view === 'crop') {
+        value = null
+        deleteCropWidget()
+      }
+      store.setAppliedEffect({[view]: value})
       store.setView('preview')
     }
   }
@@ -276,9 +290,7 @@ const Tab = (props) => {
     const {crop, originalSize} = state.cropWidget
     const coords = state.cropWidget.getSelection()
 
-    state.cropWidget.__api.release()
-    state.cropWidget.__api.destroy()
-    _image.getImg().removeAttribute('style')
+    deleteCropWidget()
 
     store.setAppliedEffect({
       crop: {
