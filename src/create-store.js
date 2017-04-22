@@ -1,66 +1,43 @@
-import initialState from './initial-state'
-import getSettingsEffects from './tools/get-settings-effects'
-import getAppliedEffects from './tools/get-applied-effects'
-import getModifiersByEffects from './tools/get-modifiers-by-effects'
-import effectsFromModifiers from './tools/effects-from-modifiers'
+import {getModifiersByEffects} from 'tools'
 
-const createStore = (settings, image) => {
-  const settingsEffects = getSettingsEffects(settings.effects)
-  const appliedEffects = getAppliedEffects(settingsEffects)
-  const appliedEffectsFromModifiers = effectsFromModifiers(image.cdnUrlModifiers, settingsEffects)
-
-  let state = {
-    settings: {
-      ...settings,
-      ...{effects: settingsEffects},
-    },
-    image: {
-      ...initialState.image,
-      ...image,
-    },
-    appliedEffects: {
-      ...appliedEffects,
-      ...appliedEffectsFromModifiers.effects,
-    },
-    otherModifiers: appliedEffectsFromModifiers.otherModifiers,
-  }
-  let effectsListeners = []
-  let effectListeners = {}
-  let imageListeners = []
-
-  const subcribeToEffects = (listener) => {
-    effectsListeners.push(listener)
+const createStore = (initialState) => {
+  let state = initialState
+  let listeners = {
+    view: [],
+    imageLoad: [],
+    appliedEffects: [],
+    image: [],
   }
 
-  const subcribeToEffect = (effect, listener) => {
-    if (!effectListeners[effect]) {
-      effectListeners[effect] = []
-    }
+  const getState = () => state
 
-    effectListeners[effect].push(listener)
-  }
-
-  const subscribeToImage = (listener) => {
-    imageListeners.push(listener)
-  }
-
-  const getState = () => {
-    return state
-  }
-
-  const setEffect = (effect, value) => {
-    state.appliedEffects = {
+  const setAppliedEffect = (appliedEffect) => {
+    const appliedEffects = {
       ...state.appliedEffects,
-      ...{[effect]: value},
+      ...appliedEffect,
     }
 
-    rebuildImage()
-
-    effectsListeners.forEach(listener => listener())
-
-    if (effectListeners[effect]) {
-      effectListeners[effect].forEach(listener => listener())
+    state = {
+      ...state,
+      ...{appliedEffects},
     }
+    listeners['appliedEffects'].forEach(listener => listener())
+  }
+
+  const setView = (view) => {
+    state = {
+      ...state,
+      ...{view},
+    }
+    listeners['view'].forEach(listener => listener())
+  }
+
+  const setImageLoad = (imageLoad) => {
+    state = {
+      ...state,
+      ...{imageLoad},
+    }
+    listeners['imageLoad'].forEach(listener => listener())
   }
 
   const rebuildImage = () => {
@@ -75,15 +52,32 @@ const createStore = (settings, image) => {
       },
     }
 
-    imageListeners.forEach(listener => listener())
+    listeners['image'].forEach(listener => listener())
   }
 
+  const subscribe = (listener, source) => {
+    listeners[source].push(listener)
+
+    return () => {
+      listeners[source] = listeners[source].filter(l => l !== listener)
+    }
+  }
+
+  const subscribeToAppliedEffects = (listener) => subscribe(listener, 'appliedEffects')
+  const subscribeToView = (listener) => subscribe(listener, 'view')
+  const subscribeToImageLoad = (listener) => subscribe(listener, 'imageLoad')
+  const subscribeToImage = (listener) => subscribe(listener, 'image')
+
   return {
-    subcribeToEffects,
-    subcribeToEffect,
-    subscribeToImage,
     getState,
-    setEffect,
+    setView,
+    setImageLoad,
+    setAppliedEffect,
+    rebuildImage,
+    subscribeToView,
+    subscribeToImageLoad,
+    subscribeToImage,
+    subscribeToAppliedEffects,
   }
 }
 

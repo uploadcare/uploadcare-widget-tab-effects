@@ -1,7 +1,7 @@
-import customExtends from './tools/custom-extends'
-import LocaleBuilder from './tools/localeBuilder'
-import createStore from './create-store'
-import startPreviewTabEffects from './start-preview-tab-effects'
+import {customExtends, configureTranslations} from 'tools'
+import configureSettings from './configure-settings'
+import configureStore from './configure-store'
+import {Tab} from 'components'
 
 function createPreviewTabEffects(PreviewTab, uc) {
   customExtends(PreviewTabEffects, PreviewTab)
@@ -13,37 +13,46 @@ function createPreviewTabEffects(PreviewTab, uc) {
   PreviewTabEffects.prototype.__setState = function(state, data) {
     if (state === 'image') {
       if (data.info) {
-        const localeBuilder = new LocaleBuilder()
-        const store = createStore(this.settings, data.info)
+        const settings = configureSettings(this.settings)
+        const store = configureStore(data.info, settings)
+        const onDone = () => {
+          const newFile = this.file.then((info) => {
+            const {cdnUrl, cdnUrlModifiers} = store.getState().image
 
-        localeBuilder.build(uc.locale.translations)
+            return {
+              ...info,
+              ...{
+                cdnUrl,
+                cdnUrlModifiers,
+              },
+            }
+          })
+
+          this.dialogApi.fileColl.replace(this.file, newFile)
+        }
+        const onFail = () => {
+          this.file = null
+          this.__setState('error', {error: 'loadImage'})
+        }
+
+        uc.locale.translations = configureTranslations(uc.locale.translations)
         uc.locale.rebuild()
 
-        startPreviewTabEffects({
+        const tab = new Tab({
           uc,
-          container: this.container[0],
           store,
-          onDone: () => {
-            const newFile = this.file.then((info) => {
-              const state = store.getState()
-              const {cdnUrl, cdnUrlModifiers} = state.image
-
-              return {
-                ...info,
-                ...{
-                  cdnUrl,
-                  cdnUrlModifiers,
-                },
-              }
-            })
-
-            this.dialogApi.fileColl.replace(this.file, newFile)
-          },
-          onFail: () => {
-            this.file = null
-            this.__setState('error', {error: 'loadImage'})
-          },
+          settings,
+          onDone,
+          onFail,
         })
+
+        const container = this.container[0]
+
+        container.innerHTML = ''
+        Array.prototype.slice.call((tab.getElement()).children)
+          .forEach(child => container.appendChild(child))
+
+        store.setImageLoad('start')
       }
     }
     else {
@@ -51,8 +60,7 @@ function createPreviewTabEffects(PreviewTab, uc) {
     }
   }
 
-  PreviewTabEffects.prototype.initImage = function() {
-  }
+  PreviewTabEffects.prototype.initImage = function() {}
 
   return PreviewTabEffects
 }

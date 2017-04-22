@@ -2,7 +2,8 @@
   "name": "uploadcare-widget-tab-effects",
   "config": {
     "name": "uploadcare.tab-effects",
-    "library": "uploadcareTabEffects"
+    "library": "uploadcareTabEffects",
+    "classPrefix": "uploadcare-tab-effects--"
   },
   "version": "1.0.0-alpha",
   "description": "The Effects Tab for Uploadcare Widget",
@@ -10,38 +11,38 @@
   "scripts": {
     "clean": "rimraf dist",
     "lint": "eslint .",
-    "build:dist": "webpack --config webpack.config.dev.js",
-    "build:dist:min": "webpack --config webpack.config.js",
-    "build": "npm run build:dist && npm run build:dist:min",
+    "build:dist": "rollup -c ./scripts/rollup.config.js",
+    "build:dist:min": "rollup -c ./scripts/rollup.config.js --environment BUILD:production",
+    "build": "npm run clean && npm run build:dist && npm run build:dist:min",
     "start:static": "npm run build && browser-sync start --ss dist --files dist --port 3126",
     "start": "npm run build && browser-sync start -s demo --ss dist --files demo dist --port 3127",
-    "publish:cdn": "node publish-to-cdn.js"
+    "publish:cdn": "node ./scripts/publish-to-cdn.js"
   },
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "aws-sdk": "^2.22.0",
-    "babel-core": "^6.7.7",
     "babel-eslint": "^6.1.0",
-    "babel-loader": "^6.2.4",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-latest": "^6.22.0",
     "babel-preset-stage-3": "^6.22.0",
     "browser-sync": "^2.11.1",
-    "css-loader": "^0.19.0",
-    "es6-template-string-loader": "^1.0.1",
+    "cssnano": "^3.10.0",
     "eslint": "^2.13.1",
     "eslint-config-uploadcare": "^1.1.0",
-    "git-revision-webpack-plugin": "^2.4.1",
-    "moment": "^2.17.1",
-    "postcss-loader": "^0.9.1",
+    "postcss-modules": "^0.6.4",
     "postcss-nested": "^1.0.0",
     "postcss-reporter": "^3.0.0",
     "rimraf": "^2.5.4",
-    "style-loader": "^0.12.4",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-filesize": "^1.2.1",
+    "rollup-plugin-includepaths": "^0.2.2",
+    "rollup-plugin-license": "^0.3.0",
+    "rollup-plugin-postcss": "^0.4.1",
+    "rollup-plugin-posthtml-template": "^1.1.0",
+    "rollup-plugin-uglify": "^1.0.1",
     "stylelint": "^7.6.0",
-    "stylelint-config-uploadcare": "^1.0.0",
-    "svg-inline-loader": "^0.7.1",
-    "webpack": "^1.14.0"
+    "stylelint-config-uploadcare": "^1.0.0"
   },
   "browserslist": [
     "> .4%",

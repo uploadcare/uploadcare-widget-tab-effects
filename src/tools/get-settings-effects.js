@@ -1,4 +1,4 @@
-import initialState from '../initial-state'
+import initialSettings from '../initial-settings'
 
 const getSettingsEffects = (value) => {
   let settingsEffects = []
@@ -10,7 +10,7 @@ const getSettingsEffects = (value) => {
     settingsEffects = value
   }
   else {
-    settingsEffects = initialState.settings.effects
+    settingsEffects = initialSettings.effects
   }
 
   const crop = settingsEffects.indexOf('crop')

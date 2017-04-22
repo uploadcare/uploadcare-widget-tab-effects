@@ -1,46 +1,74 @@
+import {createNode} from 'tools'
 import cn from './EffectButton.pcss'
 import template from './EffectButton.html'
-import getIcon from '../../tools/get-icon'
+import Icon from '../Icon/Icon'
 
 const EffectButton = (props) => {
-  const {effect, title, applied, onClick} = props
-  const icon = getIcon(effect)
-
-  const elementContainer = document.createElement('div')
-
-  elementContainer.innerHTML = template({
+  let $element
+  const {
+    effect,
     title,
-    cn,
-    icon,
-  })
-
-  const element = elementContainer.querySelector(`.${cn['effect-button']}`)
-
-  if (applied) {
-    element.classList.add(cn['effect-button_applied'])
+    onClick,
+  } = props
+  let state = {
+    applied: props.applied || false,
+    disabled: props.disabled || false,
   }
-  element.addEventListener('click', () => {
-    if (element.getAttribute('aria-disabled') === 'true') return
+
+  const getElement = () => {
+    if (!$element) {
+      render()
+    }
+
+    return $element
+  }
+
+  const getEffect = () => effect
+
+  const render = () => {
+    const _icon = new Icon({name: effect})
+
+    $element = createNode(template({
+      title,
+      cn,
+    }))
+
+    $element.appendChild(_icon.getElement())
+
+    if (state.applied) {
+      $element.classList.add(cn['effect-button_applied'])
+    }
+
+    $element.addEventListener('click', handleClick)
+  }
+
+  const handleClick = () => {
+    if (state.disabled || !onClick) return
 
     onClick()
-  })
+  }
 
-  const getElement = () => element
+  const toggleApplied = (applied) => {
+    if (!$element || (state.applied === applied)) return
 
-  const setApplied = (newApplied) => {
-    if (element) {
-      if (newApplied) {
-        element.classList.add(cn['effect-button_applied'])
-      }
-      else {
-        element.classList.remove(cn['effect-button_applied'])
-      }
-    }
+    state.applied = applied
+
+    $element.classList[(applied) ? 'add' : 'remove'](cn['effect-button_applied'])
+  }
+
+  const toggleDisabled = (disabled) => {
+    if (!$element || (state.disabled === disabled)) return
+
+    state.disabled = disabled
+
+    $element.setAttribute('aria-disabled', disabled)
   }
 
   return {
     getElement,
-    setApplied,
+    getEffect,
+    toggleApplied,
+    toggleDisabled,
   }
 }
 

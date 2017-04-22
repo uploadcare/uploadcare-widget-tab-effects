@@ -3,7 +3,6 @@ const effectsDefaults = {
   enhance: ['number', 50],
   flip: ['boolean'],
   grayscale: ['boolean'],
-  invert: ['boolean'],
   mirror: ['boolean'],
   rotate: ['number'],
   sharp: ['number', 5],
@@ -15,7 +14,6 @@ const modifierRegExp = {
   enhance: /-\/enhance\/(([0-9]+)\/|)/i,
   flip: /-\/flip\//i,
   grayscale: /-\/grayscale\//i,
-  invert: /-\/invert\//i,
   mirror: /-\/mirror\//i,
   rotate: /-\/rotate\/(([0-9]+)\/)/i,
   sharp: /-\/sharp\/(([0-9]+)\/|)/i,
@@ -30,7 +28,7 @@ function effectsFromModifiers(cdnUrlModifiers, settingsEffects) {
   }
 
   let effects = {}
-  let otherModifiers = cdnUrlModifiers
+  let otherModifiers = cdnUrlModifiers.replace(/-\/preview\//g, '')
 
   settingsEffects.forEach(settingsEffect => {
     if (modifierRegExp[settingsEffect]) {

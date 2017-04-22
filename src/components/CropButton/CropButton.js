@@ -1,45 +1,73 @@
+import {createNode} from 'tools'
 import cn from './CropButton.pcss'
 import template from './CropButton.html'
 
+const APPLIED_CLASS_NAME = 'uploadcare--crop-sizes__item_current'
+const ICON_FREE_CLASS_NAME = 'uploadcare--crop-sizes__icon_free'
+
 const CropButton = (props) => {
-  const {uc, crop, onClick} = props
-  const prefered = crop.preferedSize
-  let title
-
-  if (prefered) {
-    const gcd = uc.utils.gcd(prefered[0], prefered[1])
-
-    title = `${prefered[0] / gcd}:${prefered[1] / gcd}`
-  }
-  else {
-    title = uc.locale.t('dialog.tabs.preview.crop.free')
-  }
-
-  const elementContainer = document.createElement('div')
-
-  elementContainer.innerHTML = template({
+  let $element
+  const {
+    size,
     title,
-    cn,
-  })
+    onClick,
+  } = props
+  let state = {applied: props.applied || false}
 
-  const element = elementContainer.querySelector(`.${cn['crop-button']}`)
-  const icon = element.querySelector(`.${cn['crop-button__icon']}`)
+  const getElement = () => {
+    if (!$element) {
+      render()
+    }
 
-  if (prefered) {
-    const size = uc.utils.fitSize(prefered, [30, 30], true)
-
-    icon.style.width = `${Math.max(20, size[0])}px`
-    icon.style.height = `${Math.max(12, size[1])}px`
-  }
-  else {
-    icon.classList.add('uploadcare--crop-sizes__icon_free')
+    return $element
   }
 
-  element.addEventListener('click', () => onClick(element))
+  const render = () => {
+    $element = createNode(template({
+      title,
+      cn,
+    }))
 
-  const getElement = () => element
+    setupIcon()
 
-  return {getElement}
+    if (state.applied) {
+      $element.classList.add(APPLIED_CLASS_NAME)
+    }
+
+    $element.addEventListener('click', handleClick)
+  }
+
+  const setupIcon = () => {
+    let $icon = $element.querySelector(`.${cn['crop-button__icon']}`)
+    const {width, height} = size
+
+    if (width && height) {
+      $icon.style.width = width
+      $icon.style.height = height
+    }
+    else {
+      $icon.classList.add(ICON_FREE_CLASS_NAME)
+    }
+  }
+
+  const handleClick = () => {
+    if (!onClick) return
+
+    onClick()
+  }
+
+  const toggleApplied = (applied) => {
+    if (!$element || (state.applied === applied)) return
+
+    state.applied = applied
+
+    $element.classList[(applied) ? 'add' : 'remove'](APPLIED_CLASS_NAME)
+  }
+
+  return {
+    getElement,
+    toggleApplied,
+  }
 }
 
 export default CropButton

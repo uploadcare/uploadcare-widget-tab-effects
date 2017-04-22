@@ -20,7 +20,9 @@
           "e",
           "x",
           "y",
-          "t"
+          "t",
+          "c",
+          "l"
         ]
       }
     ],
@@ -32,7 +34,7 @@
     "no-bitwise": ["error", { "allow": ["~"] }],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "no-var": "error",
-    "no-underscore-dangle": ["error", { "allow": ["__super__", "__setState"] }],
+    "no-underscore-dangle": "off",
     "require-jsdoc": "off"
   }
 }
