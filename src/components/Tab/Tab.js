@@ -126,7 +126,7 @@ const Tab = (props) => {
     const {appliedEffects} = store.getState()
 
     if (effect === 'rotate') {
-      store.setAppliedEffect({'rotate': getNextRotateValue(appliedEffects.rotate)})
+      store.setAppliedEffect({rotate: getNextRotateValue(appliedEffects.rotate)})
 
       return
     }

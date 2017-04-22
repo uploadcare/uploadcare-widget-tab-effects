@@ -3,10 +3,10 @@ import {getModifiersByEffects} from 'tools'
 const createStore = (initialState) => {
   let state = initialState
   let listeners = {
-    'view': [],
-    'imageLoad': [],
-    'appliedEffects': [],
-    'image': [],
+    view: [],
+    imageLoad: [],
+    appliedEffects: [],
+    image: [],
   }
 
   const getState = () => state
