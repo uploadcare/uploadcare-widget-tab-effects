@@ -1,29 +1,37 @@
 # uploadcare-widget-tab-effects
 
-This is [custom tab](https://uploadcare.com/tutorials/widget_customization/#tabs) 
+Effects Tab is a
+[custom tab](https://uploadcare.com/tutorials/widget_customization/#tabs) 
 for [Uploadcare Widget](https://uploadcare.com/documentation/widget/)
-which replace preview tab and add editor for uploaded images.
+that replaces Preview Tab and adds image-editing capabilities
+to the widget.
 
 ## Requirements
 
-You should also install 
-[Uploadcare Widget](https://uploadcare.com/documentation/widget/#install).
+Since Effects Tab is a custom tab for Uploadcare Widget,
+make sure to
+[install the widget](https://uploadcare.com/documentation/widget/#install)
+first. 
 
 ## Install
 
 ### CDN
 
+You can either install this minification-enabled Effects Tab version:
+
 ```html
 <script src="https://ucarecdn.com/libs/widget-tab-effects/1.0.0-alpha/uploadcare.tab-effects.min.js" charset="utf-8"></script>
 ```
 
-Or bundle without minification,
+Or that one, bundled version without minification:
 
 ```html
 <script src="https://ucarecdn.com/libs/widget-tab-effects/1.0.0-alpha/uploadcare.tab-effects.js" charset="utf-8"></script>
 ```
 
 ## Usage
+
+That's how you add Effects Tab to Uploadcare Widget:
 
 ```javascript
 uploadcare.registerTab('preview', uploadcareTabEffects)
@@ -36,20 +44,24 @@ uploadcare.registerTab('preview', uploadcareTabEffects)
 Default: `crop,rotate,enhance,sharp,grayscale`
 Type: `String|Array`
 
-Allow you to choose effects and adjust the order of effects on the tab.
-Must be a string holding one or more comma-separated effects 
-or array (in javascript only) of strings.
+That's the main Effects Tab option allowing you to
+choose the preferred set of enabled effects. It also
+controls the order of effects in the tab.
+
+`effects` can either be a string holding one or more
+comma-separated effects or an array of strings (JS only.)
 
 Available effects:
 
-* `blur`
-* `crop`
-* `enhance`
-* `flip`
-* `grayscale`
-* `mirror`
-* `rotate`
-* `sharp`
+* `blur`, filtering images via Gaussian Blur
+* `crop`, crops images freely or using set aspect ratios
+* `enhance`, makes images look better via auto
+  levels, auto contrast, and saturation sharpening
+* `flip`, allows you to flip uploaded images
+* `grayscale`, desaturates uploaded images
+* `mirror`, provides image-mirroring capabilities
+* `rotate`, rotates uploaded images
+* `sharp`, allows you to adjust image sharpness
 
 ### Configuration
 
@@ -95,13 +107,24 @@ uploadcare.start({
 
 ## Localization
 
-It’s possible that your locale is not available in the tab yet. 
+It’s possible your locale is not available in the tab yet. 
 If that’s the case, contributing your locale might be a good idea. 
-This can be done by forking the [main repository](https://github.com/uploadcare/uploadcare-widget-tab-effects) 
-and adding a localization file 
+This can be done by forking the
+[main repository](https://github.com/uploadcare/uploadcare-widget-tab-effects) 
+followed by adding a new localization file 
 [here](https://github.com/uploadcare/uploadcare-widget-tab-effects/tree/master/src/locale).
 
 ## Contributors
 
 * [@Zmoki](https://github.com/Zmoki)
 * [@ZNick1982](https://github.com/ZNick1982)
+
+## Security issues
+
+If you think you ran into something about Effects Tab
+which might have security implications, please hit us up at
+[bugbounty@uploadcare.com](mailto:bugbounty@uploadcare.com)
+or Hackerone.
+
+We'll contact you personally in a short time to fix an issue
+through co-op and prior to any public disclosure.
