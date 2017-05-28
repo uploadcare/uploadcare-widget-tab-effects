@@ -1,4 +1,10 @@
 /* eslint no-console: "off" */
+/*
+ Create a credentials file
+ at ~/.aws/credentials on Mac/Linux
+ or C:\Users\USERNAME\.aws\credentials on Windows
+ Read more https://aws.amazon.com/sdk-for-node-js/
+ */
 const AWS = require('aws-sdk')
 const fs = require('fs')
 const path = require('path')
@@ -19,7 +25,7 @@ const UPLOAD_CONFIG = {
 let s3 = new AWS.S3()
 
 const readFile = (fileName) => new Promise((resolve, reject) => {
-  fs.readFile(path.join(__dirname, 'dist', fileName), (error, data) => {
+  fs.readFile(path.join(__dirname, '..', 'dist', fileName), (error, data) => {
     if (error) {
       reject(error)
     }
@@ -57,7 +63,7 @@ const publishFile = (fileName) => new Promise((resolve, reject) => {
     .catch(error => reject(error))
 })
 
-fs.readdir(path.join(__dirname, 'dist'), (error, files) => {
+fs.readdir(path.join(__dirname, '..', 'dist'), (error, files) => {
   if (error) {
     throw error
   }
