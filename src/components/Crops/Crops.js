@@ -42,6 +42,12 @@ const Crops = (props) => {
     buttons.forEach(button => $element.appendChild(button.getElement()))
   }
 
+  const toggleDisabled = (isDisabled) => {
+    if (!buttons) return
+
+    buttons.forEach(button => button.toggleDisabled(isDisabled))
+  }
+
   const updateApplied = (currentCrop) => {
     if (!buttons) return
 
@@ -52,6 +58,7 @@ const Crops = (props) => {
 
   return {
     getElement,
+    toggleDisabled,
     updateApplied,
   }
 }

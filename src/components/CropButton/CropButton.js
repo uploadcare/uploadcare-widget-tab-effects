@@ -12,7 +12,10 @@ const CropButton = (props) => {
     title,
     onClick,
   } = props
-  let state = {applied: props.applied || false}
+  let state = {
+    applied: props.applied || false,
+    disabled: props.disabled || false,
+  }
 
   const getElement = () => {
     if (!$element) {
@@ -52,7 +55,7 @@ const CropButton = (props) => {
   }
 
   const handleClick = () => {
-    if (!onClick) return
+    if (state.disabled || !onClick) return
 
     onClick()
   }
@@ -65,9 +68,19 @@ const CropButton = (props) => {
     $element.classList[(applied) ? 'add' : 'remove'](APPLIED_CLASS_NAME)
   }
 
+  const toggleDisabled = (disabled) => {
+    if (!$element || (state.disabled === disabled)) return
+
+    state.disabled = disabled
+
+    $element.setAttribute('aria-disabled', disabled)
+    $element.setAttribute('tabindex', disabled ? '-1' : '0')
+  }
+
   return {
     getElement,
     toggleApplied,
+    toggleDisabled,
   }
 }
 

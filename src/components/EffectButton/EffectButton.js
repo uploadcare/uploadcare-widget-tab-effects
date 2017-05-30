@@ -62,6 +62,7 @@ const EffectButton = (props) => {
     state.disabled = disabled
 
     $element.setAttribute('aria-disabled', disabled)
+    $element.setAttribute('tabindex', disabled ? -1 : 0)
   }
 
   return {

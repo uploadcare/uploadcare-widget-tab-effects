@@ -15,6 +15,7 @@ const Tab = (props) => {
   let _footer
   let _image
   let _effects
+  let _crops
   const {
     uc,
     store,
@@ -184,6 +185,8 @@ const Tab = (props) => {
     }
 
     if (view === 'crop') {
+      showCrops()
+
       const imageUrl = image.originalUrl + (getModifiersByEffects(appliedEffects, false, false) || '')
 
       _image.updateImageUrl(imageUrl)
@@ -229,6 +232,9 @@ const Tab = (props) => {
         if (view === 'preview') {
           _effects.toggleDisabled(true)
         }
+        if (view === 'crop') {
+          _crops.toggleDisabled(true)
+        }
         break
       case 'load':
         _footer.toggleDisabled(false)
@@ -238,6 +244,7 @@ const Tab = (props) => {
         }
         else if (view === 'crop') {
           startCrop()
+          _crops.toggleDisabled(false)
         }
         break
       case 'fail':
@@ -246,21 +253,15 @@ const Tab = (props) => {
     }
   }
 
-  const startCrop = () => {
+  const showCrops = () => {
     const {crop: cropSettings} = settings
     const {appliedEffects, image} = store.getState()
     const {crop} = appliedEffects
     const {width, height} = image.originalImageInfo
-    const size = [width, height]
 
-    state.currentCrop = (appliedEffects.crop) ? appliedEffects.crop.index : 0
-    state.cropWidget = new CropWidget(uc.jQuery(_image.getImg()), size, cropSettings[state.currentCrop])
+    state.currentCrop = (crop) ? crop.index : 0
 
-    if (crop && crop.coords) {
-      state.cropWidget.setSelection(crop.coords)
-    }
-
-    const _crops = new Crops({
+    _crops = new Crops({
       crops: cropSettings.map((c, i) => {
         const {description, width, height} = getCropSizeInfo(c)
 
@@ -277,11 +278,27 @@ const Tab = (props) => {
       currentCrop: state.currentCrop,
       onCropClick: (crop) => {
         state.currentCrop = crop.index
-        state.cropWidget.setCrop(crop.settings)
+        if (state.cropWidget) {
+          state.cropWidget.setCrop(crop.settings)
+        }
       },
     })
 
     _footer.appendChild(_crops.getElement())
+  }
+
+  const startCrop = () => {
+    const {crop: cropSettings} = settings
+    const {appliedEffects, image} = store.getState()
+    const {crop} = appliedEffects
+    const {width, height} = image.originalImageInfo
+    const size = [width, height]
+
+    state.cropWidget = new CropWidget(uc.jQuery(_image.getImg()), size, cropSettings[state.currentCrop])
+
+    if (crop && crop.coords) {
+      state.cropWidget.setSelection(crop.coords)
+    }
   }
 
   const finishCrop = () => {

@@ -50,7 +50,7 @@ const Footer = (props) => {
   const toggleDisabled = (isDisabled) => {
     if (!$doneElement) return
 
-    $doneElement.setAttribute('aria-disabled', isDisabled)
+    $doneElement.disabled = isDisabled
   }
 
   return {
