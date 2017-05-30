@@ -184,7 +184,7 @@ const Tab = (props) => {
     }
 
     if (view === 'crop') {
-      const imageUrl = image.originalUrl + (getModifiersByEffects(appliedEffects, false) || '')
+      const imageUrl = image.originalUrl + (getModifiersByEffects(appliedEffects, false, false) || '')
 
       _image.updateImageUrl(imageUrl)
 
@@ -249,11 +249,9 @@ const Tab = (props) => {
   const startCrop = () => {
     const {crop: cropSettings} = settings
     const {appliedEffects, image} = store.getState()
-    const {rotate, crop} = appliedEffects
+    const {crop} = appliedEffects
     const {width, height} = image.originalImageInfo
-    const size = rotate && !!~[90, 270].indexOf(rotate)
-      ? [height, width]
-      : [width, height]
+    const size = [width, height]
 
     state.currentCrop = (appliedEffects.crop) ? appliedEffects.crop.index : 0
     state.cropWidget = new CropWidget(uc.jQuery(_image.getImg()), size, cropSettings[state.currentCrop])

@@ -13,11 +13,14 @@ const getSettingsEffects = (value) => {
     settingsEffects = initialSettings.effects
   }
 
-  const crop = settingsEffects.indexOf('crop')
+  const cropIndex = settingsEffects.indexOf('crop')
 
-  if (!!~crop && (crop !== (settingsEffects.length - 1))) {
-    settingsEffects.splice(crop, 1)
-    settingsEffects.push('crop')
+  if (!!~cropIndex && (cropIndex !== 0)) {
+    settingsEffects = [
+      'crop',
+      ...settingsEffects.slice(0, cropIndex),
+      ...settingsEffects.slice(cropIndex + 1),
+    ]
   }
 
   return settingsEffects
