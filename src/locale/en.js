@@ -10,13 +10,6 @@ export default {
       rotate: 'Rotate',
       sharp: 'Sharpen',
     },
-    buttons: {
-      remove: 'Remove',
-      done: 'Done',
-      cancel: 'Cancel',
-      apply: 'Apply',
-    },
-    cancel: 'Cancel',
     apply: 'Apply',
   },
 }

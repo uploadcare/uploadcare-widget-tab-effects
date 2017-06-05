@@ -2,21 +2,14 @@ export default {
   effects: {
     captions: {
       blur: 'Размытие',
-      crop: 'Обрезать',
-      enhance: 'Улучшить',
+      crop: 'Обрезка',
+      enhance: 'Улучшение',
       flip: 'Отразить по вертикали',
       grayscale: 'Оттенки серого',
       mirror: 'Отразить по горизонтали',
       rotate: 'Повернуть',
       sharp: 'Резкость',
     },
-    buttons: {
-      remove: 'Удалить',
-      done: 'Готово',
-      cancel: 'Отмена',
-      apply: 'Применить',
-    },
-    cancel: 'Отмена',
     apply: 'Применить',
   },
 }

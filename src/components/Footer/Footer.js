@@ -53,11 +53,16 @@ const Footer = (props) => {
     $doneElement.disabled = isDisabled
   }
 
+  const updateDoneTitle = (newTitle = null) => {
+    $doneElement.innerText = (newTitle) ? newTitle : locale.done
+  }
+
   return {
     getElement,
     empty,
     appendChild,
     toggleDisabled,
+    updateDoneTitle,
   }
 }
 

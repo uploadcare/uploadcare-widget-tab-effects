@@ -91,7 +91,7 @@ const Tab = (props) => {
     store.subscribeToImageLoad(handleImageLoadChange)
   }
 
-  const headerTitle = (view) => (view === 'preview') ? t('dialog.tabs.names.preview') : effectTitle(view)
+  const headerTitle = (view) => (view === 'preview') ? t('dialog.tabs.preview.image.title') : effectTitle(view)
 
   const effectTitle = (effect) => t(`effects.captions.${effect}`)
 
@@ -175,6 +175,13 @@ const Tab = (props) => {
     const {view, appliedEffects, image} = store.getState()
 
     _header.updateTitle(headerTitle(view))
+
+    if (view === 'preview') {
+      _footer.updateDoneTitle()
+    }
+    else {
+      _footer.updateDoneTitle(t('effects.apply'))
+    }
 
     _footer.empty()
 
