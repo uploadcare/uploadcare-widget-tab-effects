@@ -20,13 +20,13 @@ first.
 You can either install this minification-enabled Effects Tab version:
 
 ```html
-<script src="https://ucarecdn.com/libs/widget-tab-effects/1.0.0-alpha.4/uploadcare.tab-effects.min.js" charset="utf-8"></script>
+<script src="https://ucarecdn.com/libs/widget-tab-effects/1.0.0-alpha.5/uploadcare.tab-effects.min.js" charset="utf-8"></script>
 ```
 
 Or that one, bundled version without minification:
 
 ```html
-<script src="https://ucarecdn.com/libs/widget-tab-effects/1.0.0-alpha.4/uploadcare.tab-effects.js" charset="utf-8"></script>
+<script src="https://ucarecdn.com/libs/widget-tab-effects/1.0.0-alpha.5/uploadcare.tab-effects.js" charset="utf-8"></script>
 ```
 
 ## Usage
