@@ -40,6 +40,13 @@ const EffectButton = (props) => {
     }
 
     $element.addEventListener('click', handleClick)
+    $element.addEventListener('keypress', (e) => {
+      if (e.code === 'Enter') {
+        $element.dispatchEvent(new Event('click'))
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    })
   }
 
   const handleClick = () => {
