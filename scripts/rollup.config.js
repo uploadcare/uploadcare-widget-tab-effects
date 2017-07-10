@@ -39,6 +39,10 @@ let config = {
       extensions: ['.pcss'],
       plugins: [
         require('postcss-nested'),
+        require('postcss-calc'),
+        require('postcss-color-function'),
+        require('postcss-flexbugs-fixes'),
+        require('postcss-css-variables'),
         require('autoprefixer'),
         require('postcss-reporter'),
         require('postcss-modules')({
