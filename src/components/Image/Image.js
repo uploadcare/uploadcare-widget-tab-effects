@@ -31,7 +31,11 @@ const Image = (props) => {
     $img = $element.querySelector(`.${cn.image}`)
 
     $img.addEventListener('load', () => onLoad())
-    $img.addEventListener('error', () => onFail())
+    $img.addEventListener('error', () => {
+      if ($img.complete) {
+        onFail()
+      }
+    })
     $img.addEventListener('abort', () => onFail())
   }
 
