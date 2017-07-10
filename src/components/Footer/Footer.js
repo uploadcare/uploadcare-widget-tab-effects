@@ -38,7 +38,9 @@ const Footer = (props) => {
   const empty = () => {
     if (!$element) return
 
-    $additionsElement.innerHTML = ''
+    while ($additionsElement.firstChild) {
+      $additionsElement.removeChild($additionsElement.firstChild)
+    }
   }
 
   const appendChild = (child) => {
