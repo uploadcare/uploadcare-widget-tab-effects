@@ -1,5 +1,11 @@
 # Effects Tab for Uploadcare Widget
 
+<a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects">
+    <img align="right" width="150"
+         src="https://ucarecdn.com/e0367a86-9787-44b1-bc94-878e18ae2928/"
+         title="Uploadcare logo">
+</a>
+
 Effects Tab is a
 [custom tab](https://uploadcare.com/tutorials/widget_customization/#tabs) 
 for [Uploadcare Widget](https://uploadcare.com/documentation/widget/)
