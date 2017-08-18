@@ -8,6 +8,9 @@
   "version": "1.0.0-alpha.5",
   "description": "The Effects Tab for Uploadcare Widget",
   "main": "dist/uploadcare.tab-effects.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rimraf dist",
     "lint": "eslint .",
@@ -53,11 +56,21 @@
     "> .4%",
     "ie >= 10"
   ],
-  "keywords": [],
+  "keywords": [
+    "uploadcare",
+    "widget",
+    "image",
+    "images",
+    "editor"
+  ],
+  "author": "",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/uploadcare/uploadcare-widget-tab-effects.git"
   },
-  "author": "Nikolay Zherdev",
-  "license": "MIT"
+  "bugs": {
+    "url": "https://github.com/uploadcare/uploadcare-widget-tab-effects/issues"
+  },
+  "homepage": "https://github.com/uploadcare/uploadcare-widget-tab-effects#readme"
 }
