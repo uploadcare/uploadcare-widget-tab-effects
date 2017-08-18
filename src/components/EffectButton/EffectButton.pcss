@@ -1,22 +1,27 @@
 .effect-button {
   --color: #212121;
 
+  flex-shrink: 1;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
 
   padding: 0;
-  width: auto;
+  width: 45px;
   height: 45px;
 
   border-color: transparent;
+  background: transparent;
 
   color: var(--color);
   fill: var(--color);
 
   &:hover,
   &:focus {
+    border-color: transparent;
+    background: transparent;
     --color: #157cfc;
   }
 
@@ -25,10 +30,10 @@
   }
 
   &[aria-disabled=true] {
+    border-color: transparent !important;
+    background: transparent !important;
     color: #d4d2d2 !important;
     fill: #d4d2d2 !important;
-
-    cursor: not-allowed;
   }
 }
 
