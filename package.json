@@ -6,8 +6,11 @@
     "classPrefix": "uploadcare-tab-effects--"
   },
   "version": "1.0.0-alpha.5",
-  "description": "The Effects Tab for Uploadcare Widget",
+  "description": "Effects Tab for Uploadcare Widget",
   "main": "dist/uploadcare.tab-effects.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rimraf dist",
     "lint": "eslint .",
@@ -20,39 +23,54 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "autoprefixer": "^6.3.6",
-    "aws-sdk": "^2.22.0",
-    "babel-eslint": "^6.1.0",
+    "autoprefixer": "^7.1.2",
+    "aws-sdk": "^2.82.0",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-latest": "^6.22.0",
-    "babel-preset-stage-3": "^6.22.0",
-    "browser-sync": "^2.11.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "browser-sync": "^2.18.12",
     "cssnano": "^3.10.0",
-    "eslint": "^2.13.1",
+    "eslint": "^4.2.0",
     "eslint-config-uploadcare": "^1.1.0",
-    "postcss-modules": "^0.6.4",
-    "postcss-nested": "^1.0.0",
-    "postcss-reporter": "^3.0.0",
+    "postcss-calc": "^6.0.0",
+    "postcss-color-function": "^4.0.0",
+    "postcss-css-variables": "^0.7.0",
+    "postcss-flexbugs-fixes": "^3.0.0",
+    "postcss-modules": "^0.8.0",
+    "postcss-nested": "^2.0.2",
+    "postcss-reporter": "^4.0.0",
     "rimraf": "^2.5.4",
+    "rollup": "^0.45.0",
     "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-filesize": "^1.2.1",
+    "rollup-plugin-filesize": "^1.4.2",
     "rollup-plugin-includepaths": "^0.2.2",
-    "rollup-plugin-license": "^0.3.0",
-    "rollup-plugin-postcss": "^0.4.1",
+    "rollup-plugin-license": "^0.4.0",
+    "rollup-plugin-postcss": "^0.5.3",
     "rollup-plugin-posthtml-template": "^1.1.0",
-    "rollup-plugin-uglify": "^1.0.1",
-    "stylelint": "^7.6.0",
-    "stylelint-config-uploadcare": "^1.0.0"
+    "rollup-plugin-uglify": "^2.0.1",
+    "stylelint": "^7.12.0",
+    "stylelint-config-uploadcare": "^2.0.0"
   },
   "browserslist": [
     "> .4%",
     "ie >= 10"
   ],
-  "keywords": [],
+  "keywords": [
+    "uploadcare",
+    "widget",
+    "image",
+    "images",
+    "editor"
+  ],
+  "author": "",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/uploadcare/uploadcare-widget-tab-effects.git"
   },
-  "author": "Nikolay Zherdev",
-  "license": "MIT"
+  "bugs": {
+    "url": "https://github.com/uploadcare/uploadcare-widget-tab-effects/issues"
+  },
+  "homepage": "https://github.com/uploadcare/uploadcare-widget-tab-effects#readme"
 }

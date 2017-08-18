@@ -22,7 +22,7 @@ const Icon = (props) => {
   const render = () => {
     $element = createNode(icons[name]())
 
-    $element.classList.add(cn['icon'])
+    $element.setAttribute('class', `${$element.getAttribute('class')} ${cn['icon']}`)
   }
 
   return {getElement}
