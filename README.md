@@ -1,4 +1,4 @@
-# uploadcare-widget-tab-effects
+# Effects Tab for Uploadcare Widget
 
 Effects Tab is a
 [custom tab](https://uploadcare.com/tutorials/widget_customization/#tabs) 
