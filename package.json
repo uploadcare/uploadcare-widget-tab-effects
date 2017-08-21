@@ -22,7 +22,9 @@
     "build": "npm run clean && npm run build:umd && npm run build:umd:min && npm run build:es",
     "start:static": "browser-sync start --ss dist --files dist --port 3126",
     "start": "browser-sync start -s demo --ss dist --files demo dist --port 3127",
-    "publish:cdn": "node ./scripts/publish-to-cdn.js"
+    "publish:cdn": "node ./scripts/publish-to-cdn.js",
+    "prepublishOnly": "npm run lint && npm run build",
+    "postpublish": "npm run publish:cdn"
   },
   "dependencies": {},
   "devDependencies": {
