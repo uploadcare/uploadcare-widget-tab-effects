@@ -49,7 +49,11 @@ const CropButton = (props) => {
       $icon.style.height = height
     }
     else {
-      $icon.innerHTML = '<svg width="32" height="32" role="presentation" class="uploadcare--icon"><use xlink:href="#uploadcare--icon-crop-free"/></svg>'
+      $icon.innerHTML = `
+<svg width="32" height="32" role="presentation" class="uploadcare--icon">
+  <use xlink:href="#uploadcare--icon-crop-free"/>
+</svg>
+      `
       $icon.classList.add(ICON_FREE_CLASS_NAME)
     }
   }

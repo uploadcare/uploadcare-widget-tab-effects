@@ -262,9 +262,8 @@ const Tab = (props) => {
 
   const showCrops = () => {
     const {crop: cropSettings} = settings
-    const {appliedEffects, image} = store.getState()
+    const {appliedEffects} = store.getState()
     const {crop} = appliedEffects
-    const {width, height} = image.originalImageInfo
 
     state.currentCrop = (crop) ? crop.index : 0
 
