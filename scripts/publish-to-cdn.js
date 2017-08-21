@@ -9,14 +9,21 @@ const AWS = require('aws-sdk')
 const fs = require('fs')
 const path = require('path')
 
-if (!process.argv[2]) {
-  throw 'Please, run that script with the argument that contain a name of your bucket'
+const CONFIG_PATH = path.join(__dirname, '..', '.awsrc')
+
+if (!fs.existsSync(CONFIG_PATH)) {
+  throw 'Please, add AWS configuration file ".awsrc" to the project root.'
 }
 
+const config = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf-8'))
+
+if (typeof config.aws_bucket_name === 'undefined') {
+  throw 'Please, add to the ".awsrc" file your bucket name under "aws_bucket_name" key.'
+}
+
+const AWS_BUCKET_NAME = config.aws_bucket_name
 const BASE_PATH = 'libs/widget-tab-effects/'
 const VERSION = process.env.npm_package_version
-
-const AWS_BUCKET_NAME = process.argv[2]
 const UPLOAD_CONFIG = {
   ACL: 'public-read',
   Bucket: AWS_BUCKET_NAME,
