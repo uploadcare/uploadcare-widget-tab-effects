@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>The Effects Tab for Uploadcare Widget</title>
+  <title>Effects Tab for Uploadcare Widget</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
   <script>
@@ -17,13 +17,18 @@
 </head>
 
 <body>
-<input type="text" role="uploadcare-uploader" name="my_file"
-       data-effects="blur,crop,enhance,grayscale,rotate,sharp,flip,mirror"/>
+<h1>Effects Tab for Uploadcare Widget</h1>
 
+<fieldset>
+  <legend>Widget</legend>
+  <input type="hidden" role="uploadcare-uploader" name="content"
+         data-effects="crop,rotate,flip,mirror,enhance,grayscale,blur,sharp"/>
+</fieldset>
 <fieldset>
   <legend>Result</legend>
   <div id="result"></div>
 </fieldset>
+
 <script>
   uploadcare.registerTab('preview', uploadcareTabEffects)
 
