@@ -1,32 +1,54 @@
 # Effects Tab for Uploadcare Widget
 
 Effects Tab is a
-[custom tab](https://uploadcare.com/tutorials/widget_customization/#tabs) 
-for [Uploadcare Widget](https://uploadcare.com/documentation/widget/)
+[custom tab](/tutorials/widget_customization/#tabs) 
+for [Uploadcare Widget](/documentation/widget/)
 that replaces Preview Tab and adds image-editing capabilities
 to the widget.
+
+## Output value
+
+Output value will be CDN link to an image with applying CDN operations based on that user choose while editing.
+
+For example, if user choose grayscale and click on rotate once, output value:
+
+```
+https://ucarecdn.com/:UUID/-/preview/-/grayscale/-/rotate/270/
+```
 
 ## Requirements
 
 Since Effects Tab is a custom tab for Uploadcare Widget,
 make sure to
-[install the widget](https://uploadcare.com/documentation/widget/#install)
+[install the widget](/documentation/widget/#install)
 first. 
 
 ## Install
+
+### NPM
+
+```
+npm i uploadcare-widget-tab-effects --save
+```
+
+Import Effects Tab in your module,
+
+```javascript
+import uploadcareTabEffects from 'uploadcare-widget-tab-effects'
+```
 
 ### CDN
 
 You can either install this minification-enabled Effects Tab version:
 
 ```html
-<script src="https://ucarecdn.com/libs/widget-tab-effects/1.0.0-alpha.5/uploadcare.tab-effects.min.js" charset="utf-8"></script>
+<script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js" charset="utf-8"></script>
 ```
 
 Or that one, bundled version without minification:
 
 ```html
-<script src="https://ucarecdn.com/libs/widget-tab-effects/1.0.0-alpha.5/uploadcare.tab-effects.js" charset="utf-8"></script>
+<script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.js" charset="utf-8"></script>
 ```
 
 ## Usage
@@ -37,39 +59,13 @@ That's how you add Effects Tab to Uploadcare Widget:
 uploadcare.registerTab('preview', uploadcareTabEffects)
 ```
 
-### Options
+## Configuration
 
-#### `effects`
-
-Default: `crop,rotate,enhance,sharp,grayscale`
-Type: `String|Array`
-
-That's the main Effects Tab option allowing you to
-choose the preferred set of enabled effects. It also
-controls the order of effects in the tab.
-
-`effects` can either be a string holding one or more
-comma-separated effects or an array of strings (JS only.)
-
-Available effects:
-
-* `blur`, filtering images via Gaussian Blur
-* `crop`, crops images freely or using set aspect ratios
-* `enhance`, makes images look better via auto
-  levels, auto contrast, and saturation sharpening
-* `flip`, allows you to flip uploaded images
-* `grayscale`, desaturates uploaded images
-* `mirror`, provides image-mirroring capabilities
-* `rotate`, rotates uploaded images
-* `sharp`, allows you to adjust image sharpness
-
-### Configuration
-
-#### Global settings
+### Global variables
 
 ```html
 <script>
-  UPLOADCARE_EFFECTS = 'blur,sharp,grayscale';
+  UPLOADCARE_EFFECTS = 'blur,sharp,grayscale'
 </script>
 ```
 
@@ -77,24 +73,24 @@ or
 
 ```html
 <script>
-  UPLOADCARE_EFFECTS = ['blur', 'sharp', 'grayscale'];
+  UPLOADCARE_EFFECTS = ['blur', 'sharp', 'grayscale']
 </script>
 ```
 
-#### Local attributes
+### Local attributes
 
 ```html
-<input type="hidden" role="uploadcare-uploader"
+<input type="hidden" role="uploadcare-uploader" name="content"
   data-effects="blur,sharp,grayscale"
 />
 ```
 
-#### Settings object
+### Settings object
 
 ```javascript
 uploadcare.start({
   effects: 'blur,sharp,grayscale',
-});
+})
 ```
 
 or
@@ -102,8 +98,36 @@ or
 ```javascript
 uploadcare.start({
   effects: ['blur', 'sharp', 'grayscale'],
-});
+})
 ```
+
+## Options
+
+### Effects `string|array`
+
+Global: `UPLOADCARE_EFFECTS` <br>
+Local: `data-effects` <br>
+Object key: `effects` <br>
+
+Default value is `crop,rotate,enhance,sharp,grayscale`.
+
+Allowing you to choose the preferred set of enabled effects.
+It also controls **the order of effects** in the tab (but, `crop` always at first).
+
+`effects` can either be a string holding one or more
+comma-separated effects or an array of strings (JS only.)
+
+Available effects:
+
+* `crop` — crops images freely or using set aspect ratios
+* `rotate` — rotates uploaded images
+* `mirror` — provides image-mirroring capabilities
+* `flip` — allows you to flip uploaded images
+* `blur` — filtering images via Gaussian Blur
+* `sharp` — allows you to adjust image sharpness
+* `enhance` — makes images look better via auto
+  levels, auto contrast, and saturation sharpening
+* `grayscale` — desaturates uploaded images
 
 ## Localization
 
