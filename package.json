@@ -7,18 +7,21 @@
   },
   "version": "1.0.0-alpha.5",
   "description": "Effects Tab for Uploadcare Widget",
-  "main": "dist/uploadcare.tab-effects.min.js",
+  "main": "dist/uploadcare.tab-effects.js",
+  "module": "dist/uploadcare.tab-effects.es.js",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "clean": "rimraf dist",
     "lint": "eslint .",
-    "build:dist": "rollup -c ./scripts/rollup.config.js",
-    "build:dist:min": "rollup -c ./scripts/rollup.config.js --environment BUILD:production",
-    "build": "npm run clean && npm run build:dist && npm run build:dist:min",
-    "start:static": "npm run build && browser-sync start --ss dist --files dist --port 3126",
-    "start": "npm run build && browser-sync start -s demo --ss dist --files demo dist --port 3127",
+    "build:umd": "rollup -c ./scripts/rollup.config.js",
+    "build:umd:min": "rollup -c ./scripts/rollup.config.js --environment BUILD:minification",
+    "build:es": "rollup -c ./scripts/rollup.config.js --environment BUILD:module",
+    "build": "npm run clean && npm run build:umd && npm run build:umd:min && npm run build:es",
+    "start:static": "browser-sync start --ss dist --files dist --port 3126",
+    "start": "browser-sync start -s demo --ss dist --files demo dist --port 3127",
     "publish:cdn": "node ./scripts/publish-to-cdn.js"
   },
   "dependencies": {},
@@ -26,8 +29,7 @@
     "autoprefixer": "^7.1.2",
     "aws-sdk": "^2.82.0",
     "babel-eslint": "^7.2.3",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-latest": "^6.24.1",
+    "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-stage-3": "^6.24.1",
     "browser-sync": "^2.18.12",
     "cssnano": "^3.10.0",

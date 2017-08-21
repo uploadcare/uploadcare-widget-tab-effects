@@ -8,7 +8,8 @@ import uglify from 'rollup-plugin-uglify'
 import license from 'rollup-plugin-license'
 
 const classPrefix = process.env.npm_package_config_classPrefix
-const isProduction = process.env.BUILD === 'production'
+const isMinification = process.env.BUILD === 'minification'
+const isModule = process.env.BUILD === 'module'
 const srcToPaths = (paths, value) => {
   paths[value] = join(__dirname, '..', 'src', value, 'index.js')
 
@@ -60,15 +61,20 @@ let config = {
       include: '**/*.{html,svg}',
       template: true,
     }),
-    babel({externalHelpers: false}),
+    babel(),
     filesize(),
   ],
 }
 
-if (isProduction) {
+if (isMinification) {
   config.dest = `dist/${process.env.npm_package_config_name}.min.js`
   config.sourceMap = false
   config.plugins.push(uglify())
+}
+if (isModule) {
+  config.dest = `dist/${process.env.npm_package_config_name}.es.js`
+  config.format = 'es'
+  config.sourceMap = true
 }
 
 config.plugins.push(license({banner: {file: join(__dirname, 'rollup.banner.txt')}}))
