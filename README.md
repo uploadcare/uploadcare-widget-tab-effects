@@ -7,8 +7,8 @@
 </a>
 
 Effects Tab is a
-[custom tab](/tutorials/widget_customization/#tabs) 
-for [Uploadcare Widget](/documentation/widget/)
+[custom tab](https://uploadcare.com/tutorials/widget_customization/#tabs) 
+for [Uploadcare Widget](https://uploadcare.com/documentation/widget/)
 that replaces Preview Tab and adds image-editing capabilities
 to the widget.
 
@@ -26,7 +26,7 @@ https://ucarecdn.com/:UUID/-/preview/-/grayscale/-/rotate/270/
 
 Since Effects Tab is a custom tab for Uploadcare Widget,
 make sure to
-[install the widget](/documentation/widget/#install)
+[install the widget](https://uploadcare.com/documentation/widget/#install)
 first. 
 
 ## Install
