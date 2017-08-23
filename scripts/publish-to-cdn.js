@@ -50,7 +50,7 @@ const s3upload = (params) => new Promise((resolve, reject) => s3.upload(params, 
   }
 }))
 
-const getFiles = async () => await fs.readdir(path.join(__dirname, '..', 'dist'))
+const getFileNames = async () => await fs.readdir(path.join(__dirname, '..', 'dist'))
 
 const readFile = async (fileName) => await fs.readFile(path.join(__dirname, '..', 'dist', fileName), 'utf-8')
 
@@ -66,8 +66,8 @@ const uploadFile = async (fileName) => {
   return await Promise.all(uploads)
 }
 
-getFiles()
-  .then(files => Promise.all(files.map(file => uploadFile(file))))
+getFileNames()
+  .then(fileNames => Promise.all(fileNames.map(fileName => uploadFile(fileName))))
   .then(uploadedFiles => uploadedFiles.forEach(uploadedFile => console.log('File uploaded: ', uploadedFile)))
   .catch(error => {
     console.error(error)
