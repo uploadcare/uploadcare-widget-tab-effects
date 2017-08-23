@@ -7,7 +7,7 @@
 </a>
 
 Effects Tab is a
-[custom tab](https://uploadcare.com/tutorials/widget_customization/#tabs) 
+[custom tab](https://uploadcare.com/documentation/javascript_api/#custom-tabs) 
 for [Uploadcare Widget](https://uploadcare.com/documentation/widget/)
 that replaces Preview Tab and adds image-editing capabilities
 to the widget.
