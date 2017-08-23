@@ -37,6 +37,7 @@
     "cssnano": "^3.10.0",
     "eslint": "^4.2.0",
     "eslint-config-uploadcare": "^1.1.0",
+    "fs-extra": "^4.0.1",
     "postcss-calc": "^6.0.0",
     "postcss-color-function": "^4.0.0",
     "postcss-css-variables": "^0.7.0",

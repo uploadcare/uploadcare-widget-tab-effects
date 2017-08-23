@@ -6,8 +6,12 @@
  Read more https://aws.amazon.com/sdk-for-node-js/
  */
 const AWS = require('aws-sdk')
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
+
+if (typeof process.env.npm_package_version === 'undefined') {
+  throw 'Please, add version to package.json'
+}
 
 const CONFIG_PATH = path.join(__dirname, '..', '.awsrc')
 
@@ -21,63 +25,51 @@ if (typeof config.aws_bucket_name === 'undefined') {
   throw 'Please, add to the ".awsrc" file your bucket name under "aws_bucket_name" key.'
 }
 
-const AWS_BUCKET_NAME = config.aws_bucket_name
+const getVersionTypes = (version) => [
+  version,
+  version.replace(/^(\d+\.\d+)\.\d+/, '$1.x'),
+  version.replace(/^(\d+)\.\d+\.\d+/, '$1.x'),
+]
+
 const BASE_PATH = 'libs/widget-tab-effects/'
-const VERSION = process.env.npm_package_version
+const VERSION_TYPES = getVersionTypes(process.env.npm_package_version)
 const UPLOAD_CONFIG = {
   ACL: 'public-read',
-  Bucket: AWS_BUCKET_NAME,
+  Bucket: config.aws_bucket_name,
+  ContentType: 'application/javascript; charset=utf-8',
 }
 
 let s3 = new AWS.S3()
 
-const readFile = (fileName) => new Promise((resolve, reject) => {
-  fs.readFile(path.join(__dirname, '..', 'dist', fileName), (error, data) => {
-    if (error) {
-      reject(error)
-    }
-    else {
-      resolve(data)
-    }
-  })
-})
-
-const uploadFile = (fileName, data) => new Promise((resolve, reject) => {
-  if (VERSION) {
-    const uploadParams = Object.assign({}, UPLOAD_CONFIG, {
-      Key: `${BASE_PATH}${VERSION}/${fileName}`,
-      Body: data,
-    })
-
-    s3.upload(uploadParams, (error, data) => {
-      if (error) {
-        reject(error)
-      }
-      else {
-        resolve(data)
-      }
-    })
+const s3upload = (params) => new Promise((resolve, reject) => s3.upload(params, (error, data) => {
+  if (error) {
+    reject(error)
   }
   else {
-    reject('Version is undefined')
+    resolve(data)
   }
-})
+}))
 
-const publishFile = (fileName) => new Promise((resolve, reject) => {
-  readFile(fileName)
-    .then(data => uploadFile(fileName, data))
-    .then(data => resolve(data))
-    .catch(error => reject(error))
-})
+const getFiles = async () => await fs.readdir(path.join(__dirname, '..', 'dist'))
 
-fs.readdir(path.join(__dirname, '..', 'dist'), (error, files) => {
-  if (error) {
-    throw error
-  }
+const readFile = async (fileName) => await fs.readFile(path.join(__dirname, '..', 'dist', fileName), 'utf-8')
 
-  Promise.all(files.map(fileName => publishFile(fileName)))
-    .then(result => console.log(result))
-    .catch(error => {
-      throw error
-    })
-})
+const uploadFile = async (fileName) => {
+  const data = await readFile(fileName)
+
+  const uploadParams = Object.assign({}, UPLOAD_CONFIG, {Body: data})
+
+  const uploads = VERSION_TYPES.map(version =>
+    s3upload(Object.assign({}, uploadParams, {Key: `${BASE_PATH}${version}/${fileName}`}))
+  )
+
+  return await Promise.all(uploads)
+}
+
+getFiles()
+  .then(files => Promise.all(files.map(file => uploadFile(file))))
+  .then(uploadedFiles => uploadedFiles.forEach(uploadedFile => console.log('File uploaded: ', uploadedFile)))
+  .catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
