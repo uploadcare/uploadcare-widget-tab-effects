@@ -12,6 +12,8 @@ for [Uploadcare Widget](https://uploadcare.com/documentation/widget/)
 that replaces Preview Tab and adds image-editing capabilities
 to the widget.
 
+See **demo** [here](https://uploadcare.github.io/uploadcare-widget-tab-effects/).
+
 ## Output value
 
 Output value will be CDN link to an image with applying CDN operations based on that user choose while editing.
