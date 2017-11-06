@@ -1,16 +1,28 @@
 # Effects Tab for Uploadcare Widget
 
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects">
-    <img align="right" width="150"
-         src="https://ucarecdn.com/e0367a86-9787-44b1-bc94-878e18ae2928/"
-         title="Uploadcare logo">
+    <img align="right" width="64" height="64"
+         src="https://ucarecdn.com/2f4864b7-ed0e-4411-965b-8148623aa680/uploadcare-logo-mark.svg"
+         alt="">
 </a>
 
 Effects Tab is a
-[custom tab](https://uploadcare.com/documentation/javascript_api/#custom-tabs) 
+[custom tab](https://uploadcare.com/documentation/javascript_api/#custom-tabs)
 for [Uploadcare Widget](https://uploadcare.com/documentation/widget/)
 that replaces Preview Tab and adds image-editing capabilities
 to the widget.
+
+[![NPM version][npm-img]][npm-link] [![Uploadcare stack on StackShare][stack-img]][stack]
+
+<a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="Play with Effects Tab">
+  <img src="https://ucarecdn.com/de487341-9107-4e29-b89f-174ba3ddaf95/uploadcare-widget-effects-tab.gif"
+       width="888" alt="">
+</a>
+
+[npm-img]: http://img.shields.io/npm/v/uploadcare-widget-tab-effects.svg
+[npm-link]: https://www.npmjs.org/package/uploadcare-widget-tab-effects
+[stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
+[stack]: https://stackshare.io/uploadcare/stacks/
 
 ## Output value
 
@@ -27,7 +39,7 @@ https://ucarecdn.com/:UUID/-/preview/-/grayscale/-/rotate/270/
 Since Effects Tab is a custom tab for Uploadcare Widget,
 make sure to
 [install the widget](https://uploadcare.com/documentation/widget/#install)
-first. 
+first.
 
 ## Install
 
@@ -137,11 +149,11 @@ Available effects:
 
 ## Localization
 
-It’s possible your locale is not available in the tab yet. 
-If that’s the case, contributing your locale might be a good idea. 
+It’s possible your locale is not available in the tab yet.
+If that’s the case, contributing your locale might be a good idea.
 This can be done by forking the
-[main repository](https://github.com/uploadcare/uploadcare-widget-tab-effects) 
-followed by adding a new localization file 
+[main repository](https://github.com/uploadcare/uploadcare-widget-tab-effects)
+followed by adding a new localization file
 [here](https://github.com/uploadcare/uploadcare-widget-tab-effects/tree/master/src/locale).
 
 ## Contributors
