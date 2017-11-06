@@ -14,9 +14,9 @@ to the widget.
 
 [![NPM version][npm-img]][npm-link] [![Uploadcare stack on StackShare][stack-img]][stack]
 
-<a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="Play with Effects Tab">
+<a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="See Effects Tab in action with demo">
   <img src="https://ucarecdn.com/de487341-9107-4e29-b89f-174ba3ddaf95/uploadcare-widget-effects-tab.gif"
-       width="888" alt="">
+       width="666" align="center" alt="">
 </a>
 
 [npm-img]: http://img.shields.io/npm/v/uploadcare-widget-tab-effects.svg
