@@ -43,6 +43,8 @@ first.
 
 ## Install
 
+You’re free to choose from the install methods listed below.
+
 ### NPM
 
 ```
