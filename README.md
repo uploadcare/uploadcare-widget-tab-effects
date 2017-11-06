@@ -14,12 +14,10 @@ to the widget.
 
 [![NPM version][npm-img]][npm-link] [![Uploadcare stack on StackShare][stack-img]][stack]
 
-<p align="center">
-  <a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="See Effects Tab in action with demo">
-    <img src="https://ucarecdn.com/de487341-9107-4e29-b89f-174ba3ddaf95/uploadcare-widget-effects-tab.gif"
-         width="600" alt="">
-  </a>
-</p>
+<a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="See Effects Tab in action with demo">
+  <img src="https://ucarecdn.com/de487341-9107-4e29-b89f-174ba3ddaf95/uploadcare-widget-effects-tab.gif"
+       width="888" alt="">
+</a>
 
 [npm-img]: http://img.shields.io/npm/v/uploadcare-widget-tab-effects.svg
 [npm-link]: https://www.npmjs.org/package/uploadcare-widget-tab-effects
