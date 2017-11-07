@@ -35,7 +35,9 @@
   </fieldset>
   <fieldset>
     <legend>Widget</legend>
-    <p id="widget"></p>
+    <p id="widget">
+      <input type="hidden" role="uploadcare-uploader">
+    </p>
   </fieldset>
   <fieldset id="result" hidden>
     <legend>Result</legend>
@@ -54,20 +56,17 @@
       })
   }
 
-  var inputExists = false
   var $widget = document.querySelector('#widget')
 
   function buildWidget() {
     var $input = document.createElement('input')
 
     $input.type = 'hidden'
-    $input.value = inputExists ? document.querySelector('#widget input').value : ''
+    $input.value = document.querySelector('#widget input').value
     $input.dataset.effects = getCheckedEffects()
 
     $widget.innerHTML = ''
-    inputExists = false
     $widget.appendChild($input)
-    inputExists = true
 
     var widget = uploadcare.Widget('#widget input')
 
