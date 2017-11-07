@@ -9,10 +9,7 @@
 
   <script>
     UPLOADCARE_PUBLIC_KEY = 'demopublickey'
-    UPLOADCARE_PREVIEW_STEP = true
     UPLOADCARE_CROP = 'free,2:3,1:1'
-    UPLOADCARE_LOCALE = 'en'
-    UPLOADCARE_LIVE = false
   </script>
   <script src="//ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>
   <script src="//ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js" charset="utf-8"></script>
@@ -23,39 +20,86 @@
   <h1>Effects&nbsp;Tab&nbsp;for Uploadcare Widget</h1>
 
   <fieldset>
+    <legend>Config</legend>
+    <p><b>Effects</b></p>
+    <ul class="effects">
+      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="crop" checked>&nbsp;Crop</label></li>
+      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="rotate" checked>&nbsp;Rotate</label></li>
+      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="mirror">&nbsp;Mirror</label></li>
+      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="flip">&nbsp;Flip</label></li>
+      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="blur">&nbsp;Blur</label></li>
+      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="sharp" checked>&nbsp;Sharp</label></li>
+      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="enhance" checked>&nbsp;Enhance</label></li>
+      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="grayscale" checked>&nbsp;Grayscale</label></li>
+    </ul>
+  </fieldset>
+  <fieldset>
     <legend>Widget</legend>
-    <input type="hidden" role="uploadcare-uploader" name="content"
-           data-effects="crop,rotate,flip,mirror,enhance,grayscale,blur,sharp"/>
+    <p id="widget"></p>
   </fieldset>
   <fieldset id="result" hidden>
     <legend>Result</legend>
     <p id="resultUrl"></p>
-    <div id="resultImage"></div>
+    <p id="resultImage"></p>
   </fieldset>
 </div>
 
 <script>
   uploadcare.registerTab('preview', uploadcareTabEffects)
 
-  var widget = uploadcare.Widget('[role=uploadcare-uploader]')
-  widget.onUploadComplete(function(info) {
-    var $resultUrl = document.getElementById('resultUrl')
-    var $resultImage = document.getElementById('resultImage')
-    var $link = document.createElement('a')
-    var image = new Image()
+  function getCheckedEffects() {
+    return [].slice.call(document.querySelectorAll('[name="effects[]"]:checked'))
+      .map(function($effect) {
+        return $effect.value
+      })
+  }
 
-    $resultUrl.innerHTML = ''
-    $link.href = info.cdnUrl
-    $link.target = '_blank'
-    $link.innerText = info.cdnUrl
-    $resultUrl.appendChild($link)
+  var inputExists = false
+  var $widget = document.querySelector('#widget')
 
-    $resultImage.innerHTML = ''
-    image.src = info.cdnUrl
-    $resultImage.appendChild(image)
+  function buildWidget() {
+    var $input = document.createElement('input')
 
-    document.getElementById('result').hidden = false
-  })
+    $input.type = 'hidden'
+    $input.value = inputExists ? document.querySelector('#widget input').value : ''
+    $input.dataset.effects = getCheckedEffects()
+
+    $widget.innerHTML = ''
+    inputExists = false
+    $widget.appendChild($input)
+    inputExists = true
+
+    var widget = uploadcare.Widget('#widget input')
+
+    widget.onUploadComplete(function(info) {
+      var $resultUrl = document.getElementById('resultUrl')
+      var $link = document.createElement('a')
+
+      $link.href = info.cdnUrl
+      $link.target = '_blank'
+      $link.innerText = info.cdnUrl
+
+      $resultUrl.innerHTML = ''
+      $resultUrl.appendChild($link)
+
+      var $resultImage = document.getElementById('resultImage')
+      var image = new Image()
+
+      image.src = info.cdnUrl
+
+      $resultImage.innerHTML = ''
+      $resultImage.appendChild(image)
+
+      document.getElementById('result').hidden = false
+    })
+  }
+
+  buildWidget()
+
+  ;[].slice.call(document.querySelectorAll('[name="effects[]"]'))
+    .forEach(function($effect) {
+      $effect.addEventListener('change', buildWidget)
+    })
 </script>
 
 <!-- Link to Github -->
@@ -98,7 +142,9 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-25057731-12"></script>
 <script>
   window.dataLayer = (window.dataLayer || [])
+
   function gtag() {dataLayer.push(arguments)}
+
   gtag('js', new Date())
   gtag('config', 'UA-25057731-12')
 </script>

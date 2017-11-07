@@ -26,14 +26,14 @@
 @media (max-width: 767px) {
   :root {
     --text-padding-bottom: 24px;
-    --text-padding-left: 24px
+    --text-padding-left: 24px;
   }
 }
 
 @media (min-width: 1280px) {
   :root {
     --font-size: 18px;
-    --line-height: 28px
+    --line-height: 28px;
   }
 }
 
@@ -41,7 +41,7 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: var(--color-light)
+  background: var(--color-light);
 }
 
 body {
@@ -50,78 +50,82 @@ body {
   font-size: var(--font-size);
   line-height: var(--line-height);
   color: var(--color-dark);
-  -webkit-font-smoothing: antialiased
+  -webkit-font-smoothing: antialiased;
 }
 
 article, aside, canvas, dd, figcaption, footer, form, header, hgroup, li, main, nav, section, tbody, tfoot, thead {
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 
 address, audio, blockquote, dl, fieldset, figure, h1, h2, h3, h4, h5, h6, hr, ol, output, p, pre, table, ul, video {
   margin: 0;
-  padding: 0 0 var(--text-padding-bottom)
+  padding: 0 0 var(--text-padding-bottom);
+}
+
+p + ul {
+  margin-top: calc(var(--text-padding-bottom) / -2);
 }
 
 a {
   transition: var(--hover-transition);
-  color: var(--color-blue)
+  color: var(--color-blue);
 }
 
 a:focus, a:hover {
   color: var(--color-light-blue);
-  text-decoration: none
+  text-decoration: none;
 }
 
 a:active {
-  color: var(--color-dark-blue)
+  color: var(--color-dark-blue);
 }
 
 a:visited {
-  color: var(--color-purple)
+  color: var(--color-purple);
 }
 
 a:visited:focus, a:visited:hover {
-  color: var(--color-light-purple)
+  color: var(--color-light-purple);
 }
 
 a:visited:active {
-  color: var(--color-dark-purple)
+  color: var(--color-dark-purple);
 }
 
 a:focus {
   outline: var(--focus-color) solid 2px;
-  outline-offset: 2px
+  outline-offset: 2px;
 }
 
 fieldset {
   box-sizing: border-box;
   border: 1px solid var(--color-light-grey);
-  padding: 20px 20px var(--text-padding-bottom);
+  padding: 20px 20px 0;
   margin-bottom: var(--text-padding-bottom);
 }
 
 h1 {
   font-family: var(--font-headings);
-  font-weight: 700
+  font-weight: 700;
 }
 
 h1 {
   font-size: 48px;
-  line-height: 56px
+  line-height: 56px;
 }
 
 @media (max-width: 767px) {
   h1 {
     font-size: 36px;
-    line-height: 40px
+    line-height: 40px;
   }
 }
 
 @media (min-width: 1280px) {
   h1 {
     font-size: 62px;
-    line-height: 64px
+    line-height: 64px;
   }
 }
 
@@ -131,6 +135,7 @@ img {
 
 legend {
   font-family: var(--font-headings);
+  color: var(--color-grey);
 }
 
 .content {
@@ -151,4 +156,9 @@ legend {
     width: 760px;
     padding: 80px 0;
   }
+}
+
+.effects {
+  list-style: none;
+  column-count: 2;
 }
