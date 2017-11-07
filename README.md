@@ -6,40 +6,56 @@
          alt="">
 </a>
 
-Effects Tab is a
-[custom tab](https://uploadcare.com/documentation/javascript_api/#custom-tabs)
-for [Uploadcare Widget](https://uploadcare.com/documentation/widget/)
-that replaces Preview Tab and adds image-editing capabilities
-to the widget.
+Effects Tab is a [custom tab][uc-custom-tabs] for [Uploadcare Widget][uc-widget]
+that replaces Preview Tab and adds image-editing capabilities to the widget.
 
 [![NPM version][npm-img]][npm-link] [![Uploadcare stack on StackShare][stack-img]][stack]
-
-<a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="See Effects Tab in action with demo">
-  <img src="https://ucarecdn.com/de487341-9107-4e29-b89f-174ba3ddaf95/uploadcare-widget-effects-tab.gif"
-       width="888" alt="">
-</a>
 
 [npm-img]: http://img.shields.io/npm/v/uploadcare-widget-tab-effects.svg
 [npm-link]: https://www.npmjs.org/package/uploadcare-widget-tab-effects
 [stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [stack]: https://stackshare.io/uploadcare/stacks/
 
-## Output value
+<a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="See Effects Tab in action with demo">
+  <img src="https://ucarecdn.com/de487341-9107-4e29-b89f-174ba3ddaf95/uploadcare-widget-effects-tab.gif"
+       width="888" alt="">
+</a>
 
-Output value will be CDN link to an image with applying CDN operations based on that user choose while editing.
+Effects Tab provides 8 effects for on-the-fly image editing on upload:
+crop, rotate, mirror, flip, blur, sharpen, enhance, and grayscale.
+You can customize which effects are allowed and otherwise affect the tab behavior.
 
-For example, if user choose grayscale and click on rotate once, output value:
+* [How it works](#how-it-works)
+* [Requirements](#requirements)
+* [Install](#install)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Options](#options)
+* [Localization](#localization)
+
+## How it works
+
+Image operations provided by Effects Tab are based on the capabilities of our [CDN API][uc-cdn].
+The tab outputs a CDN link holding your image [UUID][uc-uuid] and
+[image operations][uc-cdn-image-operations] applied by a user during the in-tab editing process.
+Technically, every original image is firstly uploaded to our CDN and then shown
+to a user in Effects Tab.
+In case of uploading [multiple files][uc-multi-upload], this happens asynchronously.
+
+For example, if a user chose to apply `grayscale` and clicked `rotate` once,
+this is how the output value looks like:
 
 ```
 https://ucarecdn.com/:UUID/-/preview/-/grayscale/-/rotate/270/
 ```
 
+You will always have the `preview` operation in Effects Tab output URL due to
+CDN API [limitations][uc-cdn-limits].
+
 ## Requirements
 
-Since Effects Tab is a custom tab for Uploadcare Widget,
-make sure to
-[install the widget](https://uploadcare.com/documentation/widget/#install)
-first.
+Since Effects Tab is a [custom tab][uc-custom-tabs] for Uploadcare Widget,
+make sure to start with [installing the widget][uc-widget-install].
 
 ## Install
 
@@ -47,11 +63,13 @@ You’re free to choose from the install methods listed below.
 
 ### NPM
 
+Get Effects Tab:
+
 ```
 npm i uploadcare-widget-tab-effects --save
 ```
 
-Import Effects Tab in your module,
+And then import it in your module:
 
 ```javascript
 import uploadcareTabEffects from 'uploadcare-widget-tab-effects'
@@ -65,7 +83,7 @@ You can either install this minification-enabled Effects Tab version:
 <script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js" charset="utf-8"></script>
 ```
 
-Or that one, bundled version without minification:
+Or a bundled version without minification:
 
 ```html
 <script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.js" charset="utf-8"></script>
@@ -73,13 +91,16 @@ Or that one, bundled version without minification:
 
 ## Usage
 
-That's how you add Effects Tab to Uploadcare Widget:
+That’s how you add Effects Tab to the widget:
 
 ```javascript
 uploadcare.registerTab('preview', uploadcareTabEffects)
 ```
 
 ## Configuration
+
+This section describes different ways to set which effects are allowed
+in the Effects Tab.
 
 ### Global variables
 
@@ -129,25 +150,26 @@ Global: `UPLOADCARE_EFFECTS` <br>
 Local: `data-effects` <br>
 Object key: `effects` <br>
 
-Default value is `crop,rotate,enhance,sharp,grayscale`.
+Default value: `crop,rotate,enhance,sharp,grayscale`.
 
-Allowing you to choose the preferred set of enabled effects.
-It also controls **the order of effects** in the tab (but, `crop` always at first).
+This allows you to configure the set of enabled effects.
+It also controls **the order of effects** in the tab:
+however, `crop` is always the first in the set.
 
 `effects` can either be a string holding one or more
-comma-separated effects or an array of strings (JS only.)
+comma-separated effects or an array of strings (JS only).
 
 Available effects:
 
 * `crop` — crops images freely or using set aspect ratios
-* `rotate` — rotates uploaded images
+* `rotate` — rotates images
 * `mirror` — provides image-mirroring capabilities
-* `flip` — allows you to flip uploaded images
-* `blur` — filtering images via Gaussian Blur
-* `sharp` — allows you to adjust image sharpness
+* `flip` — allows flipping images
+* `blur` — filters images via Gaussian Blur
+* `sharp` — allows adjusting image sharpness
 * `enhance` — makes images look better via auto
   levels, auto contrast, and saturation sharpening
-* `grayscale` — desaturates uploaded images
+* `grayscale` — desaturates images
 
 ## Localization
 
@@ -172,3 +194,13 @@ or Hackerone.
 
 We'll contact you personally in a short time to fix an issue
 through co-op and prior to any public disclosure.
+
+
+[uc-widget]: https://uploadcare.com/documentation/widget/
+[uc-widget-install]: https://uploadcare.com/documentation/widget/#install
+[uc-custom-tabs]: https://uploadcare.com/documentation/javascript_api/#custom-tabs
+[uc-cdn]: https://uploadcare.com/documentation/cdn/
+[uc-cdn-image-operations]: https://uploadcare.com/documentation/cdn/#image-operations
+[uc-cdn-limits]: https://uploadcare.com/documentation/cdn/#limits
+[uc-uuid]: https://uploadcare.com/documentation/#how-uc-works
+[uc-multi-upload]: https://uploadcare.com/tutorials/multi-upload/
