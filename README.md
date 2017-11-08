@@ -16,10 +16,12 @@ that replaces Preview Tab and adds image-editing capabilities to the widget.
 [stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [stack]: https://stackshare.io/uploadcare/stacks/
 
-<a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="See Effects Tab in action with demo">
-  <img src="https://ucarecdn.com/de487341-9107-4e29-b89f-174ba3ddaf95/uploadcare-widget-effects-tab.gif"
-       width="888" alt="">
-</a>
+<p>
+  <a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="See Effects Tab in action with demo">
+    <img src="https://ucarecdn.com/c04e8231-3c79-43ca-a122-285b8573d1f8/uploadcare-widget-effects-tab.gif"
+        width="888" alt="">
+  </a>
+</p>
 
 Effects Tab provides 8 effects for on-the-fly image editing on upload:
 crop, rotate, mirror, flip, blur, sharpen, enhance, and grayscale.
