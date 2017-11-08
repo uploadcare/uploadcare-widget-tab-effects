@@ -27,6 +27,7 @@ Effects Tab provides 8 effects for on-the-fly image editing on upload:
 crop, rotate, mirror, flip, blur, sharpen, enhance, and grayscale.
 You can customize which effects are allowed and otherwise affect the tab behavior.
 
+* [Demo](https://uploadcare.github.io/uploadcare-widget-tab-effects/)
 * [How it works](#how-it-works)
 * [Requirements](#requirements)
 * [Install](#install)
