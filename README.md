@@ -173,6 +173,7 @@ Available effects:
 * `enhance` — makes images look better via auto
   levels, auto contrast, and saturation sharpening
 * `grayscale` — desaturates images
+* `invert` — inverts images
 
 ## Localization
 

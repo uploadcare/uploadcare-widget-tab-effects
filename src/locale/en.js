@@ -6,6 +6,7 @@ export default {
       enhance: 'Enhance',
       flip: 'Flip',
       grayscale: 'Grayscale',
+      invert: 'Invert',
       mirror: 'Mirror',
       rotate: 'Rotate',
       sharp: 'Sharpen',
