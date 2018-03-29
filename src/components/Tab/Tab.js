@@ -265,7 +265,7 @@ const Tab = (props) => {
     const {appliedEffects} = store.getState()
     const {crop} = appliedEffects
 
-    state.currentCrop = (crop) ? crop.index : 0
+    state.currentCrop = (crop && crop.index !== undefined) ? crop.index : 0
 
     _crops = new Crops({
       crops: cropSettings.map((c, i) => {
