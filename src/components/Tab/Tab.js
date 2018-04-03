@@ -89,6 +89,10 @@ const Tab = (props) => {
     store.subscribeToView(handleViewChange)
     store.subscribeToImage(handleImageChange)
     store.subscribeToImageLoad(handleImageLoadChange)
+
+    if (settings.crop && !settings.multiple) {
+      store.setView('crop')
+    }
   }
 
   const headerTitle = (view) => (view === 'preview') ? t('dialog.tabs.preview.image.title') : effectTitle(view)
