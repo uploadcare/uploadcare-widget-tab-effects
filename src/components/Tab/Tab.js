@@ -125,7 +125,7 @@ const Tab = (props) => {
   }
 
   const handleCancel = (e) => {
-    const {view} = store.getState()
+    const {view, appliedEffects} = store.getState()
 
     if (view !== 'preview') {
       e.stopPropagation()
@@ -133,7 +133,7 @@ const Tab = (props) => {
       let value = 0
 
       if (view === 'crop') {
-        value = null
+        value = appliedEffects[view]
         deleteCropWidget()
       }
       store.setAppliedEffect({[view]: value})
