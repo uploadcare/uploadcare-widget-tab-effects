@@ -7,6 +7,7 @@ const ALL_EFFECTS = [
   'sharp',
   'enhance',
   'grayscale',
+  'invert',
 ]
 
 export default ALL_EFFECTS
