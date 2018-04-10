@@ -1,4 +1,4 @@
-import {customExtends, configureTranslations} from 'tools'
+import {customExtends, configureTranslations, autoCrop} from 'tools'
 import configureSettings from './configure-settings'
 import configureStore from './configure-store'
 import {Tab} from 'components'
@@ -34,6 +34,8 @@ function createPreviewTabEffects(PreviewTab, uc) {
           this.file = null
           this.__setState('error', {error: 'loadImage'})
         }
+
+        autoCrop(store, settings, uc)
 
         uc.locale.translations = configureTranslations(uc.locale.translations)
         uc.locale.rebuild()
