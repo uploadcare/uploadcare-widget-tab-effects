@@ -4,7 +4,7 @@ module.exports = {
   serveStatic: ['./dist'],
   files: ['./demo', './dist'],
   rewriteRules: [{
-    match: 'http://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js',
+    match: /\/\/ucarecdn\.com\/libs\/widget-tab-effects\/1\.x\/uploadcare\.tab-effects\.min\.js/,
     replace: 'uploadcare.tab-effects.js',
   }],
 }

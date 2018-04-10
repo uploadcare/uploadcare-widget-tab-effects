@@ -20,6 +20,7 @@
     "build:umd:min": "rollup -c ./scripts/rollup.config.js --environment BUILD:minification",
     "build:es": "rollup -c ./scripts/rollup.config.js --environment BUILD:module",
     "build": "npm run clean && npm run build:umd && npm run build:umd:min && npm run build:es",
+    "dev:build": "npm run build:umd -- --watch",
     "start:static": "browser-sync start --ss dist --files dist --port 3126",
     "start": "browser-sync start --config ./scripts/start.config.js",
     "publish:cdn": "node ./scripts/publish-to-cdn.js",
@@ -54,6 +55,7 @@
     "rollup-plugin-postcss": "^0.5.3",
     "rollup-plugin-posthtml-template": "^1.1.0",
     "rollup-plugin-uglify": "^2.0.1",
+    "rollup-watch": "^4.3.1",
     "stylelint": "^7.12.0",
     "stylelint-config-uploadcare": "^2.0.0"
   },
