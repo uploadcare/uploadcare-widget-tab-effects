@@ -8,6 +8,7 @@ import getModifiersByEffects from './get-modifiers-by-effects'
 import getNextRotateValue from './get-next-rotate-value'
 import getSettingsCrop from './get-settings-crop'
 import getSettingsEffects from './get-settings-effects'
+import autoCrop from './auto-crop'
 
 export {
   createNode,
@@ -20,4 +21,5 @@ export {
   getSettingsCrop,
   getSettingsEffects,
   configureTranslations,
+  autoCrop,
 }
