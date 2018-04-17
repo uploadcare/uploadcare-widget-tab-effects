@@ -1,4 +1,4 @@
-import {customExtends, configureTranslations, autoCrop} from 'tools'
+import {customExtends, configureTranslations, getGlobalSettingsByKey, autoCrop} from 'tools'
 import configureSettings from './configure-settings'
 import configureStore from './configure-store'
 import {Tab} from 'components'
@@ -13,6 +13,13 @@ function createPreviewTabEffects(PreviewTab, uc) {
   PreviewTabEffects.prototype.__setState = function(state, data) {
     if (state === 'image') {
       if (data.info) {
+        const globalEffects = getGlobalSettingsByKey('effects')
+
+        // Trying to get effects settings from global if widget doesn't have them
+        if (typeof this.settings.effects === 'undefined' && globalEffects) {
+          this.settings.effects = globalEffects
+        }
+
         const settings = configureSettings(this.settings)
         const store = configureStore(data.info, settings)
         const onDone = () => {

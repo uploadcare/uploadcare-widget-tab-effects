@@ -1,7 +1,12 @@
 import initialSettings from '../initial-settings'
+import ALL_EFFECTS from '../all-effects'
 
 const getSettingsEffects = (value) => {
   let settingsEffects = []
+
+  if (typeof value === 'string' && value === 'all') {
+    return ALL_EFFECTS
+  }
 
   if (typeof value === 'string') {
     settingsEffects = value.replace(/\s/g, '').split(',')
