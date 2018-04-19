@@ -23,8 +23,8 @@ that replaces Preview Tab and adds image-editing capabilities to the widget.
   </a>
 </p>
 
-Effects Tab provides 8 effects for on-the-fly image editing on upload:
-crop, rotate, mirror, flip, blur, sharpen, enhance, and grayscale.
+Effects Tab provides 9 effects for on-the-fly image editing on upload:
+crop, rotate, mirror, flip, blur, sharpen, enhance, grayscale and invert.
 You can customize which effects are allowed and otherwise affect the tab behavior.
 
 * [Demo](https://uploadcare.github.io/uploadcare-widget-tab-effects/)
@@ -161,6 +161,7 @@ however, `crop` is always the first in the set.
 
 `effects` can either be a string holding one or more
 comma-separated effects or an array of strings (JS only).
+You can also enable all effects by setting the option to `all`.
 
 Available effects:
 
@@ -173,7 +174,7 @@ Available effects:
 * `enhance` — makes images look better via auto
   levels, auto contrast, and saturation sharpening
 * `grayscale` — desaturates images
-* `invert` — inverts images
+* `invert` — inverts image colors
 
 ## Localization
 
@@ -183,11 +184,6 @@ This can be done by forking the
 [main repository](https://github.com/uploadcare/uploadcare-widget-tab-effects)
 followed by adding a new localization file
 [here](https://github.com/uploadcare/uploadcare-widget-tab-effects/tree/master/src/locale).
-
-## Contributors
-
-* [@Zmoki](https://github.com/Zmoki)
-* [@ZNick1982](https://github.com/ZNick1982)
 
 ## Security issues
 
@@ -199,12 +195,17 @@ or Hackerone.
 We'll contact you personally in a short time to fix an issue
 through co-op and prior to any public disclosure.
 
+## Contributors
 
-[uc-widget]: https://uploadcare.com/documentation/widget/
-[uc-widget-install]: https://uploadcare.com/documentation/widget/#install
-[uc-custom-tabs]: https://uploadcare.com/documentation/javascript_api/#custom-tabs
-[uc-cdn]: https://uploadcare.com/documentation/cdn/
-[uc-cdn-image-operations]: https://uploadcare.com/documentation/cdn/#image-operations
-[uc-cdn-limits]: https://uploadcare.com/documentation/cdn/#limits
-[uc-uuid]: https://uploadcare.com/documentation/#how-uc-works
-[uc-multi-upload]: https://uploadcare.com/tutorials/multi-upload/
+* [@Zmoki](https://github.com/Zmoki)
+* [@ZNick1982](https://github.com/ZNick1982)
+
+
+[uc-widget]: https://uploadcare.com/docs/uploads/widget/
+[uc-widget-install]: https://uploadcare.com/docs/uploads/widget/install/
+[uc-custom-tabs]: https://uploadcare.com/docs/uploads/widget/custom_tabs/
+[uc-cdn]: https://uploadcare.com/docs/delivery/
+[uc-cdn-image-operations]: https://uploadcare.com/docs/processing/image/
+[uc-cdn-limits]: https://uploadcare.com/docs/processing/image/limits/
+[uc-uuid]: https://uploadcare.com/docs/concepts/#cdn
+[uc-multi-upload]: https://uploadcare.com/docs/uploads/widget/multi_upload/
