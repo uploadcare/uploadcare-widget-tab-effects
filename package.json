@@ -29,6 +29,9 @@
     "prepublishOnly": "npm run lint && npm run build",
     "postpublish": "npm run publish:cdn"
   },
+  "peerDependencies": {
+    "uploadcare-widget": "3.x"
+  },
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^8.3.0",
