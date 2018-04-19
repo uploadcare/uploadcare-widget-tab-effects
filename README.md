@@ -9,7 +9,8 @@
 Effects Tab is a [custom tab][uc-custom-tabs] for [Uploadcare Widget][uc-widget]
 that replaces Preview Tab and adds image-editing capabilities to the widget.
 
-[![NPM version][npm-img]][npm-link] [![Uploadcare stack on StackShare][stack-img]][stack]
+[![NPM version][npm-img]][npm-link] [![Uploadcare stack on StackShare][stack-img]][stack]&nbsp;
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
 
 [npm-img]: http://img.shields.io/npm/v/uploadcare-widget-tab-effects.svg
 [npm-link]: https://www.npmjs.org/package/uploadcare-widget-tab-effects
@@ -197,6 +198,11 @@ through co-op and prior to any public disclosure.
 
 ## Contributors
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+| [<img src="https://avatars2.githubusercontent.com/u/948688?v=4" width="100px;"/><br /><sub><b>Zarema Khalilova</b></sub>](https://twitter.com/Zmoki)<br />[💻](https://github.com/uploadcare/uploadcare-widget-tab-effects/commits?author=Zmoki "Code") [💬](#question-Zmoki "Answering Questions") [📖](https://github.com/uploadcare/uploadcare-widget-tab-effects/commits?author=Zmoki "Documentation") [💡](#example-Zmoki "Examples") [🤔](#ideas-Zmoki "Ideas, Planning, & Feedback") [👀](#review-Zmoki "Reviewed Pull Requests") | [<img src="https://avatars3.githubusercontent.com/u/5286366?v=4" width="100px;"/><br /><sub><b>Nikolay</b></sub>](https://github.com/ZNick1982)<br />[💻](https://github.com/uploadcare/uploadcare-widget-tab-effects/commits?author=ZNick1982 "Code") | [<img src="https://avatars1.githubusercontent.com/u/1747220?v=4" width="100px;"/><br /><sub><b>Siarhei Bautrukevich</b></sub>](https://bautrukevich.com)<br />[💻](https://github.com/uploadcare/uploadcare-widget-tab-effects/commits?author=bautrukevich "Code") [📖](https://github.com/uploadcare/uploadcare-widget-tab-effects/commits?author=bautrukevich "Documentation") [💡](#example-bautrukevich "Examples") [👀](#review-bautrukevich "Reviewed Pull Requests") | [<img src="https://avatars0.githubusercontent.com/u/670959?v=4" width="100px;"/><br /><sub><b>Aleksandr Grenishin</b></sub>](https://github.com/nd0ut)<br />[💻](https://github.com/uploadcare/uploadcare-widget-tab-effects/commits?author=nd0ut "Code") [👀](#review-nd0ut "Reviewed Pull Requests") | [<img src="https://avatars3.githubusercontent.com/u/22449102?v=4" width="100px;"/><br /><sub><b>Elijah</b></sub>](https://github.com/dayton1987)<br />[📖](https://github.com/uploadcare/uploadcare-widget-tab-effects/commits?author=dayton1987 "Documentation") [👀](#review-dayton1987 "Reviewed Pull Requests") |
+| :---: | :---: | :---: | :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 * [@Zmoki](https://github.com/Zmoki)
 * [@ZNick1982](https://github.com/ZNick1982)
 

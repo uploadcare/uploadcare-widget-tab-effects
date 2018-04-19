@@ -1,0 +1,68 @@
+{
+  "projectName": "uploadcare-widget-tab-effects",
+  "projectOwner": "uploadcare",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "Zmoki",
+      "name": "Zarema Khalilova",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/948688?v=4",
+      "profile": "https://twitter.com/Zmoki",
+      "contributions": [
+        "code",
+        "question",
+        "doc",
+        "example",
+        "ideas",
+        "review"
+      ]
+    },
+    {
+      "login": "ZNick1982",
+      "name": "Nikolay",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5286366?v=4",
+      "profile": "https://github.com/ZNick1982",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "bautrukevich",
+      "name": "Siarhei Bautrukevich",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1747220?v=4",
+      "profile": "https://bautrukevich.com",
+      "contributions": [
+        "code",
+        "doc",
+        "example",
+        "review"
+      ]
+    },
+    {
+      "login": "nd0ut",
+      "name": "Aleksandr Grenishin",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/670959?v=4",
+      "profile": "https://github.com/nd0ut",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "dayton1987",
+      "name": "Elijah",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/22449102?v=4",
+      "profile": "https://github.com/dayton1987",
+      "contributions": [
+        "doc",
+        "review"
+      ]
+    }
+  ]
+}

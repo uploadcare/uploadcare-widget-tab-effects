@@ -27,13 +27,16 @@
     "start": "browser-sync start --config ./scripts/start.config.js",
     "publish:cdn": "node ./scripts/publish-to-cdn.js",
     "prepublishOnly": "npm run lint && npm run build",
-    "postpublish": "npm run publish:cdn"
+    "postpublish": "npm run publish:cdn",
+    "contributors:add": "all-contributors add",
+    "contributors:check": "all-contributors check"
   },
   "peerDependencies": {
     "uploadcare-widget": "3.x"
   },
   "dependencies": {},
   "devDependencies": {
+    "all-contributors-cli": "^4.11.1",
     "autoprefixer": "^8.3.0",
     "aws-sdk": "^2.82.0",
     "babel-eslint": "^8.2.3",
