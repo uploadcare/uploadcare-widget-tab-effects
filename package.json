@@ -15,7 +15,9 @@
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "lint": "eslint .",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint \"src/**/*.pcss\"",
+    "lint": "npm run lint:js && npm run lint:css",
     "build:umd": "rollup -c ./scripts/rollup.config.js",
     "build:umd:min": "rollup -c ./scripts/rollup.config.js --environment BUILD:minification",
     "build:es": "rollup -c ./scripts/rollup.config.js --environment BUILD:module",
