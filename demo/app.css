@@ -98,11 +98,13 @@ a:focus {
   outline-offset: 2px;
 }
 
-fieldset {
-  box-sizing: border-box;
-  border: 1px solid var(--color-light-grey);
-  padding: 20px 20px 0;
-  margin-bottom: var(--text-padding-bottom);
+code {
+  font-family: monospace;
+  font-weight: 400;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  color: #747d8c;
+  padding: 0 4px;
 }
 
 h1 {
@@ -129,13 +131,22 @@ h1 {
   }
 }
 
+hr {
+  border: none;
+  border-top: 1px solid var(--color-light-grey)
+}
+
 img {
   max-width: 100%;
 }
 
-legend {
-  font-family: var(--font-headings);
-  color: var(--color-grey);
+pre {
+  overflow-x: auto;
+  font-family: monospace;
+  white-space: pre;
+  margin: 0 0 var(--text-padding-bottom);
+  padding: 20px;
+  background: var(--color-lighten);
 }
 
 .content {
