@@ -27,38 +27,44 @@
     <a href="https://github.com/uploadcare/uploadcare-widget-tab-effects/tree/gh-pages">Demo source</a>
   </p>
 
-  <fieldset>
-    <legend>Config</legend>
-    <p><b>Effects</b></p>
-    <ul class="effects">
-      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="crop" checked>&nbsp;Crop</label>
-      </li>
-      <li class="effects__item">
-        <label><input type="checkbox" name="effects[]" value="rotate" checked>&nbsp;Rotate</label></li>
-      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="mirror">&nbsp;Mirror</label></li>
-      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="flip">&nbsp;Flip</label></li>
-      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="blur">&nbsp;Blur</label></li>
-      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="sharp" checked>&nbsp;Sharp</label>
-      </li>
-      <li class="effects__item">
-        <label><input type="checkbox" name="effects[]" value="enhance" checked>&nbsp;Enhance</label></li>
-      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="grayscale" checked>&nbsp;Grayscale</label>
-      </li>
-      <li class="effects__item"><label><input type="checkbox" name="effects[]" value="invert">&nbsp;Invert</label>
-      </li>
-    </ul>
-  </fieldset>
-  <fieldset>
-    <legend>Widget</legend>
-    <p id="widget">
-      <input type="hidden" role="uploadcare-uploader">
-    </p>
-  </fieldset>
-  <fieldset id="result" hidden>
-    <legend>Result</legend>
-    <p id="resultUrl"></p>
-    <p id="resultImage"></p>
-  </fieldset>
+  <h2>Effects</h2>
+  <ul class="effects">
+    <li class="effects__item"><label><input type="checkbox" name="effects[]" value="crop" checked>&nbsp;Crop</label></li>
+    <li class="effects__item"><label><input type="checkbox" name="effects[]" value="rotate" checked>&nbsp;Rotate</label></li>
+    <li class="effects__item"><label><input type="checkbox" name="effects[]" value="mirror">&nbsp;Mirror</label></li>
+    <li class="effects__item"><label><input type="checkbox" name="effects[]" value="flip">&nbsp;Flip</label></li>
+    <li class="effects__item"><label><input type="checkbox" name="effects[]" value="blur">&nbsp;Blur</label></li>
+    <li class="effects__item"><label><input type="checkbox" name="effects[]" value="sharp" checked>&nbsp;Sharp</label></li>
+    <li class="effects__item"><label><input type="checkbox" name="effects[]" value="enhance" checked>&nbsp;Enhance</label></li>
+    <li class="effects__item"><label><input type="checkbox" name="effects[]" value="grayscale" checked>&nbsp;Grayscale</label></li>
+    <li class="effects__item"><label><input type="checkbox" name="effects[]" value="invert">&nbsp;Invert</label></li>
+  </ul>
+  <hr>
+  <p>
+    <label><input type="checkbox" name="effects" value="all">&nbsp;All effects</label>
+  </p>
+
+  <h2>Demo</h2>
+  <p id="widget">
+    <input type="hidden" role="uploadcare-uploader">
+  </p>
+
+  <h2>Code</h2>
+  <pre>
+<code>&lt;script&gt;</code>
+<code>  UPLOADCARE_PUBLIC_KEY = &apos;demopublickey&apos;</code>
+<code>  UPLOADCARE_CROP = &apos;1:1,4:3,16:9&apos;</code>
+<code>  UPLOADCARE_EFFECTS = &apos;<span id="effects"></span>&apos;</code>
+<code>&lt;/script&gt;</code>
+<code>&lt;script src=&quot;https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</code>
+<code>&lt;script src=&quot;https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</code></code>
+<code>&nbsp;</code>
+<code>&lt;input type=&quot;hidden&quot; role=&quot;uploadcare-uploader&quot;&gt;</code>
+</pre>
+
+  <h2>Result</h2>
+  <p id="resultUrl">Choose an image in the widget</p>
+  <p id="resultImage"></p>
 
   <p style="text-align: center">
     Powered by <a
@@ -69,21 +75,28 @@
 <script>
   uploadcare.registerTab('preview', uploadcareTabEffects)
 
-  function getCheckedEffects() {
-    return [].slice.call(document.querySelectorAll('[name="effects[]"]:checked'))
+  var $widget = document.querySelector('#widget')
+  var effects = Array.from(document.querySelectorAll('[name="effects[]"]'))
+  var $all = document.querySelector('[name=effects][value=all]')
+  var getCheckedEffects = function() {
+    if ($all.checked) {
+      return 'all'
+    }
+
+    return Array.from(document.querySelectorAll('[name="effects[]"]:checked'))
       .map(function($effect) {
         return $effect.value
       })
   }
-
-  var $widget = document.querySelector('#widget')
-
-  function buildWidget() {
+  var buildWidget = function() {
+    var checkedEffects = getCheckedEffects()
     var $input = document.createElement('input')
 
     $input.type = 'hidden'
     $input.value = document.querySelector('#widget input').value
-    $input.dataset.effects = getCheckedEffects()
+    $input.dataset.effects = checkedEffects
+
+    document.querySelector('#effects').textContent = checkedEffects
 
     $widget.innerHTML = ''
     $widget.appendChild($input)
@@ -108,16 +121,32 @@
 
       $resultImage.innerHTML = ''
       $resultImage.appendChild(image)
-
-      document.getElementById('result').hidden = false
     })
   }
 
   buildWidget()
 
-  ;[].slice.call(document.querySelectorAll('[name="effects[]"]'))
+  effects
     .forEach(function($effect) {
       $effect.addEventListener('change', buildWidget)
+    })
+
+  $all
+    .addEventListener('change', function(event) {
+      if (event.target.checked) {
+        effects
+          .forEach(function($effect) {
+            $effect.checked = true
+            $effect.disabled = true
+          })
+      }
+      else {
+        effects
+          .forEach(function($effect) {
+            $effect.disabled = false
+          })
+      }
+      buildWidget()
     })
 </script>
 
