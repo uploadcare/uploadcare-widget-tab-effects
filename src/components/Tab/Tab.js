@@ -58,8 +58,8 @@ const Tab = (props) => {
 
     let imageUrl = image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
 
-    if (settings.overridePreviewUrl) {
-      imageUrl = settings.overridePreviewUrl(imageUrl, image)
+    if (settings.previewUrlCallback) {
+      imageUrl = settings.previewUrlCallback(imageUrl, image)
     }
 
     _image = new Image({
@@ -235,8 +235,8 @@ const Tab = (props) => {
     const {image} = store.getState()
     let imageUrl = image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
 
-    if (settings.overridePreviewUrl) {
-      imageUrl = settings.overridePreviewUrl(imageUrl, image)
+    if (settings.previewUrlCallback) {
+      imageUrl = settings.previewUrlCallback(imageUrl, image)
     }
 
     _image.updateImageUrl(imageUrl)
