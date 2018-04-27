@@ -56,8 +56,14 @@ const Tab = (props) => {
 
     _content = new Content()
 
+    let imageUrl = image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
+
+    if (settings.previewUrlCallback) {
+      imageUrl = settings.previewUrlCallback(imageUrl, image)
+    }
+
     _image = new Image({
-      imageUrl: image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/',
+      imageUrl: imageUrl,
       onUpdate: () => store.setImageLoad('start'),
       onLoad: () => store.setImageLoad('load'),
       onFail: () => store.setImageLoad('fail'),
@@ -227,7 +233,11 @@ const Tab = (props) => {
 
   const handleImageChange = () => {
     const {image} = store.getState()
-    const imageUrl = image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
+    let imageUrl = image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
+
+    if (settings.previewUrlCallback) {
+      imageUrl = settings.previewUrlCallback(imageUrl, image)
+    }
 
     _image.updateImageUrl(imageUrl)
   }
