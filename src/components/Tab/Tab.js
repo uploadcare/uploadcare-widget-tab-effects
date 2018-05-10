@@ -29,6 +29,7 @@ const Tab = (props) => {
   }
   const t = uc.locale.t
   const CropWidget = uc.crop.CropWidget
+  const previewModifiers = '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
 
   const getElement = () => {
     if (!$element) {
@@ -56,7 +57,7 @@ const Tab = (props) => {
 
     _content = new Content()
 
-    let imageUrl = image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
+    let imageUrl = image.cdnUrl + previewModifiers
 
     if (settings.previewUrlCallback) {
       imageUrl = settings.previewUrlCallback(imageUrl, image)
@@ -203,7 +204,9 @@ const Tab = (props) => {
     if (view === 'crop') {
       showCrops()
 
-      const imageUrl = image.originalUrl + (getModifiersByEffects([{crop: null}], false, false) || '')
+      const imageUrl = image.originalUrl +
+        (getModifiersByEffects([{crop: null}], false, false) || '') +
+        previewModifiers
 
       _image.updateImageUrl(imageUrl)
 
@@ -233,7 +236,7 @@ const Tab = (props) => {
 
   const handleImageChange = () => {
     const {image} = store.getState()
-    let imageUrl = image.cdnUrl + '-/preview/1162x693/-/setfill/ffffff/-/format/jpeg/-/progressive/yes/'
+    let imageUrl = image.cdnUrl + previewModifiers
 
     if (settings.previewUrlCallback) {
       imageUrl = settings.previewUrlCallback(imageUrl, image)
