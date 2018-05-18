@@ -6,7 +6,7 @@
     "classPrefix": "uploadcare-tab-effects--"
   },
   "version": "1.1.0",
-  "description": "Effects Tab for Uploadcare Widget",
+  "description": "Effects Tab for Uploadcare Widget. Edit images in the browser.",
   "main": "dist/uploadcare.tab-effects.js",
   "module": "dist/uploadcare.tab-effects.es.js",
   "files": [
