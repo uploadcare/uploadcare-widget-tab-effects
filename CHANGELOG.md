@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   [`previewProxy`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-proxy)
   and [`previewUrlCallback`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-url-callback),
   read more about it [here](https://uploadcare.com/docs/uploads/widget/secure_urls/).
-* Added French (`fr`) locale.
+* Added French (`fr`) locale, thanks to [@gpenverne](https://github.com/gpenverne).
 
 ### Changed
 
