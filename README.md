@@ -6,15 +6,11 @@
          alt="">
 </a>
 
-Effects Tab is a [custom tab][uc-custom-tabs] for [Uploadcare Widget][uc-widget]
+Effects Tab is a [custom tab][uc-docs-widget-custom-tabs] for [Uploadcare Widget][uc-docs-widget]
 that replaces Preview Tab and adds image-editing capabilities to the widget.
 
-[![NPM version][npm-img]][npm-link] [![Uploadcare stack on StackShare][stack-img]][stack]
-
-[npm-img]: http://img.shields.io/npm/v/uploadcare-widget-tab-effects.svg
-[npm-link]: https://www.npmjs.org/package/uploadcare-widget-tab-effects
-[stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
-[stack]: https://stackshare.io/uploadcare/stacks/
+[![NPM version][badge-npm-img]][badge-npm-url]&nbsp;
+[![Uploadcare stack on StackShare][badge-stack-img]][badge-stack-url]
 
 <p>
   <a href="https://uploadcare.github.io/uploadcare-widget-tab-effects/" title="See Effects Tab in action with demo">
@@ -27,23 +23,29 @@ Effects Tab provides 9 effects for on-the-fly image editing on upload:
 crop, rotate, mirror, flip, blur, sharpen, enhance, grayscale and invert.
 You can customize which effects are allowed and otherwise affect the tab behavior.
 
-* [Demo](https://uploadcare.github.io/uploadcare-widget-tab-effects/)
+<!-- toc -->
+
 * [How it works](#how-it-works)
+* [Demo](#demo)
 * [Requirements](#requirements)
 * [Install](#install)
 * [Usage](#usage)
 * [Configuration](#configuration)
 * [Options](#options)
 * [Localization](#localization)
+* [Security issues](#security-issues)
+* [Feedback](#feedback)
+
+<!-- tocstop -->
 
 ## How it works
 
-Image operations provided by Effects Tab are based on the capabilities of our [CDN API][uc-cdn].
-The tab outputs a CDN link holding your image [UUID][uc-uuid] and
-[image operations][uc-cdn-image-operations] applied by a user during the in-tab editing process.
+Image operations provided by Effects Tab are based on the capabilities of our [CDN API][uc-docs-cdn].
+The tab outputs a CDN link holding your image [UUID][uc-docs-uuid] and
+[image operations][uc-docs-cdn-image-operations] applied by a user during the in-tab editing process.
 Technically, every original image is firstly uploaded to our CDN and then shown
 to a user in Effects Tab.
-In case of uploading [multiple files][uc-multi-upload], this happens asynchronously.
+In case of uploading [multiple files][uc-docs-widget-multi-upload], this happens asynchronously.
 
 For example, if a user chose to apply `grayscale` and clicked `rotate` once,
 this is how the output value looks like:
@@ -53,12 +55,16 @@ https://ucarecdn.com/:UUID/-/preview/-/grayscale/-/rotate/270/
 ```
 
 You will always have the `preview` operation in Effects Tab output URL due to
-CDN API [limitations][uc-cdn-limits].
+CDN API [limitations][uc-docs-cdn-limits].
+
+## Demo
+
+Check out the basic demo [here][demo].
 
 ## Requirements
 
-Since Effects Tab is a [custom tab][uc-custom-tabs] for Uploadcare Widget,
-make sure to start with [installing the widget][uc-widget-install].
+Since Effects Tab is a [custom tab][uc-docs-widget-custom-tabs] for Uploadcare Widget,
+make sure to start with [installing the widget][uc-docs-widget-install].
 
 ## Install
 
@@ -68,7 +74,7 @@ You’re free to choose from the install methods listed below.
 
 Get Effects Tab:
 
-```
+```bash
 npm i uploadcare-widget-tab-effects --save
 ```
 
@@ -180,32 +186,37 @@ Available effects:
 
 It’s possible your locale is not available in the tab yet.
 If that’s the case, contributing your locale might be a good idea.
-This can be done by forking the
-[main repository](https://github.com/uploadcare/uploadcare-widget-tab-effects)
-followed by adding a new localization file
-[here](https://github.com/uploadcare/uploadcare-widget-tab-effects/tree/master/src/locale).
+This can be done by forking the [main repository][github-effectstab]
+followed by adding a new localization file [here][github-effectstab-locales].
 
 ## Security issues
 
-If you think you ran into something about Effects Tab
-which might have security implications, please hit us up at
-[bugbounty@uploadcare.com](mailto:bugbounty@uploadcare.com)
+If you think you ran into something in Uploadcare libraries which might have
+security implications, please hit us up at [bugbounty@uploadcare.com][uc-email-bounty]
 or Hackerone.
 
-We'll contact you personally in a short time to fix an issue
-through co-op and prior to any public disclosure.
+We'll contact you personally in a short time to fix an issue through co-op and
+prior to any public disclosure.
 
-## Contributors
+## Feedback
 
-* [@Zmoki](https://github.com/Zmoki)
-* [@ZNick1982](https://github.com/ZNick1982)
+Issues and PRs are welcome. You can provide your feedback or drop us a support
+request at [hello@uploadcare.com][uc-email-hello].
 
-
-[uc-widget]: https://uploadcare.com/docs/uploads/widget/
-[uc-widget-install]: https://uploadcare.com/docs/uploads/widget/install/
-[uc-custom-tabs]: https://uploadcare.com/docs/uploads/widget/custom_tabs/
-[uc-cdn]: https://uploadcare.com/docs/delivery/
-[uc-cdn-image-operations]: https://uploadcare.com/docs/processing/image/
-[uc-cdn-limits]: https://uploadcare.com/docs/processing/image/limits/
-[uc-uuid]: https://uploadcare.com/docs/concepts/#cdn
-[uc-multi-upload]: https://uploadcare.com/docs/uploads/widget/multi_upload/
+[demo]: https://uploadcare.github.io/uploadcare-widget-tab-effects/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
+[github-effectstab]: https://github.com/uploadcare/uploadcare-widget-tab-effects
+[github-effectstab-locales]: https://github.com/uploadcare/uploadcare-widget-tab-effects/tree/master/src/locale
+[uc-email-bounty]: mailto:bugbounty@uploadcare.com
+[uc-email-hello]: mailto:hello@uploadcare.com
+[uc-docs-widget]: https://uploadcare.com/docs/uploads/widget/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
+[uc-docs-widget-install]: https://uploadcare.com/docs/uploads/widget/install/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
+[uc-docs-widget-custom-tabs]: https://uploadcare.com/docs/uploads/widget/custom_tabs/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
+[uc-docs-cdn]: https://uploadcare.com/docs/delivery/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
+[uc-docs-cdn-image-operations]: https://uploadcare.com/docs/processing/image/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
+[uc-docs-cdn-limits]: https://uploadcare.com/docs/processing/image/limits/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
+[uc-docs-uuid]: https://uploadcare.com/docs/concepts/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects#cdn
+[uc-docs-widget-multi-upload]: https://uploadcare.com/docs/uploads/widget/multi_upload/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
+[badge-npm-img]: http://img.shields.io/npm/v/uploadcare-widget-tab-effects.svg
+[badge-npm-url]: https://www.npmjs.org/package/uploadcare-widget-tab-effects
+[badge-stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
+[badge-stack-url]: https://stackshare.io/uploadcare/stacks/
