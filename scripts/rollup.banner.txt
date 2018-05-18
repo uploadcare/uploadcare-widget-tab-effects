@@ -1,3 +1,4 @@
 <%= pkg.config.library %> <%= pkg.version %>
 <%= pkg.description %>
-Date: <%= moment().format('YYYY-MM-DD HH:mm:ss ZZ') %>
+<%= pkg.homepage %>
+Date: <%= moment().format('YYYY-MM-DD') %>
