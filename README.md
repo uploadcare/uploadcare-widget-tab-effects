@@ -6,8 +6,10 @@
          alt="">
 </a>
 
-Effects Tab is a [custom tab][uc-docs-widget-custom-tabs] for [Uploadcare Widget][uc-docs-widget]
-that replaces Preview Tab and adds image-editing capabilities to the widget.
+Effects Tab is an [Uploadcare Widget][uc-docs-widget] addon
+that allows for in-browser image editing on desktop and mobile.
+Technically, it's a [custom widget tab][uc-docs-widget-custom-tabs]
+that replaces Preview Tab.
 
 [![NPM version][badge-npm-img]][badge-npm-url]&nbsp;
 [![Uploadcare stack on StackShare][badge-stack-img]][badge-stack-url]
@@ -19,7 +21,7 @@ that replaces Preview Tab and adds image-editing capabilities to the widget.
   </a>
 </p>
 
-Effects Tab provides 9 effects for on-the-fly image editing on upload:
+Effects Tab provides 9 effects for on-the-fly image editing in desktop or mobile browsers:
 crop, rotate, mirror, flip, blur, sharpen, enhance, grayscale and invert.
 You can customize which effects are allowed and otherwise affect the tab behavior.
 
@@ -40,9 +42,10 @@ You can customize which effects are allowed and otherwise affect the tab behavio
 
 ## How it works
 
-Image operations provided by Effects Tab are based on the capabilities of our [CDN API][uc-docs-cdn].
+Image operations provided by Effects Tab are based on the capabilities
+of Uploadcare [Image Processing][uc-feature-image-processing].
 The tab outputs a CDN link holding your image [UUID][uc-docs-uuid] and
-[image operations][uc-docs-cdn-image-operations] applied by a user during the in-tab editing process.
+[image operations][uc-docs-cdn-image-operations] applied by a user while editing.
 Technically, every original image is firstly uploaded to our CDN and then shown
 to a user in Effects Tab.
 In case of uploading [multiple files][uc-docs-widget-multi-upload], this happens asynchronously.
@@ -208,6 +211,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [github-effectstab-locales]: https://github.com/uploadcare/uploadcare-widget-tab-effects/tree/master/src/locale
 [uc-email-bounty]: mailto:bugbounty@uploadcare.com
 [uc-email-hello]: mailto:hello@uploadcare.com
+[uc-feature-image-processing]: https://uploadcare.com/features/image_processing/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
 [uc-docs-widget]: https://uploadcare.com/docs/uploads/widget/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
 [uc-docs-widget-install]: https://uploadcare.com/docs/uploads/widget/install/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
 [uc-docs-widget-custom-tabs]: https://uploadcare.com/docs/uploads/widget/custom_tabs/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
