@@ -1,4 +1,5 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
@@ -8,24 +9,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-* Support for new configuration options of the widget,
-  [`previewProxy`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-proxy)
-  and [`previewUrlCallback`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-url-callback),
-  read more about it [here](https://uploadcare.com/docs/uploads/widget/secure_urls/).
-* Added French (`fr`) locale, thanks to [@gpenverne](https://github.com/gpenverne).
+* Support for new widget configuration options:
+  [`previewProxy`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-proxy),
+  [`previewUrlCallback`](https://uploadcare.com/docs/uploads/widget/config/#option-preview-url-callback).
+  Learn more [here](https://uploadcare.com/docs/uploads/widget/secure_urls/).
+* French (`fr`) locale thanks to [@gpenverne](https://github.com/gpenverne).
 
 ### Changed
 
 * Updated README:
-  * updated links,
+  * references,
   * added Feedback section,
   * removed Contributors section.
 
 ### Fixed
 
-* Autorotate for image preview, [#21][pr-21].
+* Autorotate for image preview, [#21][github-pr-21].
 
-[pr-21]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/21
+[github-pr-21]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/21
 
 ## 1.1.0 - 2018-04-20
 
