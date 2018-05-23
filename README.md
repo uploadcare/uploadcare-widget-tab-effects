@@ -189,8 +189,8 @@ Available effects:
 
 It’s possible your locale is not available in the tab yet.
 If that’s the case, contributing your locale might be a good idea.
-This can be done by forking the [main repository][github-effectstab]
-followed by adding a new localization file [here][github-effectstab-locales].
+This can be done by forking the [main repository][github-home]
+followed by adding a new localization file [here][github-files-locales].
 
 ## Security issues
 
@@ -207,8 +207,8 @@ Issues and PRs are welcome. You can provide your feedback or drop us a support
 request at [hello@uploadcare.com][uc-email-hello].
 
 [demo]: https://uploadcare.github.io/uploadcare-widget-tab-effects/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
-[github-effectstab]: https://github.com/uploadcare/uploadcare-widget-tab-effects
-[github-effectstab-locales]: https://github.com/uploadcare/uploadcare-widget-tab-effects/tree/master/src/locale
+[github-home]: https://github.com/uploadcare/uploadcare-widget-tab-effects
+[github-files-locales]: https://github.com/uploadcare/uploadcare-widget-tab-effects/tree/master/src/locale
 [uc-email-bounty]: mailto:bugbounty@uploadcare.com
 [uc-email-hello]: mailto:hello@uploadcare.com
 [uc-feature-image-processing]: https://uploadcare.com/features/image_processing/?utm_source=github&utm_campaign=uploadcare-widget-tab-effects
