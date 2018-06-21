@@ -40,6 +40,12 @@ const Image = (props) => {
   }
 
   const updateImageUrl = (imageUrl) => {
+    if ($img.src === imageUrl) {
+      // safari do not call onload event when url is the same
+      // so we manually clear it before update
+      $img.removeAttribute('src')
+    }
+
     $img.src = imageUrl
 
     onUpdate()
