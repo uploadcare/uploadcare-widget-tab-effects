@@ -9,7 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.2.1...HEAD
+
+## [1.2.1] - 2018-06-28
+
+### Fixed
+
+* Not working crop in Safari, see [#24][github-pr-24].
+
+[1.2.1]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.2.0...v1.2.1
+[github-pr-24]: https://github.com/uploadcare/uploadcare-widget/pull/24
 
 ## 1.2.0 - 2018-05-23
 
