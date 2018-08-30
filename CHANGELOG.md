@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
 
+* New locales: Japanese (`ja`), Vietnamese (`vi`). See [#25][github-pr-25].
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.2.1...HEAD
+[github-pr-25]: https://github.com/uploadcare/uploadcare-widget/pull/25
 
 ## [1.2.1] - 2018-06-28
 
