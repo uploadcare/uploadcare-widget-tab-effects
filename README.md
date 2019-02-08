@@ -11,7 +11,8 @@ that allows for in-browser image editing on desktop and mobile.
 Technically, it's a [custom widget tab][uc-docs-widget-custom-tabs]
 that replaces Preview Tab.
 
-[![NPM version][badge-npm-img]][badge-npm-url]&nbsp;
+[![NPM version][badge-npm-img]][badge-npm-url][![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fuploadcare%2Fuploadcare-widget-tab-effects.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fuploadcare%2Fuploadcare-widget-tab-effects?ref=badge_shield)
+&nbsp;
 [![Uploadcare stack on StackShare][badge-stack-img]][badge-stack-url]
 
 <p>
@@ -224,3 +225,7 @@ request at [hello@uploadcare.com][uc-email-hello].
 [badge-npm-url]: https://www.npmjs.org/package/uploadcare-widget-tab-effects
 [badge-stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [badge-stack-url]: https://stackshare.io/uploadcare/stacks/
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fuploadcare%2Fuploadcare-widget-tab-effects.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fuploadcare%2Fuploadcare-widget-tab-effects?ref=badge_large)
