@@ -1,7 +1,8 @@
 import * as locale from 'locale'
 
-const configureTranslations = (translations) => {
+const configureTranslations = (translations, currentLocale) => {
   let newTranslations = {...translations}
+  const isLocaleExists = Object.keys(locale).includes(currentLocale)
 
   for (const key in locale) {
     if (newTranslations.hasOwnProperty(key)) {
@@ -12,7 +13,10 @@ const configureTranslations = (translations) => {
     }
   }
 
-  return newTranslations
+  return {
+    translations: newTranslations,
+    isLocaleExists,
+  }
 }
 
 export default configureTranslations
