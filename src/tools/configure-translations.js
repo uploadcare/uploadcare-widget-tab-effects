@@ -22,10 +22,11 @@ const configureTranslations = (translations, currentLocale) => {
   const extendedTranslations = {...translations}
   const isCurrentLocaleAvailable = isLocaleAvailable(currentLocale)
   const defaultTranslations = locales[initialSettings.locale]
+  const isLocaleAvailableInTranslations = locale => extendedTranslations.hasOwnProperty(locale)
 
   for (const locale in extendedTranslations) {
-    if (extendedTranslations.hasOwnProperty(locale)) {
-      if (!extendedTranslations.hasOwnProperty(currentLocale)) {
+    if (isLocaleAvailableInTranslations(locale)) {
+      if (!isLocaleAvailableInTranslations(currentLocale)) {
         const currentLocaleTranslations = extendedTranslations[currentLocale]
 
         extendedTranslations[currentLocale] = {
