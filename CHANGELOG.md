@@ -12,9 +12,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * New locale, Italian (`it`). See [#26][github-pr-26].
 * New locale, Dutch (Netherlands) (`nl`). See [#27][github-pr-27].
 
+### Fixed
+
+* Fix locales and add fallback if locale doesn't exists. See [#29][github-pr-29].
+
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.3.0...HEAD
 [github-pr-26]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/26
 [github-pr-27]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/27
+[github-pr-29]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/29
 
 ## [1.3.0] - 2018-09-21
 
