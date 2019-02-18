@@ -1,4 +1,5 @@
 import {getSettingsCrop, getSettingsEffects} from 'tools'
+import initialSettings from './initial-settings'
 
 const configureSettings = (settings) => {
   const effects = getSettingsEffects(settings.effects)
@@ -8,6 +9,7 @@ const configureSettings = (settings) => {
     ...settings,
     ...{crop},
     ...{effects},
+    ...{locale: settings.locale ? settings.locale : initialSettings.locale},
   }
 }
 

@@ -44,7 +44,9 @@ function createPreviewTabEffects(PreviewTab, uc) {
 
         autoCrop(store, settings, uc)
 
-        uc.locale.translations = configureTranslations(uc.locale.translations)
+        const currentLocale = settings.locale
+
+        uc.locale.translations = configureTranslations(uc.locale.translations, currentLocale)
         uc.locale.rebuild()
 
         const tab = new Tab({

@@ -1,18 +1,59 @@
-import * as locale from 'locale'
+import * as locales from 'locale'
+import initialSettings from '../initial-settings'
 
-const configureTranslations = (translations) => {
-  let newTranslations = {...translations}
+/**
+ * Check if locale available in list of locales for Tab.
+ * @param locale
+ * @return {boolean}
+ */
+const isLocaleAvailable = locale => {
+  const availableLocales = Object.keys(locales)
 
-  for (const key in locale) {
-    if (newTranslations.hasOwnProperty(key)) {
-      newTranslations[key] = {
-        ...newTranslations[key],
-        ...locale[key],
+  return availableLocales.includes(locale)
+}
+
+/**
+ * Configure translations for Tab.
+ * @param translations
+ * @param currentLocale
+ * @return {*}
+ */
+const configureTranslations = (translations, currentLocale) => {
+  const extendedTranslations = {...translations}
+  const isCurrentLocaleAvailable = isLocaleAvailable(currentLocale)
+  const defaultTranslations = locales[initialSettings.locale]
+  const isLocaleAvailableInTranslations = locale => extendedTranslations.hasOwnProperty(locale)
+
+  for (const locale in extendedTranslations) {
+    if (isLocaleAvailableInTranslations(locale)) {
+      if (!isLocaleAvailableInTranslations(currentLocale)) {
+        const currentLocaleTranslations = extendedTranslations[currentLocale]
+
+        extendedTranslations[currentLocale] = {
+          ...currentLocaleTranslations,
+          ...defaultTranslations,
+        }
+
+        /* eslint-disable no-continue */
+        continue
+      }
+
+      if (isCurrentLocaleAvailable || isLocaleAvailable(locale)) {
+        extendedTranslations[locale] = {
+          ...extendedTranslations[locale],
+          ...locales[locale],
+        }
+      }
+      else {
+        extendedTranslations[locale] = {
+          ...extendedTranslations[locale],
+          ...defaultTranslations,
+        }
       }
     }
   }
 
-  return newTranslations
+  return extendedTranslations
 }
 
 export default configureTranslations

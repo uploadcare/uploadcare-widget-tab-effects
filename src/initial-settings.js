@@ -1,1 +1,4 @@
-export default {effects: ['crop', 'rotate', 'enhance', 'sharp', 'grayscale']}
+export default {
+  effects: ['crop', 'rotate', 'enhance', 'sharp', 'grayscale'],
+  locale: 'en',
+}
