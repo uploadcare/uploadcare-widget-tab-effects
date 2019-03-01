@@ -22,7 +22,7 @@
     "build:umd": "rollup -c ./scripts/rollup.config.js",
     "build:umd:min": "rollup -c ./scripts/rollup.config.js --environment BUILD:minification",
     "build:es": "rollup -c ./scripts/rollup.config.js --environment BUILD:module",
-    "build": "run-s build:*",
+    "build": "run-s build:**",
     "watch": "npm run build:umd -- --watch",
     "serve": "browser-sync start --ss dist --files dist --port 3126",
     "start": "browser-sync start --config ./scripts/start.config.js",
