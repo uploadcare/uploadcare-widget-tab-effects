@@ -18,29 +18,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Fix locales and add fallback if locale doesn't exists. See [#29][github-pr-29].
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.3.0...HEAD
-[github-pr-26]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/26
-[github-pr-27]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/27
-[github-pr-29]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/29
-[github-pr-30]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/30
-
 ## [1.3.0] - 2018-09-21
 
 ### Added
 
 * New locales: Japanese (`ja`), Vietnamese (`vi`). See [#25][github-pr-25].
 
-[1.3.0]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.2.1...v1.3.0
-[github-pr-25]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/25
-
 ## [1.2.1] - 2018-06-28
 
 ### Fixed
 
 * Not working crop in Safari, see [#24][github-pr-24].
-
-[1.2.1]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.2.0...v1.2.1
-[github-pr-24]: https://github.com/uploadcare/uploadcare-widget/pull/24
 
 ## 1.2.0 - 2018-05-23
 
@@ -62,8 +50,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 * Autorotate for image preview, [#21][github-pr-21].
-
-[github-pr-21]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/21
 
 ## 1.1.0 - 2018-04-20
 
@@ -113,3 +99,15 @@ Initial public release.
 
 * The `uploadcareTabEffects` function as default export.
 * README with info about requirements, install, usage, etc.
+
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.2.1...v1.3.0
+[1.2.1]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.2.0...v1.2.1
+
+[github-pr-30]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/30
+[github-pr-29]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/29
+[github-pr-27]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/27
+[github-pr-26]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/26
+[github-pr-25]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/25
+[github-pr-24]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/24
+[github-pr-21]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/21
