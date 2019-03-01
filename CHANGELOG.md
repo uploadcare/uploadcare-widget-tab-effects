@@ -9,9 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-* New locale, Italian (`it`). See [#26][github-pr-26].
-* New locale, Dutch (Netherlands) (`nl`). See [#27][github-pr-27].
-* New locale, Belarussian (`be`). See [#30][github-pr-30].
+* New locales:
+  * Italian (`it`), see [#26][github-pr-26],
+  * Dutch (Netherlands) (`nl`), [#27][github-pr-27],
+  * Belarussian (`be`), [#30][github-pr-30].
 
 ### Fixed
 
