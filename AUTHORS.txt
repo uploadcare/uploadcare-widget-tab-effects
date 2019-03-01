@@ -1,8 +1,10 @@
 # This list of authors is based on the git history of this repo.
 
 Aleksandr Grenishin <nd0ut.me@gmail.com>
+Alex Chernenko <optlsnd@gmail.com>
 Elijah <ilya@uploadcare.com>
 Nikolay Zherdev <nickzherdev@gmail.com>
 Siarhei Bautrukevich <s.boltrukevich@gmail.com>
 Zarema Khalilova <zarema.khalilova@gmail.com>
 gpenverne <gpenverne@gmail.com>
+heocoi <dev.hibiki@gmail.com>
