@@ -27,7 +27,8 @@
     "serve": "browser-sync start --ss dist --files dist --port 3126",
     "start": "browser-sync start --config ./scripts/start.config.js",
     "dev": "run-p watch start",
-    "prepublishOnly": "npm run build",
+    "preversion": "kacl lint",
+    "version": "kacl release && git add CHANGELOG.md && npm run build",
     "publish:cdn": "node ./scripts/publish-to-cdn.js",
     "postpublish": "npm run publish:cdn"
   },
@@ -36,6 +37,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@brightcove/kacl": "^0.1.6",
     "autoprefixer": "^8.3.0",
     "aws-sdk": "^2.82.0",
     "babel-eslint": "^8.2.3",
