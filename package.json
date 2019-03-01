@@ -17,7 +17,7 @@
     "clean": "rimraf dist",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"src/**/*.pcss\"",
-    "lint": "npm run lint:js",
+    "lint": "npm run lint:js && npm run lint:css",
     "build:umd": "rollup -c ./scripts/rollup.config.js",
     "build:umd:min": "rollup -c ./scripts/rollup.config.js --environment BUILD:minification",
     "build:es": "rollup -c ./scripts/rollup.config.js --environment BUILD:module",
@@ -61,7 +61,7 @@
     "rollup-plugin-posthtml-template": "^1.1.0",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.3.1",
-    "stylelint": "^9.2.0",
+    "stylelint": "^8.2.0",
     "stylelint-config-uploadcare": "^3.0.0"
   },
   "browserslist": [
