@@ -2,8 +2,14 @@ const autoCrop = (store, settings, uc) => {
   const {crop: cropSettings, multiple} = settings
   const {image} = store.getState()
 
-  // auto-crop only in single mode with free crop disabled
-  if (multiple || cropSettings.some(c => !c.preferedSize)) {
+  // auto-crop only in single file mode
+  if (!cropSettings || !multiple) {
+    return
+  }
+
+  // if even one of crop option sets allow free crop,
+  // we don't need to crop automatically
+  if (cropSettings.some(c => !c.preferedSize)) {
     return
   }
 
