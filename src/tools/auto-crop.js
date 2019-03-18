@@ -1,15 +1,15 @@
 const autoCrop = (store, settings, uc) => {
-  const {crop: cropSettings, multiple} = settings
+  const {crop, multiple} = settings
   const {image} = store.getState()
 
   // auto-crop only in single file mode
-  if (!cropSettings || !multiple) {
+  if (!crop || !multiple) {
     return
   }
 
   // if even one of crop option sets allow free crop,
   // we don't need to crop automatically
-  if (cropSettings.some(c => !c.preferedSize)) {
+  if (crop.some(c => !c.preferedSize)) {
     return
   }
 
@@ -24,7 +24,7 @@ const autoCrop = (store, settings, uc) => {
     true
   )
 
-  const crop = {
+  const cropEffect = {
     originalSize: [info.width, info.height],
     coords: {
       left: Math.round((info.width - size[0]) / 2),
@@ -34,7 +34,7 @@ const autoCrop = (store, settings, uc) => {
     },
   }
 
-  store.setAppliedEffect({crop})
+  store.setAppliedEffect({crop: cropEffect})
   store.rebuildImage()
 }
 
