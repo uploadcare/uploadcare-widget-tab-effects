@@ -1,9 +1,8 @@
 const autoCrop = (store, settings, uc) => {
-  const {crop, multiple} = settings
+  const {crop} = settings
   const {image} = store.getState()
 
-  // auto-crop only in single file mode
-  if (!crop || !multiple) {
+  if (!crop) {
     return
   }
 
