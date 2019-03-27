@@ -127,7 +127,7 @@ Initial public release.
 [#30]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/30
 [#31]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/31
 [#32]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/32
-[#32]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/33
+[#33]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/33
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.0...HEAD
 [1.4.3]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.2...v1.4.3
