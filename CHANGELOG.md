@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.4.3] - 2019-03-27
+
+### Fixed
+
+- Apply auto-crop even in single image mode. See [#32].
+
 ## [1.4.2] - 2019-03-19
 
 ### Fixed
@@ -116,8 +122,10 @@ Initial public release.
 [#29]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/29
 [#30]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/30
 [#31]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/31
+[#32]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/32
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.0...HEAD
+[1.4.3]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.0...v1.4.2
 [1.4.0]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.2.1...v1.3.0
