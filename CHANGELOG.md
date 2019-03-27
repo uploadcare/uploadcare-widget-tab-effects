@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Add missing `crop` field to the `fileInfo` object. See [#33].
+
 ## [1.4.3] - 2019-03-27
 
 ### Fixed
@@ -123,6 +127,7 @@ Initial public release.
 [#30]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/30
 [#31]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/31
 [#32]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/32
+[#32]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/33
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.0...HEAD
 [1.4.3]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.2...v1.4.3

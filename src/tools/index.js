@@ -10,6 +10,7 @@ import getSettingsCrop from './get-settings-crop'
 import getSettingsEffects from './get-settings-effects'
 import getGlobalSettingsByKey from './get-global-settings-by-key'
 import autoCrop from './auto-crop'
+import buildFileInfoCrop from './build-file-info-crop'
 
 export {
   createNode,
@@ -24,4 +25,5 @@ export {
   getGlobalSettingsByKey,
   configureTranslations,
   autoCrop,
+  buildFileInfoCrop,
 }
