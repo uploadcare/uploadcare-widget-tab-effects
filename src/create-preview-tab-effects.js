@@ -24,13 +24,14 @@ function createPreviewTabEffects(PreviewTab, uc) {
         const store = configureStore(data.info, settings)
         const onDone = () => {
           const newFile = this.file.then((info) => {
-            const {cdnUrl, cdnUrlModifiers} = store.getState().image
+            const {cdnUrl, cdnUrlModifiers, crop} = store.getState().image
 
             return {
               ...info,
               ...{
                 cdnUrl,
                 cdnUrlModifiers,
+                crop,
               },
             }
           })

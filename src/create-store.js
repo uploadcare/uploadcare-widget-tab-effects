@@ -1,4 +1,4 @@
-import {getModifiersByEffects} from 'tools'
+import {getModifiersByEffects, buildFileInfoCrop} from 'tools'
 
 const createStore = (initialState) => {
   let state = initialState
@@ -43,12 +43,14 @@ const createStore = (initialState) => {
   const rebuildImage = () => {
     const {appliedEffects, image} = state
     const cdnUrlModifiers = getModifiersByEffects(appliedEffects) + state.otherModifiers
+    const crop = buildFileInfoCrop(appliedEffects.crop)
 
     state.image = {
       ...image,
       ...{
         cdnUrl: image.originalUrl + (cdnUrlModifiers || ''),
         cdnUrlModifiers,
+        crop,
       },
     }
 
