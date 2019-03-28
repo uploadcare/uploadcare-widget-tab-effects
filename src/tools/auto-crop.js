@@ -1,14 +1,4 @@
-const getFinalSize = (crop, info) => {
-  const downscale = crop.downscale && (info.width > crop.preferedSize[0] || info.height > crop.preferedSize[1])
-  const upscale = crop.upscale && (info.width < crop.preferedSize[0] || info.height < crop.preferedSize[1])
-
-  if (downscale || upscale) {
-    return crop.preferedSize
-  }
-  else {
-    return null
-  }
-}
+import getCropResize from './get-crop-resize'
 
 const autoCrop = (store, settings, uc) => {
   const {crop} = settings
@@ -33,7 +23,8 @@ const autoCrop = (store, settings, uc) => {
 
   const cropEffect = {
     originalSize: [info.width, info.height],
-    resizeTo: getFinalSize(crop[0], info),
+    settings: crop[0],
+    resizeTo: getCropResize(crop[0], size),
     coords: {
       left: Math.round((info.width - size[0]) / 2),
       top: Math.round((info.height - size[1]) / 2),

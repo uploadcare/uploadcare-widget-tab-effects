@@ -1,4 +1,4 @@
-import {createNode, getModifiersByEffects, getNextRotateValue} from 'tools'
+import {createNode, getModifiersByEffects, getNextRotateValue, getCropResize} from 'tools'
 import template from './Tab.html'
 import {Content, Crops, Effects, Footer, Header, Image, Range} from 'components'
 
@@ -333,6 +333,7 @@ const Tab = (props) => {
       crop: {
         originalSize,
         coords,
+        resizeTo: getCropResize(crop, [coords.width, coords.height]),
         settings: crop,
         index: state.currentCrop,
       },

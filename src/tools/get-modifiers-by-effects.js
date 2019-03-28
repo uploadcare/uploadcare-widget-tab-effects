@@ -20,12 +20,7 @@ const getModifiersByEffects = (effects, withCrop = true, withRFM = true) => {
           break
         case 'object':
           if (effect === 'crop' && withCrop) {
-            const effectObject = effects[effect]
-            const resizeModifiers = effectObject.resizeTo
-              ? `-/resize/${effectObject.resizeTo.join('x')}/`
-              : '-/preview/'
-
-            cdnUrlModifiers += getModifiersByCrop(effectObject) + resizeModifiers
+            cdnUrlModifiers += getModifiersByCrop(effects[effect])
           }
           break
       }
