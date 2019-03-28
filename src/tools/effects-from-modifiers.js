@@ -30,7 +30,7 @@ function effectsFromModifiers(cdnUrlModifiers, settingsEffects) {
   }
 
   let effects = {}
-  let otherModifiers = cdnUrlModifiers.replace(/-\/preview\//g, '')
+  let otherModifiers = cdnUrlModifiers.replace(/-\/preview\//g, '').replace(/-\/resize\/\d*x\d*\//g, '')
 
   settingsEffects.forEach(settingsEffect => {
     if (modifierRegExp[settingsEffect]) {
