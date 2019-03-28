@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 - Add missing `crop` field to the `fileInfo` object. See [#33].
+- Apply resize operation along with the crop if needed
+  to achieve behaviour similiar to the original preview tab. See [#34].
 
 ## [1.4.3] - 2019-03-27
 
@@ -128,6 +130,7 @@ Initial public release.
 [#31]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/31
 [#32]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/32
 [#33]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/33
+[#34]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/34
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.0...HEAD
 [1.4.3]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.2...v1.4.3
