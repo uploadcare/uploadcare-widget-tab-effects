@@ -1,3 +1,5 @@
+import getCropResize from './get-crop-resize'
+
 const autoCrop = (store, settings, uc) => {
   const {crop} = settings
   const {image} = store.getState()
@@ -17,14 +19,12 @@ const autoCrop = (store, settings, uc) => {
   }
 
   const info = image.originalImageInfo
-  const size = uc.utils.fitSize(
-    settings.crop[0].preferedSize,
-    [info.width, info.height],
-    true
-  )
+  const size = uc.utils.fitSize(crop[0].preferedSize, [info.width, info.height], true)
 
   const cropEffect = {
     originalSize: [info.width, info.height],
+    settings: crop[0],
+    resizeTo: getCropResize(crop[0], size),
     coords: {
       left: Math.round((info.width - size[0]) / 2),
       top: Math.round((info.height - size[1]) / 2),

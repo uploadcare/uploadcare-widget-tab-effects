@@ -20,7 +20,7 @@ const getModifiersByEffects = (effects, withCrop = true, withRFM = true) => {
           break
         case 'object':
           if (effect === 'crop' && withCrop) {
-            cdnUrlModifiers += getModifiersByCrop(effects[effect]) + '-/preview/'
+            cdnUrlModifiers += getModifiersByCrop(effects[effect])
           }
           break
       }
@@ -28,7 +28,7 @@ const getModifiersByEffects = (effects, withCrop = true, withRFM = true) => {
   }
 
   if (cdnUrlModifiers) {
-    cdnUrlModifiers = (effects['crop'] && withCrop) ? cdnUrlModifiers : `-/preview/${cdnUrlModifiers}`
+    cdnUrlModifiers = effects['crop'] && withCrop ? cdnUrlModifiers : `-/preview/${cdnUrlModifiers}`
   }
   else {
     cdnUrlModifiers = ''
