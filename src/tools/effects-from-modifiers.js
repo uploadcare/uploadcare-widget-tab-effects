@@ -11,7 +11,7 @@ const effectsDefaults = {
 
 const modifierRegExp = {
   blur: /-\/blur\/(([0-9]+)\/|)/i,
-  crop: /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\//i,
+  crop: /-\/crop\/([0-9]+)x([0-9]+)(\/(center|([0-9]+),([0-9]+)))?\/(-\/resize\/([0-9]+)x([0-9]+)\/)?/i,
   enhance: /-\/enhance\/(([0-9]+)\/|)/i,
   flip: /-\/flip\//i,
   grayscale: /-\/grayscale\//i,
@@ -30,7 +30,7 @@ function effectsFromModifiers(cdnUrlModifiers, settingsEffects) {
   }
 
   let effects = {}
-  let otherModifiers = cdnUrlModifiers.replace(/-\/preview\//g, '').replace(/-\/resize\/\d*x\d*\//g, '')
+  let otherModifiers = cdnUrlModifiers.replace(/-\/preview\//g, '')
 
   settingsEffects.forEach(settingsEffect => {
     if (modifierRegExp[settingsEffect]) {
@@ -40,7 +40,10 @@ function effectsFromModifiers(cdnUrlModifiers, settingsEffects) {
         let effectValue
 
         if (settingsEffect === 'crop') {
+          const resizeTo = foundModifier[7] && [foundModifier[8], foundModifier[9]]
+
           effectValue = {
+            resizeTo,
             coords: {
               width: parseInt(foundModifier[1]),
               height: parseInt(foundModifier[2]),
