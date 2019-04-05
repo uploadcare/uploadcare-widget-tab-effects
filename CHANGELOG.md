@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## Fixed
+
+- Fixed crashing of the widget if set `free` crop. See [#35].
+
 ## [1.4.4] - 2019-03-29
 
 ### Fixed
@@ -133,6 +137,7 @@ Initial public release.
 [#32]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/32
 [#33]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/33
 [#34]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/34
+[#35]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/35
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.4...HEAD
 [1.4.4]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.3...v1.4.4

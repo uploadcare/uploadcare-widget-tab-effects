@@ -45,7 +45,11 @@ function effectsFromModifiers(cdnUrlModifiers, settingsEffects, settingsCrop) {
           const cropWidth = parseInt(foundModifier[1])
           const cropHeight = parseInt(foundModifier[2])
 
-          const cropIndex = settingsCrop.findIndex(({preferedSize: [w, h]}) => {
+          const cropIndex = settingsCrop.findIndex((settings) => {
+            if (typeof settings.preferedSize === 'undefined') {
+              return true
+            }
+            const {preferedSize: [w, h]} = settings
             const sameSize = cropWidth === w && cropHeight === h
             const sameRatio = (w / h).toPrecision(2) === (cropWidth / cropHeight).toPrecision(2)
 

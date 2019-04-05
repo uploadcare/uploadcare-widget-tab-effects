@@ -1,17 +1,24 @@
-const buildFileInfoCrop = ({coords, resizeTo}) => {
-  const cropInfo = {
-    width: coords.width,
-    height: coords.height,
-    left: coords.left,
-    top: coords.top,
-  }
+const buildFileInfoCrop = (crop) => {
+  if (crop) {
+    const {coords, resizeTo} = crop
 
-  if (resizeTo) {
-    cropInfo.sw = resizeTo[0]
-    cropInfo.sh = resizeTo[1]
-  }
+    const cropInfo = {
+      width: coords.width,
+      height: coords.height,
+      left: coords.left,
+      top: coords.top,
+    }
 
-  return cropInfo
+    if (resizeTo) {
+      cropInfo.sw = resizeTo[0]
+      cropInfo.sh = resizeTo[1]
+    }
+
+    return cropInfo
+  }
+  else {
+    return null
+  }
 }
 
 export default buildFileInfoCrop
