@@ -9,7 +9,7 @@ import initialSettings from '../initial-settings'
 const isLocaleAvailable = locale => {
   const availableLocales = Object.keys(locales)
 
-  return availableLocales.includes(locale)
+  return availableLocales.indexOf(locale) > -1
 }
 
 /**
