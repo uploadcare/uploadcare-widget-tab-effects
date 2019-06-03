@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.4.6] - 2019-03-06
+
+### Fixed
+
+- Fix IE11 support. See [#36].
+
 ## [1.4.5] - 2019-04-05
 
 ### Fixed
@@ -140,8 +146,10 @@ Initial public release.
 [#33]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/33
 [#34]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/34
 [#35]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/35
+[#36]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/36
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.5...HEAD
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.6...HEAD
+[1.4.5]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.5...v1.4.6
 [1.4.5]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.4...v1.4.5
 [1.4.4]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.3...v1.4.4
 [1.4.3]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.2...v1.4.3
