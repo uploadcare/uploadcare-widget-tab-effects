@@ -204,9 +204,13 @@ const Tab = (props) => {
     if (view === 'crop') {
       showCrops()
 
-      const imageUrl = image.originalUrl +
+      let imageUrl = image.originalUrl +
         (getModifiersByEffects([{crop: null}], false, false) || '') +
         previewModifiers
+
+      if (settings.previewUrlCallback) {
+        imageUrl = settings.previewUrlCallback(imageUrl, image)
+      }
 
       _image.updateImageUrl(imageUrl)
 
