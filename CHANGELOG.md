@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.4.7] - 2020-06-05
+
+### Fixed
+
+- call `previewUrlCallback` before rendering crop effect. See [#40].
+
 ## [1.4.6] - 2019-03-06
 
 ### Fixed
@@ -146,10 +152,12 @@ Initial public release.
 [#33]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/33
 [#34]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/34
 [#35]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/35
-[#36]: https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/36
+[#36]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/36
+[#40]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/40
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.6...HEAD
-[1.4.5]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.5...v1.4.6
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.7...HEAD
+[1.4.7]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.6...v1.4.7
+[1.4.6]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.5...v1.4.6
 [1.4.5]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.4...v1.4.5
 [1.4.4]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.3...v1.4.4
 [1.4.3]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.2...v1.4.3
