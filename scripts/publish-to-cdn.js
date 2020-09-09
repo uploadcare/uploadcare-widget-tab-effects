@@ -39,7 +39,7 @@ const UPLOAD_CONFIG = {
   ContentType: 'application/javascript; charset=utf-8',
 }
 
-let s3 = new AWS.S3()
+let s3 = new AWS.S3({credentials: new AWS.Credentials(config.access_key, config.secret_key)})
 
 const s3upload = (params) => new Promise((resolve, reject) => s3.upload(params, (error, data) => {
   if (error) {
