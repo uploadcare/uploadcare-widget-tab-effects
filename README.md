@@ -89,17 +89,19 @@ import uploadcareTabEffects from 'uploadcare-widget-tab-effects'
 
 ### CDN
 
-You can either install this minification-enabled Effects Tab version:
-
-```html
-<script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js" charset="utf-8"></script>
-```
-
-Or a bundled version without minification:
+Directly include the Effects Tab script one a page using
 
 ```html
 <script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.js" charset="utf-8"></script>
 ```
+
+To reduce loading time, you can also choose one of the following:
+
+* The minified all-locales bundle `uploadcare.tab-effects.min.js`
+* The english-only bundle `uploadcare.tab-effects.lang.en.js`
+* The minified english-only bundle `uploadcare.tab-effects.lang.en.min.js`
+
+> Note: When using a bundle above, you should also use the [matching version]([widget-bundle-types]) of `uploadcare-widget` (minified or english-only).
 
 ## Usage
 
@@ -225,3 +227,4 @@ request at [hello@uploadcare.com][uc-email-hello].
 [badge-npm-url]: https://www.npmjs.org/package/uploadcare-widget-tab-effects
 [badge-stack-img]: https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat
 [badge-stack-url]: https://stackshare.io/uploadcare/stacks/
+[widget-bundle-types]: https://github.com/uploadcare/uploadcare-widget#types-of-bundles
