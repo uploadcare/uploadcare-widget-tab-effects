@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.5.0] - 2021-03-31
+
+### Added
+
+- Generate an english-only bundle that imports the correct
+`uploadcare.lang.en.js` bundle.See [#41].
+- Generate a minified english-only bundle that imports the correct
+`uploadcare.lang.en.min.js` bundle. See [#41].
+
+### Fixed
+
+- Update the existing minified bundle so that it imports the correct
+`uploadcare.min.js` bundle. See [#41].
+
 ## [1.4.7] - 2020-06-05
 
 ### Fixed
@@ -154,8 +168,10 @@ Initial public release.
 [#35]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/35
 [#36]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/36
 [#40]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/40
+[#41]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/41
 
 [Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.7...HEAD
+[1.5.0]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.6...v1.4.7
 [1.4.7]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.6...v1.4.7
 [1.4.6]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.5...v1.4.6
 [1.4.5]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.4...v1.4.5
