@@ -6,36 +6,45 @@ import posthtml from 'rollup-plugin-posthtml-template'
 import filesize from 'rollup-plugin-filesize'
 import uglify from 'rollup-plugin-uglify'
 import license from 'rollup-plugin-license'
+import replacement from 'rollup-plugin-module-replacement'
+
 
 const classPrefix = process.env.npm_package_config_classPrefix
-const isMinification = process.env.BUILD === 'minification'
-const isModule = process.env.BUILD === 'module'
+const isMinified = process.env.MINIFIED === 'true'
+const isEnglishOnly = process.env.ENGLISH === 'true'
+const isModule = process.env.ESM === 'true'
 const srcToPaths = (paths, value) => {
   paths[value] = join(__dirname, '..', 'src', value, 'index.js')
 
   return paths
 }
 let cssExportMap = {}
+let paths = [
+  'components',
+  'images',
+  'locale',
+  'tools',
+].reduce(srcToPaths, {})
 
+// When using an english-only build, don't include other locale copy
+if (isEnglishOnly) {
+  paths['locale'] = join(__dirname, '..', 'src', 'locale', 'en-only', 'index.js')
+}
+
+// Add any necessary suffixes to the output file name
+const suffixes = `${isModule ? '.es' : ''}${isEnglishOnly ? '.lang.en' : ''}${isMinified ? '.min' : ''}`
 
 let config = {
   entry: 'src/index.js',
-  dest: `dist/${process.env.npm_package_config_name}.js`,
-  format: 'umd',
+  dest: `dist/${process.env.npm_package_config_name}${suffixes}.js`,
+  format: isModule ? 'es' : 'umd',
   moduleContext: 'window',
   globals: {'uploadcare-widget': 'uploadcare'},
   external: ['uploadcare-widget'],
   moduleName: process.env.npm_package_config_library,
-  sourceMap: true,
+  sourceMap: !isMinified,
   plugins: [
-    includePaths({
-      include: [
-        'components',
-        'images',
-        'locale',
-        'tools',
-      ].reduce(srcToPaths, {}),
-    }),
+    includePaths({include: paths}),
     postcss({
       extensions: ['.pcss'],
       plugins: [
@@ -66,15 +75,29 @@ let config = {
   ],
 }
 
-if (isMinification) {
-  config.dest = `dist/${process.env.npm_package_config_name}.min.js`
-  config.sourceMap = false
-  config.plugins.push(uglify())
+// Minified and english-only builds import a different script from `uploadcare-widget`
+const replacementWidgetScript =
+  (isMinified && isEnglishOnly && 'uploadcare-widget/uploadcare.lang.en.min') ||
+  (isMinified && 'uploadcare-widget/uploadcare.min') ||
+  (isEnglishOnly && 'uploadcare-widget/uploadcare.lang.en')
+
+if (replacementWidgetScript) {
+  config.external = [replacementWidgetScript]
+  config.globals = {[replacementWidgetScript]: 'uploadcare'}
+  config.plugins.unshift(replacement({
+    entries: [
+      {
+        find: 'uploadcare-widget',
+        replacement: replacementWidgetScript,
+      },
+    ],
+  }))
 }
-if (isModule) {
-  config.dest = `dist/${process.env.npm_package_config_name}.es.js`
-  config.format = 'es'
-  config.sourceMap = true
+
+// Minified builds also reduce the bundle size by uglifying code
+if (isMinified) {
+  if (isModule) throw ('Uglifying the ESM build currently fails.')
+  config.plugins.push(uglify())
 }
 
 config.plugins.push(license({banner: {file: join(__dirname, 'rollup.banner.txt')}}))
