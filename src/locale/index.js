@@ -6,6 +6,7 @@ import ja from './ja'
 import nl from './nl'
 import ru from './ru'
 import vi from './vi'
+import es from './es'
 
 export {
   be,
@@ -16,4 +17,5 @@ export {
   nl,
   ru,
   vi,
+  es,
 }
