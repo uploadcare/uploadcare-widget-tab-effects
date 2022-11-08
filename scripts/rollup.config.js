@@ -10,6 +10,7 @@ import replacement from 'rollup-plugin-module-replacement'
 
 
 const classPrefix = process.env.npm_package_config_classPrefix
+const isForReact = process.env.REACT === 'true'
 const isMinified = process.env.MINIFIED === 'true'
 const isEnglishOnly = process.env.ENGLISH === 'true'
 const isModule = process.env.ESM === 'true'
@@ -34,7 +35,38 @@ if (isEnglishOnly) {
 // Add any necessary suffixes to the output file name
 const suffixes = `${isModule ? '.es' : ''}${isEnglishOnly ? '.lang.en' : ''}${isMinified ? '.min' : ''}`
 
-let config = {
+const basePlugins = [
+  includePaths({include: paths}),
+  postcss({
+    extensions: ['.pcss'],
+    plugins: [
+      require('postcss-nested'),
+      require('postcss-calc'),
+      require('postcss-color-function'),
+      require('postcss-flexbugs-fixes'),
+      require('postcss-css-variables'),
+      require('autoprefixer'),
+      require('postcss-reporter'),
+      require('postcss-modules')({
+        generateScopedName: `${classPrefix}[local]`,
+        getJSON: (id, json) => {
+          cssExportMap[id] = json
+        },
+      }),
+      require('cssnano'),
+    ],
+    getExport: (id) => cssExportMap[id],
+    combineStyleTags: true,
+  }),
+  posthtml({
+    include: '**/*.{html,svg}',
+    template: true,
+  }),
+  babel(),
+  filesize(),
+]
+
+let mainConfig = {
   entry: 'src/index.js',
   dest: `dist/${process.env.npm_package_config_name}${suffixes}.js`,
   format: isModule ? 'es' : 'umd',
@@ -43,37 +75,20 @@ let config = {
   external: ['uploadcare-widget'],
   moduleName: process.env.npm_package_config_library,
   sourceMap: !isMinified,
-  plugins: [
-    includePaths({include: paths}),
-    postcss({
-      extensions: ['.pcss'],
-      plugins: [
-        require('postcss-nested'),
-        require('postcss-calc'),
-        require('postcss-color-function'),
-        require('postcss-flexbugs-fixes'),
-        require('postcss-css-variables'),
-        require('autoprefixer'),
-        require('postcss-reporter'),
-        require('postcss-modules')({
-          generateScopedName: `${classPrefix}[local]`,
-          getJSON: (id, json) => {
-            cssExportMap[id] = json
-          },
-        }),
-        require('cssnano'),
-      ],
-      getExport: (id) => cssExportMap[id],
-      combineStyleTags: true,
-    }),
-    posthtml({
-      include: '**/*.{html,svg}',
-      template: true,
-    }),
-    babel(),
-    filesize(),
-  ],
+  plugins: basePlugins,
 }
+
+let reactConfig = {
+  entry: 'src/react.js',
+  dest: `dist/${process.env.npm_package_config_name}.react${suffixes}.js`,
+  format: isModule ? 'es' : 'umd',
+  moduleContext: 'window',
+  moduleName: process.env.npm_package_config_library,
+  sourceMap: !isMinified,
+  plugins: basePlugins,
+}
+
+let config = isForReact ? reactConfig : mainConfig
 
 // Minified and english-only builds import a different script from `uploadcare-widget`
 const replacementWidgetScript =
