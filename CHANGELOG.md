@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.6.0] - 2022-11-16
+
+### Added
+
+- Add separate bundles to be used with [`react-widget`][react-widget]. See [#43].
+
 ## [1.5.0] - 2021-03-31
 
 ### Added
@@ -154,6 +160,8 @@ Initial public release.
 - The `uploadcareTabEffects` function as default export.
 - README with info about requirements, install, usage, etc.
 
+[react-widget]: https://github.com/uploadcare/react-widget
+
 [#21]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/21
 [#24]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/24
 [#25]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/25
@@ -169,9 +177,11 @@ Initial public release.
 [#36]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/36
 [#40]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/40
 [#41]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/41
+[#43]: https://github.com/uploadcare/uploadcare-widget-tab-effects/issues/43
 
-[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.7...HEAD
-[1.5.0]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.6...v1.4.7
+[Unreleased]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.5.0...v1.6.0
+[1.5.0]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.7...v1.5.0
 [1.4.7]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.6...v1.4.7
 [1.4.6]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.5...v1.4.6
 [1.4.5]: https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.4.4...v1.4.5
