@@ -11,7 +11,9 @@
   "module": "dist/uploadcare.tab-effects.es.js",
   "files": [
     "dist",
-    "src"
+    "src",
+    "react.js",
+    "react-en.js"
   ],
   "scripts": {
     "clean": "rimraf dist",
@@ -25,6 +27,8 @@
     "build:umd:en:min": "rollup -c ./scripts/rollup.config.js --environment ENGLISH,MINIFIED",
     "build:es": "rollup -c ./scripts/rollup.config.js --environment ESM",
     "build:es:en": "rollup -c ./scripts/rollup.config.js --environment ESM,ENGLISH",
+    "build:react:umd": "rollup -c ./scripts/rollup.config.js --environment REACT",
+    "build:react:umd:en": "rollup -c ./scripts/rollup.config.js --environment REACT,ENGLISH",
     "build": "run-s build:**",
     "watch": "npm run build:umd -- --watch",
     "serve": "browser-sync start --ss dist --files dist --port 3126",
