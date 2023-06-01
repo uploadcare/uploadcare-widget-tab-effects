@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.7.0] - 2023-06-01
+
+* Add new locale: Swedish (sv). by @joelgrondrup in https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/45
+
 ## [1.6.0] - 2022-11-16
+
+### Added
+
+* Add new locale: Spanish (es). by @comontes in https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/42
+* Add separate bundle to be used with [react-widget](https://github.com/uploadcare/react-widget) by @nd0ut in https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/43
 
 ### Added
 
