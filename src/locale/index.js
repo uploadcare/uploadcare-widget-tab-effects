@@ -7,6 +7,7 @@ import nl from './nl'
 import ru from './ru'
 import vi from './vi'
 import es from './es'
+import sv from './sv'
 
 export {
   be,
@@ -18,4 +19,5 @@ export {
   ru,
   vi,
   es,
+  sv
 }
