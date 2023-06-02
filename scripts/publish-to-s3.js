@@ -9,20 +9,14 @@ const AWS = require('aws-sdk')
 const fs = require('fs-extra')
 const path = require('path')
 
-if (typeof process.env.npm_package_version === 'undefined') {
-  throw 'Please, add version to package.json'
-}
+const BUCKET = process.env.WIDGET_TAB_EFFECTS_S3_BUCKET
+const BASE_PATH = process.env.WIDGET_TAB_EFFECTS_S3_PATH
+const ACCESS_KEY = process.env.WIDGET_TAB_EFFECTS_S3_ACCESS_KEY
+const SECRET_KEY = process.env.WIDGET_TAB_EFFECTS_S3_SECRET_KEY
 
-const CONFIG_PATH = path.join(__dirname, '..', '.awsrc')
-
-if (!fs.existsSync(CONFIG_PATH)) {
-  throw 'Please, add AWS configuration file ".awsrc" to the project root.'
-}
-
-const config = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf-8'))
-
-if (typeof config.aws_bucket_name === 'undefined') {
-  throw 'Please, add to the ".awsrc" file your bucket name under "aws_bucket_name" key.'
+if (!BASE_PATH || !BUCKET || !ACCESS_KEY || !SECRET_KEY) {
+  console.log('S3 credentials not found')
+  process.exit(0)
 }
 
 const getVersionTypes = (version) => [
@@ -31,7 +25,6 @@ const getVersionTypes = (version) => [
   version.replace(/^(\d+)\.\d+\.\d+/, '$1.x'),
 ]
 
-const BASE_PATH = 'libs/widget-tab-effects/'
 const VERSION_TYPES = getVersionTypes(process.env.npm_package_version)
 const UPLOAD_CONFIG = {
   ACL: 'public-read',
