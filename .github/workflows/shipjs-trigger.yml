@@ -13,10 +13,10 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          registry-url: "https://registry.npmjs.org"
-          node-version: '16'
+          node-version-file: .nvmrc
+          cache: npm
       - run: npm ci
       - run: npm run release:trigger
         env:
