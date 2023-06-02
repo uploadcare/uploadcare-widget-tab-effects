@@ -1,3 +1,17 @@
+# [1.7.0](https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.6.0...v1.7.0) (2023-06-02)
+
+
+### Features
+
+* add Swedish locale ([8f2012f](https://github.com/uploadcare/uploadcare-widget-tab-effects/commit/8f2012f883ee38d5565ff46b1afd40983d2bc30d))
+
+
+### Reverts
+
+* Revert "chore: disable internal shipjs changelog generator" ([c2badc3](https://github.com/uploadcare/uploadcare-widget-tab-effects/commit/c2badc3dc0a8dcd3022814921e5cfba3b111df1e))
+
+
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
