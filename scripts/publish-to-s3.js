@@ -66,7 +66,7 @@ const uploadFile = async (fileName) => {
   const uploadParams = Object.assign({}, UPLOAD_CONFIG, {Body: data})
 
   const uploads = VERSION_TYPES.map(version =>
-    s3upload(Object.assign({}, uploadParams, {Key: normalizeBasePath(`${BASE_PATH}/${version}/${fileName}`)}))
+    s3upload(Object.assign({}, uploadParams, {Key: `${normalizeBasePath(BASE_PATH)}/${version}/${fileName}`}))
   )
 
   return await Promise.all(uploads)
