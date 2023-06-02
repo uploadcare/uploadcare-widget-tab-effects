@@ -5,11 +5,16 @@
     "library": "uploadcareTabEffects",
     "classPrefix": "uploadcare-tab-effects--"
   },
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Effects Tab for Uploadcare Widget. Edit images in desktop and mobile browsers.",
   "main": "dist/uploadcare.tab-effects.js",
   "module": "dist/uploadcare.tab-effects.es.js",
-  "files": ["dist", "src", "react.js", "react-en.js"],
+  "files": [
+    "dist",
+    "src",
+    "react.js",
+    "react-en.js"
+  ],
   "scripts": {
     "clean": "rimraf dist",
     "lint:js": "eslint .",
@@ -38,7 +43,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^8.3.0",
-    "aws-sdk": "^2.82.0",
+    "aws-sdk": "^2.1389.0",
     "babel-eslint": "^8.2.3",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-stage-3": "^6.24.1",
@@ -70,8 +75,17 @@
     "stylelint": "^8.2.0",
     "stylelint-config-uploadcare": "^3.0.0"
   },
-  "browserslist": ["> .4%", "ie >= 10"],
-  "keywords": ["uploadcare", "widget", "image", "images", "editor"],
+  "browserslist": [
+    "> .4%",
+    "ie >= 10"
+  ],
+  "keywords": [
+    "uploadcare",
+    "widget",
+    "image",
+    "images",
+    "editor"
+  ],
   "author": "",
   "license": "MIT",
   "repository": {

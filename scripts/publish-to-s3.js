@@ -28,11 +28,11 @@ const getVersionTypes = (version) => [
 const VERSION_TYPES = getVersionTypes(process.env.npm_package_version)
 const UPLOAD_CONFIG = {
   ACL: 'public-read',
-  Bucket: config.aws_bucket_name,
+  Bucket: BUCKET,
   ContentType: 'application/javascript; charset=utf-8',
 }
 
-let s3 = new AWS.S3()
+let s3 = new AWS.S3({credentials: new AWS.Credentials(ACCESS_KEY, SECRET_KEY)})
 
 const s3upload = (params) => new Promise((resolve, reject) => s3.upload(params, (error, data) => {
   if (error) {
