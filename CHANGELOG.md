@@ -3,26 +3,6 @@
 
 ### Features
 
-* add Swedish locale ([8f2012f](https://github.com/uploadcare/uploadcare-widget-tab-effects/commit/8f2012f883ee38d5565ff46b1afd40983d2bc30d))
-
-
-### Reverts
-
-* Revert "chore: disable internal shipjs changelog generator" ([c2badc3](https://github.com/uploadcare/uploadcare-widget-tab-effects/commit/c2badc3dc0a8dcd3022814921e5cfba3b111df1e))
-
-
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-### Added
-
 * Add new locale: Swedish (sv). by @joelgrondrup in https://github.com/uploadcare/uploadcare-widget-tab-effects/pull/45
 
 ## [1.6.0] - 2022-11-16
