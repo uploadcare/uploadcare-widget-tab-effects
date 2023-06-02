@@ -9,12 +9,7 @@
   "description": "Effects Tab for Uploadcare Widget. Edit images in desktop and mobile browsers.",
   "main": "dist/uploadcare.tab-effects.js",
   "module": "dist/uploadcare.tab-effects.es.js",
-  "files": [
-    "dist",
-    "src",
-    "react.js",
-    "react-en.js"
-  ],
+  "files": ["dist", "src", "react.js", "react-en.js"],
   "scripts": {
     "clean": "rimraf dist",
     "lint:js": "eslint .",
@@ -34,17 +29,14 @@
     "serve": "browser-sync start --ss dist --files dist --port 3126",
     "start": "browser-sync start --config ./scripts/start.config.js",
     "dev": "run-p watch start",
-    "preversion": "kacl lint",
-    "version": "kacl release && git add CHANGELOG.md && npm run build",
-    "publish:cdn": "node ./scripts/publish-to-cdn.js",
-    "postpublish": "npm run publish:cdn"
+    "publish:cdn": "node ./scripts/publish-to-s3.js",
+    "release:prepare": "shipjs prepare",
+    "release:trigger": "shipjs trigger"
   },
   "peerDependencies": {
     "uploadcare-widget": "3.x"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@brightcove/kacl": "^0.1.6",
     "autoprefixer": "^8.3.0",
     "aws-sdk": "^2.82.0",
     "babel-eslint": "^8.2.3",
@@ -74,20 +66,12 @@
     "rollup-plugin-posthtml-template": "^1.1.0",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.3.1",
+    "shipjs": "0.26.3",
     "stylelint": "^8.2.0",
     "stylelint-config-uploadcare": "^3.0.0"
   },
-  "browserslist": [
-    "> .4%",
-    "ie >= 10"
-  ],
-  "keywords": [
-    "uploadcare",
-    "widget",
-    "image",
-    "images",
-    "editor"
-  ],
+  "browserslist": ["> .4%", "ie >= 10"],
+  "keywords": ["uploadcare", "widget", "image", "images", "editor"],
   "author": "",
   "license": "MIT",
   "repository": {

@@ -19,5 +19,5 @@ export {
   ru,
   vi,
   es,
-  sv
+  sv,
 }
