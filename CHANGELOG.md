@@ -1,3 +1,7 @@
+## [1.7.1](https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.7.0...v1.7.1) (2023-06-02)
+
+
+
 # [1.7.0](https://github.com/uploadcare/uploadcare-widget-tab-effects/compare/v1.6.0...v1.7.0) (2023-06-02)
 
 
