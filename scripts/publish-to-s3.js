@@ -47,13 +47,26 @@ const getFileNames = async () => await fs.readdir(path.join(__dirname, '..', 'di
 
 const readFile = async (fileName) => await fs.readFile(path.join(__dirname, '..', 'dist', fileName), 'utf-8')
 
+const normalizeBasePath = (basePath) => {
+  let normalizeBasePath = basePath
+
+  if (normalizeBasePath.startsWith('/')) {
+    normalizeBasePath = normalizeBasePath.substring(1)
+  }
+  if (normalizeBasePath.endsWith('/')) {
+    normalizeBasePath = normalizeBasePath.substring(0, normalizeBasePath.length - 1)
+  }
+
+  return normalizeBasePath
+}
+
 const uploadFile = async (fileName) => {
   const data = await readFile(fileName)
 
   const uploadParams = Object.assign({}, UPLOAD_CONFIG, {Body: data})
 
   const uploads = VERSION_TYPES.map(version =>
-    s3upload(Object.assign({}, uploadParams, {Key: `${BASE_PATH}${version}/${fileName}`}))
+    s3upload(Object.assign({}, uploadParams, {Key: normalizeBasePath(`${BASE_PATH}/${version}/${fileName}`)}))
   )
 
   return await Promise.all(uploads)
